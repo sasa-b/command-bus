@@ -10,7 +10,7 @@ namespace SasaB\CommandBus\Middleware;
 
 
 use SasaB\CommandBus\Command;
-use SasaB\CommandBus\Exceptions\CommandBusException;
+use SasaB\CommandBus\Exceptions\Exception;
 use SasaB\CommandBus\Middleware;
 use SasaB\CommandBus\Events\CommandFailedEvent;
 use SasaB\CommandBus\Events\CommandHandledEvent;
@@ -38,7 +38,7 @@ final class EventMiddleware implements Middleware
 
         } catch (\Exception $e) {
             $this->emitter->emit(new CommandFailedEvent($command));
-            throw new CommandBusException($e->getMessage(), $e->getCode(), $e);
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
         }
 
         return $result;
