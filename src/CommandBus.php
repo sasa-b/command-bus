@@ -14,6 +14,7 @@ use Psr\Container\ContainerInterface;
 use SasaB\CommandBus\Exceptions\MiddlewareException;
 use SasaB\CommandBus\Response\Map;
 use SasaB\CommandBus\Response\Item;
+use SasaB\CommandBus\Response\Text;
 use SasaB\CommandBus\Response\Void;
 use SasaB\CommandBus\Response\Double;
 use SasaB\CommandBus\Response\Integer;
@@ -61,6 +62,9 @@ final class CommandBus implements Dispatcher
                 break;
             case is_bool($response):
                 $response = new Boolean($response);
+                break;
+            case is_string($response):
+                $response = new Text($response);
                 break;
             case is_array($response):
                 $is_map = $response && is_string(array_keys($response)[0]);

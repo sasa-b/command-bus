@@ -16,6 +16,7 @@ use SasaB\CommandBus\Response\Double;
 use SasaB\CommandBus\Response\Integer;
 use SasaB\CommandBus\Response\Item;
 use SasaB\CommandBus\Response\Map;
+use SasaB\CommandBus\Response\Text;
 use SasaB\CommandBus\Response\Void;
 use SasaB\CommandBus\Tests\TestCommand;
 use SasaB\CommandBus\Tests\TestCase;
@@ -37,7 +38,7 @@ class ResponseTest extends TestCase
     public function testItCanReturnVoidResponse()
     {
         $response = $this->bus->dispatch(
-            new TestCommand('void')
+            new TestCommand()
         );
 
         self::assertInstanceOf(Void::class, $response);
@@ -46,7 +47,7 @@ class ResponseTest extends TestCase
     public function testItCanReturnIntegerResponse()
     {
         $response = $this->bus->dispatch(
-            new TestCommand('int', 1)
+            new TestCommand( 1)
         );
 
         self::assertInstanceOf(Integer::class, $response);
@@ -55,16 +56,25 @@ class ResponseTest extends TestCase
     public function testItCanReturnDoubleResponse()
     {
         $response = $this->bus->dispatch(
-            new TestCommand('double', 2.0)
+            new TestCommand(2.0)
         );
 
         self::assertInstanceOf(Double::class, $response);
     }
 
+    public function testItCanReturnStringResponse()
+    {
+        $response = $this->bus->dispatch(
+            new TestCommand('Hello World')
+        );
+
+        self::assertInstanceOf(Text::class, $response);
+    }
+
     public function testItCanReturnBooleanResponse()
     {
         $response = $this->bus->dispatch(
-            new TestCommand('bool', true)
+            new TestCommand(true)
         );
 
         self::assertInstanceOf(Boolean::class, $response);
@@ -73,7 +83,7 @@ class ResponseTest extends TestCase
     public function testItCanReturnMapResponse()
     {
         $response = $this->bus->dispatch(
-            new TestCommand('map', ['foo' => 'bar'])
+            new TestCommand(['foo' => 'bar'])
         );
 
         self::assertInstanceOf(Map::class, $response);
@@ -85,7 +95,7 @@ class ResponseTest extends TestCase
         $item->foo = 'bar';
 
         $response = $this->bus->dispatch(
-            new TestCommand('item', $item)
+            new TestCommand($item)
         );
 
         self::assertInstanceOf(Item::class, $response);
@@ -94,7 +104,7 @@ class ResponseTest extends TestCase
     public function testItCanReturnCollectionResponse()
     {
         $response = $this->bus->dispatch(
-            new TestCommand('map', ['foo', 'bar'])
+            new TestCommand(['foo', 'bar'])
         );
 
         self::assertInstanceOf(Collection::class, $response);

@@ -11,7 +11,6 @@ namespace SasaB\CommandBus\Tests;
 
 use SasaB\CommandBus\Command;
 use SasaB\CommandBus\Handler;
-use SasaB\CommandBus\Tests\Commands\TestCommand;
 
 final class TestHandler implements Handler
 {

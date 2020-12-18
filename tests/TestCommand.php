@@ -20,10 +20,9 @@ final class TestCommand implements Command
 
     private $data;
 
-    public function __construct(string $dataType, $data = null)
+    public function __construct($data = null)
     {
         $this->uuid = uuid();
-        $this->dataType = $dataType;
         $this->data = $data;
     }
 

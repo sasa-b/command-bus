@@ -19,5 +19,7 @@ final class EchoTestHandler implements Handler
     public function handle(Command $command)
     {
         echo $command->getMessage() . " Successfully Dispatched";
+
+        return 'echo';
     }
 }
