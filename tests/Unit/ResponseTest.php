@@ -23,19 +23,16 @@ use SasaB\CommandBus\Tests\TestCase;
 
 class ResponseTest extends TestCase
 {
-    /**
-     * @var \SasaB\CommandBus\CommandBus
-     */
-    private $bus;
+    private CommandBus $bus;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->bus = new CommandBus($this->container, []);
     }
 
-    public function testItCanReturnVoidResponse()
+    public function testItCanReturnVoidResponse(): void
     {
         $response = $this->bus->dispatch(
             new TestCommand()
@@ -44,67 +41,67 @@ class ResponseTest extends TestCase
         self::assertInstanceOf(None::class, $response);
     }
 
-    public function testItCanReturnIntegerResponse()
+    public function testItCanReturnIntegerResponse(): void
     {
         $response = $this->bus->dispatch(
-            new TestCommand( 1)
+            new TestCommand(data: 1)
         );
 
         self::assertInstanceOf(Integer::class, $response);
     }
 
-    public function testItCanReturnDoubleResponse()
+    public function testItCanReturnDoubleResponse(): void
     {
         $response = $this->bus->dispatch(
-            new TestCommand(2.0)
+            new TestCommand(data: 2.0)
         );
 
         self::assertInstanceOf(Double::class, $response);
     }
 
-    public function testItCanReturnStringResponse()
+    public function testItCanReturnStringResponse(): void
     {
         $response = $this->bus->dispatch(
-            new TestCommand('Hello World')
+            new TestCommand(data: 'Hello World')
         );
 
         self::assertInstanceOf(Text::class, $response);
     }
 
-    public function testItCanReturnBooleanResponse()
+    public function testItCanReturnBooleanResponse(): void
     {
         $response = $this->bus->dispatch(
-            new TestCommand(true)
+            new TestCommand(data: true)
         );
 
         self::assertInstanceOf(Boolean::class, $response);
     }
 
-    public function testItCanReturnMapResponse()
+    public function testItCanReturnMapResponse(): void
     {
         $response = $this->bus->dispatch(
-            new TestCommand(['foo' => 'bar'])
+            new TestCommand(data: ['foo' => 'bar'])
         );
 
         self::assertInstanceOf(Map::class, $response);
     }
 
-    public function testItCanReturnItemResponse()
+    public function testItCanReturnItemResponse(): void
     {
         $item = new \stdClass();
         $item->foo = 'bar';
 
         $response = $this->bus->dispatch(
-            new TestCommand($item)
+            new TestCommand(data: $item)
         );
 
         self::assertInstanceOf(Item::class, $response);
     }
 
-    public function testItCanReturnCollectionResponse()
+    public function testItCanReturnCollectionResponse(): void
     {
         $response = $this->bus->dispatch(
-            new TestCommand(['foo', 'bar'])
+            new TestCommand(data: ['foo', 'bar'])
         );
 
         self::assertInstanceOf(Collection::class, $response);

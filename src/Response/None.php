@@ -11,5 +11,5 @@ namespace SasaB\CommandBus\Response;
 
 final class None extends Response
 {
-    public function getContent() {}
+    public function getContent(): void {}
 }

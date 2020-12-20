@@ -21,7 +21,7 @@ use SasaB\CommandBus\Tests\TestCase;
 
 class MiddlewareTest extends TestCase
 {
-    public function testItCanEmmitEvents()
+    public function testItCanEmmitEvents(): void
     {
         $this->expectOutputString(
             "Command Received|EchoTestCommand Successfully Dispatched|Command Handled"
@@ -43,11 +43,11 @@ class MiddlewareTest extends TestCase
 
         $bus = new CommandBus($this->container, [$eventMiddleware]);
 
-        $bus->dispatch(new EchoTestCommand('EchoTestCommand'));
+        $bus->dispatch(new EchoTestCommand(message: 'EchoTestCommand'));
 
     }
 
-    public function testItCanExecuteInTransaction()
+    public function testItCanExecuteInTransaction(): void
     {
         $this->expectOutputString(
             "Begin|EchoTestCommand Successfully Dispatched|Commit"
@@ -61,6 +61,6 @@ class MiddlewareTest extends TestCase
 
         $bus = new CommandBus($this->container, [$transactionMiddleware]);
 
-        $bus->dispatch(new EchoTestCommand('EchoTestCommand'));
+        $bus->dispatch(new EchoTestCommand(message: 'EchoTestCommand'));
     }
 }

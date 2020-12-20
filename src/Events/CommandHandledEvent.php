@@ -13,12 +13,9 @@ use SasaB\CommandBus\Command;
 
 final class CommandHandledEvent implements Event
 {
-    private $command;
-
-    public function __construct(Command $command)
-    {
-        $this->command = $command;
-    }
+    public function __construct(
+        private Command $command
+    ) {}
 
     public function getName(): string
     {

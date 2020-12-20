@@ -11,14 +11,11 @@ namespace SasaB\CommandBus\Response;
 
 class Item extends Response
 {
-    private $value;
+    public function __construct(
+        private object|array $value
+    ) {}
 
-    public function __construct($value)
-    {
-        $this->value = $value;
-    }
-
-    public function getContent()
+    public function getContent(): object|array
     {
         return $this->value;
     }

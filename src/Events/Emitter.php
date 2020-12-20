@@ -11,14 +11,11 @@ namespace SasaB\CommandBus\Events;
 
 final class Emitter
 {
-    private $subscriber;
+    public function __construct(
+        private Subscriber $subscriber
+    ) {}
 
-    public function __construct(Subscriber $subscriber)
-    {
-        $this->subscriber = $subscriber;
-    }
-
-    public function emit(Event $event)
+    public function emit(Event $event): void
     {
         foreach ($this->subscriber->getListeners($event->getName()) as $listener) {
             $listener($event);

@@ -11,12 +11,9 @@ namespace SasaB\CommandBus\Response;
 
 final class Double extends Response
 {
-    private $value;
-
-    public function __construct(float $value)
-    {
-        $this->value = $value;
-    }
+    public function __construct(
+        private float $value
+    ) {}
 
     public function getContent(): float
     {

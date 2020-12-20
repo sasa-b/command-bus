@@ -16,12 +16,12 @@ trait CanAccessAsArray
         return isset($this->items[$offset]);
     }
 
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->items[$offset] ?? null;
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if ($offset === null) {
             $this->items[] = $value;
@@ -30,7 +30,7 @@ trait CanAccessAsArray
         }
     }
 
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->items[$offset]);
     }

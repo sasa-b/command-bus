@@ -20,14 +20,14 @@ class CommandBusTest extends TestCase
      */
     private $bus;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->bus = new CommandBus($this->container, []);
     }
 
-    public function testItCanDispatchCommand()
+    public function testItCanDispatchCommand(): void
     {
         $this->expectOutputString(EchoTestCommand::class . " Successfully Dispatched");
 
@@ -36,10 +36,10 @@ class CommandBusTest extends TestCase
         );
     }
 
-    public function testCommandUuidAndResponseUuidAreSame()
+    public function testCommandUuidAndResponseUuidAreSame(): void
     {
         $response = $this->bus->dispatch(
-            $command = new EchoTestCommand(EchoTestCommand::class)
+            $command = new EchoTestCommand(message: EchoTestCommand::class)
         );
 
         self::assertSame($command->uuid(), $response->uuid());

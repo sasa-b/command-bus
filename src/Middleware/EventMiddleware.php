@@ -19,12 +19,9 @@ use SasaB\CommandBus\Events\Emitter;
 
 final class EventMiddleware implements Middleware
 {
-    private $emitter;
-
-    public function __construct(Emitter $emitter)
-    {
-        $this->emitter = $emitter;
-    }
+    public function __construct(
+        private Emitter $emitter
+    ){}
 
     public function handle(Command $command, \Closure $next)
     {

@@ -9,6 +9,7 @@
 namespace SasaB\CommandBus\Response\Collection;
 
 
+
 trait CanCount
 {
     public function count(): int

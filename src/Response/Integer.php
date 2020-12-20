@@ -11,12 +11,9 @@ namespace SasaB\CommandBus\Response;
 
 final class Integer extends Response
 {
-    private $value;
-
-    public function __construct(int $value)
-    {
-        $this->value = $value;
-    }
+    public function __construct(
+        private int $value
+    ) {}
 
     public function getContent(): int
     {

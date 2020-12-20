@@ -15,16 +15,11 @@ use SasaB\CommandBus\Exceptions\Exception;
 
 final class TransactionMiddleware implements Middleware
 {
-    private $begin;
-    private $commit;
-    private $rollback;
-
-    public function __construct(\Closure $begin, \Closure $commit, \Closure $rollback)
-    {
-        $this->begin = $begin;
-        $this->commit = $commit;
-        $this->rollback = $rollback;
-    }
+    public function __construct(
+        private \Closure $begin,
+        private \Closure $commit,
+        private \Closure $rollback
+    ){}
 
     public function handle(Command $command, \Closure $next)
     {

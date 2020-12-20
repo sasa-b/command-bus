@@ -24,15 +24,14 @@ use SasaB\CommandBus\Response\Collection;
 
 final class CommandBus implements Dispatcher
 {
-    private $diContainer;
+    private \Closure $middlewares;
 
-    private $middlewares;
-
-    private $mapper;
-
-    public function __construct(ContainerInterface $diContainer, array $middleware = [], Mapper $mapper = null)
+    public function __construct(
+        private ContainerInterface $diContainer,
+        private array $middleware = [],
+        private ?Mapper $mapper = null
+    )
     {
-        $this->diContainer = $diContainer;
         $this->middlewares = $this->createMiddlewareChain($middleware);
         $this->mapper = $mapper ?? new MapByName();
     }
@@ -55,45 +54,41 @@ final class CommandBus implements Dispatcher
         return $response->setUuid($command->uuid());
     }
 
-    private function parseResponse($response)
+    private function parseResponse(mixed $response): Response
     {
         switch ($response) {
             case null:
                 return new None();
             case is_int($response):
-                return new Integer($response);
+                return new Integer(value: $response);
             case is_float($response):
-                return new Double($response);
+                return new Double(value: $response);
             case is_bool($response):
-                return new Boolean($response);
+                return new Boolean(value: $response);
             case is_string($response):
-                return new Text($response);
+                return new Text(value: $response);
             case is_array($response):
                 return $response && is_string(array_keys($response)[0])
-                    ? new Map($response)
-                    : new Collection($response);
+                    ? new Map(items: $response)
+                    : new Collection(items: $response);
             case $response instanceof Response:
                 // do nothing, it's already a custom response object
                 return $response;
             default:
-                return new Item($response);
+                return new Item(value: $response);
         }
     }
 
     private function createMiddlewareChain(array $chain): \Closure
     {
-        $lastMiddleware = function ($command) {
-            return $this->getHandlerFor($command)->handle($command);
-        };
+        $lastMiddleware = fn (Command $command) => $this->getHandlerFor($command)->handle($command);
 
         while ($middleware = array_pop($chain)) {
             if (!$middleware instanceof Middleware) {
                 throw MiddlewareException::invalid($middleware);
             }
 
-            $lastMiddleware = function ($command) use ($middleware, $lastMiddleware) {
-                return $middleware->handle($command, $lastMiddleware);
-            };
+            $lastMiddleware = fn (Command $command) => $middleware->handle($command, $lastMiddleware);
         }
 
         return $lastMiddleware;
