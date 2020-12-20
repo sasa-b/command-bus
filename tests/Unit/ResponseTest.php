@@ -17,7 +17,7 @@ use SasaB\CommandBus\Response\Integer;
 use SasaB\CommandBus\Response\Item;
 use SasaB\CommandBus\Response\Map;
 use SasaB\CommandBus\Response\Text;
-use SasaB\CommandBus\Response\Void;
+use SasaB\CommandBus\Response\None;
 use SasaB\CommandBus\Tests\TestCommand;
 use SasaB\CommandBus\Tests\TestCase;
 
@@ -41,7 +41,7 @@ class ResponseTest extends TestCase
             new TestCommand()
         );
 
-        self::assertInstanceOf(Void::class, $response);
+        self::assertInstanceOf(None::class, $response);
     }
 
     public function testItCanReturnIntegerResponse()

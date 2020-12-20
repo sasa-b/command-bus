@@ -15,7 +15,7 @@ use SasaB\CommandBus\Exceptions\MiddlewareException;
 use SasaB\CommandBus\Response\Map;
 use SasaB\CommandBus\Response\Item;
 use SasaB\CommandBus\Response\Text;
-use SasaB\CommandBus\Response\Void;
+use SasaB\CommandBus\Response\None;
 use SasaB\CommandBus\Response\Double;
 use SasaB\CommandBus\Response\Integer;
 use SasaB\CommandBus\Response\Boolean;
@@ -37,7 +37,7 @@ final class CommandBus implements Dispatcher
         $this->mapper = $mapper ?? new MapByName();
     }
 
-    private function getHandlerFor(Command $command)
+    private function getHandlerFor(Command $command): Handler
     {
         return $this->diContainer->get(
             $this->mapper->getHandlerName($command)
@@ -48,39 +48,36 @@ final class CommandBus implements Dispatcher
     {
         $chain = $this->middlewares;
 
-        $response = $chain($command);
-
-        switch ($response) {
-            case null:
-                $response = new Void();
-                break;
-            case is_int($response):
-                $response = new Integer($response);
-                break;
-            case is_float($response):
-                $response = new Double($response);
-                break;
-            case is_bool($response):
-                $response = new Boolean($response);
-                break;
-            case is_string($response):
-                $response = new Text($response);
-                break;
-            case is_array($response):
-                $is_map = $response && is_string(array_keys($response)[0]);
-                $response = $is_map
-                    ? new Map($response)
-                    : new Collection($response);
-                break;
-            case $response instanceof Response:
-                // do nothing, it's already a custom response object
-                break;
-            default:
-                $response = new Item($response);
-                break;
-        }
+        $response = $this->parseResponse(
+            $chain($command)
+        );
 
         return $response->setUuid($command->uuid());
+    }
+
+    private function parseResponse($response)
+    {
+        switch ($response) {
+            case null:
+                return new None();
+            case is_int($response):
+                return new Integer($response);
+            case is_float($response):
+                return new Double($response);
+            case is_bool($response):
+                return new Boolean($response);
+            case is_string($response):
+                return new Text($response);
+            case is_array($response):
+                return $response && is_string(array_keys($response)[0])
+                    ? new Map($response)
+                    : new Collection($response);
+            case $response instanceof Response:
+                // do nothing, it's already a custom response object
+                return $response;
+            default:
+                return new Item($response);
+        }
     }
 
     private function createMiddlewareChain(array $chain): \Closure

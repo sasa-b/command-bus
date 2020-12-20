@@ -9,10 +9,7 @@
 namespace SasaB\CommandBus\Response;
 
 
-final class Void extends Response
+final class None extends Response
 {
-    public function getContent()
-    {
-        return null;
-    }
+    public function getContent() {}
 }
