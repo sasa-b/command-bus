@@ -14,9 +14,9 @@ use function Tests\uuid;
 
 final class EchoTestCommand implements Command
 {
-    private $uuid;
+    private string $uuid;
 
-    private $message;
+    private string $message;
 
     public function __construct(string $message)
     {
@@ -27,13 +27,6 @@ final class EchoTestCommand implements Command
     public function uuid(): string
     {
         return $this->uuid;
-    }
-
-    public function toArray(): array
-    {
-        return [
-            'message' => $this->message
-        ];
     }
 
     public function getMessage(): string

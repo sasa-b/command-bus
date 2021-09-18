@@ -14,13 +14,11 @@ use function Tests\uuid;
 
 final class TestCommand implements Command
 {
-    private $uuid;
+    private string $uuid;
 
-    private $dataType;
+    private mixed $data;
 
-    private $data;
-
-    public function __construct($data = null)
+    public function __construct(mixed $data = null)
     {
         $this->uuid = uuid();
         $this->data = $data;
@@ -31,21 +29,8 @@ final class TestCommand implements Command
         return $this->uuid;
     }
 
-    public function toArray(): array
-    {
-        return [
-            'data'      => $this->data,
-            'data_type' => $this->dataType
-        ];
-    }
-
     public function getData()
     {
         return $this->data;
-    }
-
-    public function getDataType(): string
-    {
-        return $this->dataType;
     }
 }

@@ -11,11 +11,13 @@ namespace SasaB\CommandBus\Response;
 
 class Item extends Response
 {
+    use CanDelegate;
+
     public function __construct(
-        private object|array $value
+        private object $value
     ) {}
 
-    public function getContent(): object|array
+    public function getContent(): object
     {
         return $this->value;
     }

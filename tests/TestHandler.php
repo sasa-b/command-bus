@@ -14,10 +14,6 @@ use SasaB\CommandBus\Handler;
 
 final class TestHandler implements Handler
 {
-    /**
-     * @param Command|TestCommand $command
-     * @return mixed
-     */
     public function handle(Command $command)
     {
         return $command->getData();

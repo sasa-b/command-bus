@@ -13,13 +13,10 @@ use SasaB\CommandBus\Handler;
 
 final class EchoTestHandler implements Handler
 {
-    /**
-     * @param Command|EchoTestCommand $command
-     */
     public function handle(Command $command)
     {
         echo $command->getMessage() . " Successfully Dispatched";
 
-        return 'echo';
+        return 0;
     }
 }

@@ -27,7 +27,7 @@ class CommandBusTest extends TestCase
         $this->bus = new Bus($this->container, []);
     }
 
-    public function testItCanDispatchCommand(): void
+    public function test_it_can_dispatch_command(): void
     {
         $this->expectOutputString(EchoTestCommand::class . " Successfully Dispatched");
 
@@ -36,7 +36,7 @@ class CommandBusTest extends TestCase
         );
     }
 
-    public function testCommandUuidAndResponseUuidAreSame(): void
+    public function test_command_uuid_and_response_uuid_are_same(): void
     {
         $response = $this->bus->dispatch(
             $command = new EchoTestCommand(message: EchoTestCommand::class)

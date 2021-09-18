@@ -20,6 +20,7 @@ use SasaB\CommandBus\Response\Text;
 use SasaB\CommandBus\Response\None;
 use SasaB\CommandBus\Tests\TestCommand;
 use SasaB\CommandBus\Tests\TestCase;
+use SasaB\CommandBus\Tests\TestItemObject;
 
 class ResponseTest extends TestCase
 {
@@ -32,7 +33,7 @@ class ResponseTest extends TestCase
         $this->bus = new Bus($this->container, []);
     }
 
-    public function testItCanReturnVoidResponse(): void
+    public function test_it_can_return_void_response(): void
     {
         $response = $this->bus->dispatch(
             new TestCommand()
@@ -41,7 +42,7 @@ class ResponseTest extends TestCase
         self::assertInstanceOf(None::class, $response);
     }
 
-    public function testItCanReturnIntegerResponse(): void
+    public function test_it_can_return_integer_response(): void
     {
         $response = $this->bus->dispatch(
             new TestCommand(data: 1)
@@ -50,7 +51,7 @@ class ResponseTest extends TestCase
         self::assertInstanceOf(Integer::class, $response);
     }
 
-    public function testItCanReturnDoubleResponse(): void
+    public function test_it_can_return_double_response(): void
     {
         $response = $this->bus->dispatch(
             new TestCommand(data: 2.0)
@@ -59,7 +60,7 @@ class ResponseTest extends TestCase
         self::assertInstanceOf(Double::class, $response);
     }
 
-    public function testItCanReturnStringResponse(): void
+    public function test_it_can_return_string_response(): void
     {
         $response = $this->bus->dispatch(
             new TestCommand(data: 'Hello World')
@@ -68,7 +69,7 @@ class ResponseTest extends TestCase
         self::assertInstanceOf(Text::class, $response);
     }
 
-    public function testItCanReturnBooleanResponse(): void
+    public function test_it_can_return_boolean_response(): void
     {
         $response = $this->bus->dispatch(
             new TestCommand(data: true)
@@ -77,7 +78,7 @@ class ResponseTest extends TestCase
         self::assertInstanceOf(Boolean::class, $response);
     }
 
-    public function testItCanReturnMapResponse(): void
+    public function test_it_can_return_map_response(): void
     {
         $response = $this->bus->dispatch(
             new TestCommand(data: ['foo' => 'bar'])
@@ -86,7 +87,7 @@ class ResponseTest extends TestCase
         self::assertInstanceOf(Map::class, $response);
     }
 
-    public function testItCanReturnItemResponse(): void
+    public function test_it_can_return_item_response(): void
     {
         $item = new \stdClass();
         $item->foo = 'bar';
@@ -98,12 +99,24 @@ class ResponseTest extends TestCase
         self::assertInstanceOf(Item::class, $response);
     }
 
-    public function testItCanReturnCollectionResponse(): void
+    public function test_it_can_return_collection_response(): void
     {
         $response = $this->bus->dispatch(
             new TestCommand(data: ['foo', 'bar'])
         );
 
         self::assertInstanceOf(Collection::class, $response);
+    }
+
+    public function test_item_response_can_delegate()
+    {
+        $item = new TestItemObject();
+
+        $response = $this->bus->dispatch(
+            new TestCommand(data: $item)
+        );
+
+        self::assertSame("Item can delegate", $response->message);
+        self::assertSame("Item can delegate", $response->getMessage());
     }
 }
