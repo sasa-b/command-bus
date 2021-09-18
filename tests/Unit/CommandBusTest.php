@@ -9,14 +9,14 @@
 namespace SasaB\CommandBus\Tests\Unit;
 
 
-use SasaB\CommandBus\CommandBus;
+use SasaB\CommandBus\Bus;
 use SasaB\CommandBus\Tests\EchoTestCommand;
 use SasaB\CommandBus\Tests\TestCase;
 
 class CommandBusTest extends TestCase
 {
     /**
-     * @var \SasaB\CommandBus\CommandBus
+     * @var \SasaB\CommandBus\Bus
      */
     private $bus;
 
@@ -24,7 +24,7 @@ class CommandBusTest extends TestCase
     {
         parent::setUp();
 
-        $this->bus = new CommandBus($this->container, []);
+        $this->bus = new Bus($this->container, []);
     }
 
     public function testItCanDispatchCommand(): void

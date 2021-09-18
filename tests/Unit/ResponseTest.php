@@ -9,7 +9,7 @@
 namespace SasaB\CommandBus\Tests\Unit;
 
 
-use SasaB\CommandBus\CommandBus;
+use SasaB\CommandBus\Bus;
 use SasaB\CommandBus\Response\Boolean;
 use SasaB\CommandBus\Response\Collection;
 use SasaB\CommandBus\Response\Double;
@@ -23,13 +23,13 @@ use SasaB\CommandBus\Tests\TestCase;
 
 class ResponseTest extends TestCase
 {
-    private CommandBus $bus;
+    private Bus $bus;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->bus = new CommandBus($this->container, []);
+        $this->bus = new Bus($this->container, []);
     }
 
     public function testItCanReturnVoidResponse(): void

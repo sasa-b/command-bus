@@ -22,10 +22,16 @@ use SasaB\CommandBus\Response\Boolean;
 use SasaB\CommandBus\Response\Collection;
 
 
-final class CommandBus implements Dispatcher
+class Bus implements Dispatcher
 {
     private \Closure $middlewares;
 
+    /**
+     * @param ContainerInterface $diContainer
+     * @param array $middleware
+     * @param Mapper|null $mapper
+     * @throws MiddlewareException
+     */
     public function __construct(
         private ContainerInterface $diContainer,
         private array $middleware = [],
@@ -79,6 +85,9 @@ final class CommandBus implements Dispatcher
         }
     }
 
+    /**
+     * @throws MiddlewareException
+     */
     private function createMiddlewareChain(array $chain): \Closure
     {
         $lastMiddleware = fn (Command $command) => $this->getHandlerFor($command)->handle($command);

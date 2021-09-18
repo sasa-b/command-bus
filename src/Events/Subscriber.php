@@ -9,11 +9,8 @@
 namespace SasaB\CommandBus\Events;
 
 
-use JetBrains\PhpStorm\ArrayShape;
-
 final class Subscriber
 {
-    #[ArrayShape([Event::class => 'array'])]
     private array $listeners = [
         CommandFailedEvent::class   => [],
         CommandHandledEvent::class  => [],

@@ -9,7 +9,7 @@
 namespace SasaB\CommandBus\Tests\Unit;
 
 
-use SasaB\CommandBus\CommandBus;
+use SasaB\CommandBus\Bus;
 use SasaB\CommandBus\Events\CommandHandledEvent;
 use SasaB\CommandBus\Events\CommandReceivedEvent;
 use SasaB\CommandBus\Events\Emitter;
@@ -41,7 +41,7 @@ class MiddlewareTest extends TestCase
 
         $eventMiddleware = new EventMiddleware($emitter);
 
-        $bus = new CommandBus($this->container, [$eventMiddleware]);
+        $bus = new Bus($this->container, [$eventMiddleware]);
 
         $bus->dispatch(new EchoTestCommand(message: 'EchoTestCommand'));
 
@@ -59,7 +59,7 @@ class MiddlewareTest extends TestCase
             function () { echo "|Rollback"; }
         );
 
-        $bus = new CommandBus($this->container, [$transactionMiddleware]);
+        $bus = new Bus($this->container, [$transactionMiddleware]);
 
         $bus->dispatch(new EchoTestCommand(message: 'EchoTestCommand'));
     }
