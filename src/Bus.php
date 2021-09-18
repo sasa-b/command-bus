@@ -9,6 +9,7 @@
 namespace SasaB\CommandBus;
 
 
+use Closure;
 use Psr\Container\ContainerInterface;
 
 use SasaB\CommandBus\Exceptions\MiddlewareException;
@@ -22,20 +23,20 @@ use SasaB\CommandBus\Response\Boolean;
 use SasaB\CommandBus\Response\Collection;
 
 
-class Bus implements Dispatcher
+final class Bus implements Dispatcher
 {
-    private \Closure $middlewares;
+    private Closure $middlewares;
 
     /**
-     * @param ContainerInterface $diContainer
+     * @param ContainerInterface $container
      * @param array $middleware
      * @param Mapper|null $mapper
      * @throws MiddlewareException
      */
     public function __construct(
-        private ContainerInterface $diContainer,
-        private array $middleware = [],
-        private ?Mapper $mapper = null
+        private ContainerInterface $container,
+        private array              $middleware = [],
+        private ?Mapper            $mapper = null
     )
     {
         $this->middlewares = $this->createMiddlewareChain($middleware);
@@ -44,7 +45,7 @@ class Bus implements Dispatcher
 
     private function getHandlerFor(Command $command): Handler
     {
-        return $this->diContainer->get(
+        return $this->container->get(
             $this->mapper->getHandlerName($command)
         );
     }
@@ -88,7 +89,7 @@ class Bus implements Dispatcher
     /**
      * @throws MiddlewareException
      */
-    private function createMiddlewareChain(array $chain): \Closure
+    private function createMiddlewareChain(array $chain): Closure
     {
         $lastMiddleware = fn (Command $command) => $this->getHandlerFor($command)->handle($command);
 

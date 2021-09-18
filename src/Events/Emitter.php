@@ -11,7 +11,9 @@ namespace SasaB\CommandBus\Events;
 
 final class Emitter
 {
-    public function __construct(private Subscriber $subscriber) {}
+    public function __construct(
+        private Subscriber $subscriber
+    ) {}
 
     public function emit(Event $event): void
     {

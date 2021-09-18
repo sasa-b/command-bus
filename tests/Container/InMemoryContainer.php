@@ -13,12 +13,7 @@ use Psr\Container\ContainerInterface;
 
 final class InMemoryContainer implements ContainerInterface
 {
-    private $services;
-
-    public function __construct(array $services)
-    {
-        $this->services = $services;
-    }
+    public function __construct(private array $services) {}
 
     public function get($id)
     {
