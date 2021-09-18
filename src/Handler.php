@@ -11,5 +11,5 @@ namespace SasaB\CommandBus;
 
 interface Handler
 {
-    public function handle(Command $command);
+    public function handle(AbstractCommand|Command $command);
 }
