@@ -9,9 +9,6 @@
 namespace SasaB\CommandBus;
 
 
-/**
- * @deprecated @method toArray(): array
- */
 interface Command
 {
     public function uuid(): string;
