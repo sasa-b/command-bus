@@ -33,4 +33,9 @@ final class EchoTestCommand implements Command
     {
         return $this->message;
     }
+
+    public function getData(): string
+    {
+        return $this->message;
+    }
 }

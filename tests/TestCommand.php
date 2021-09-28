@@ -29,7 +29,7 @@ final class TestCommand implements Command
         return $this->uuid;
     }
 
-    public function getData()
+    public function getData(): mixed
     {
         return $this->data;
     }

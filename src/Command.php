@@ -12,4 +12,6 @@ namespace SasaB\CommandBus;
 interface Command
 {
     public function uuid(): string;
+
+    public function getData(): mixed;
 }
