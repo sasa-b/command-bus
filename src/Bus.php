@@ -6,41 +6,37 @@
  * Time: 16:34
  */
 
-namespace SasaB\CommandBus;
+declare(strict_types=1);
 
+namespace SasaB\CommandBus;
 
 use Closure;
 use Psr\Container\ContainerInterface;
-
 use SasaB\CommandBus\Exceptions\MiddlewareException;
-use SasaB\CommandBus\Response\Map;
-use SasaB\CommandBus\Response\Item;
-use SasaB\CommandBus\Response\Text;
-use SasaB\CommandBus\Response\None;
-use SasaB\CommandBus\Response\Double;
-use SasaB\CommandBus\Response\Integer;
-use SasaB\CommandBus\Response\Boolean;
-use SasaB\CommandBus\Response\Collection;
-
+use SasaB\CommandBus\Response\TypeMapper;
 
 final class Bus implements Dispatcher
 {
-    private Closure $middlewares;
+    private Closure $chain;
+
+    private TypeMapper $typeMapper;
 
     /**
      * @param ContainerInterface $container
-     * @param array $middleware
+     * @param array<Middleware> $middlewares
      * @param Mapper|null $mapper
      * @throws MiddlewareException
      */
     public function __construct(
         private ContainerInterface $container,
-        private array              $middleware = [],
-        private ?Mapper            $mapper = null
-    )
-    {
-        $this->middlewares = $this->createMiddlewareChain($middleware);
+        array $middlewares = [],
+        private ?Mapper $mapper = null,
+        private ?Identity $identity = null
+    ) {
+        $this->chain = $this->createMiddlewareChain($middlewares);
         $this->mapper = $mapper ?? new MapByName();
+        $this->identity = $identity ?? new RandomStringIdentity();
+        $this->typeMapper = new TypeMapper();
     }
 
     private function getHandlerFor(Command $command): Handler
@@ -52,41 +48,17 @@ final class Bus implements Dispatcher
 
     public function dispatch(Command $command): Response
     {
-        $chain = $this->middlewares;
-
-        $response = $this->parseResponse(
-            $chain($command)
+        $command->setUuid(
+            $this->identity->generate()
         );
 
-        return $response->setUuid($command->uuid());
-    }
-
-    private function parseResponse(mixed $response): Response
-    {
-        switch ($response) {
-            case null:
-                return new None();
-            case is_int($response):
-                return new Integer(value: $response);
-            case is_float($response):
-                return new Double(value: $response);
-            case is_bool($response):
-                return new Boolean(value: $response);
-            case is_string($response):
-                return new Text(value: $response);
-            case is_array($response):
-                return $response && is_string(array_keys($response)[0])
-                    ? new Map(items: $response)
-                    : new Collection(items: $response);
-            case $response instanceof Response:
-                // do nothing, it's already a custom response object
-                return $response;
-            default:
-                return new Item(value: $response);
-        }
+        return $this->typeMapper->map(
+            ($this->chain)($command)
+        )->setUuid($command->uuid());
     }
 
     /**
+     * @param array<Middleware> $chain
      * @throws MiddlewareException
      */
     private function createMiddlewareChain(array $chain): Closure

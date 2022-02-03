@@ -6,8 +6,9 @@
  * Time: 13:25
  */
 
-namespace SasaB\CommandBus\Tests\Unit;
+declare(strict_types=1);
 
+namespace SasaB\CommandBus\Tests\Unit;
 
 use SasaB\CommandBus\Bus;
 use SasaB\CommandBus\Events\CommandHandledEvent;
@@ -44,7 +45,6 @@ class MiddlewareTest extends TestCase
         $bus = new Bus($this->container, [$eventMiddleware]);
 
         $bus->dispatch(new EchoTestCommand(message: 'EchoTestCommand'));
-
     }
 
     public function test_it_can_execute_in_transaction(): void
@@ -54,9 +54,15 @@ class MiddlewareTest extends TestCase
         );
 
         $transactionMiddleware = new TransactionMiddleware(
-            function () { echo "Begin|"; },
-            function () { echo "|Commit"; },
-            function () { echo "|Rollback"; }
+            function () {
+                echo "Begin|";
+            },
+            function () {
+                echo "|Commit";
+            },
+            function () {
+                echo "|Rollback";
+            }
         );
 
         $bus = new Bus($this->container, [$transactionMiddleware]);

@@ -6,8 +6,9 @@
  * Time: 23:31
  */
 
-namespace SasaB\CommandBus;
+declare(strict_types=1);
 
+namespace SasaB\CommandBus;
 
 interface Middleware
 {

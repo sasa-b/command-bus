@@ -6,17 +6,23 @@
  * Time: 16:36
  */
 
+declare(strict_types=1);
+
 namespace SasaB\CommandBus\Response;
 
+use SasaB\CommandBus\Response;
 
 final class Boolean extends Response
 {
-    public function __construct(
-        private bool $value
-    ) {}
+    use Concerns\CanIdentify;
 
-    public function getContent(): bool
+    public function __construct(
+        public readonly bool $content
+    ) {
+    }
+
+    public function content(): bool
     {
-        return $this->value;
+        return $this->content;
     }
 }

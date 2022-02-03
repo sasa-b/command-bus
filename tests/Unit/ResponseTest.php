@@ -6,20 +6,21 @@
  * Time: 11:18
  */
 
-namespace SasaB\CommandBus\Tests\Unit;
+declare(strict_types=1);
 
+namespace SasaB\CommandBus\Tests\Unit;
 
 use SasaB\CommandBus\Bus;
 use SasaB\CommandBus\Response\Boolean;
 use SasaB\CommandBus\Response\Collection;
+use SasaB\CommandBus\Response\Delegated;
 use SasaB\CommandBus\Response\Double;
 use SasaB\CommandBus\Response\Integer;
-use SasaB\CommandBus\Response\Item;
 use SasaB\CommandBus\Response\Map;
-use SasaB\CommandBus\Response\Text;
 use SasaB\CommandBus\Response\None;
-use SasaB\CommandBus\Tests\TestCommand;
+use SasaB\CommandBus\Response\Text;
 use SasaB\CommandBus\Tests\TestCase;
+use SasaB\CommandBus\Tests\TestCommand;
 use SasaB\CommandBus\Tests\TestItemObject;
 
 class ResponseTest extends TestCase
@@ -96,7 +97,7 @@ class ResponseTest extends TestCase
             new TestCommand(data: $item)
         );
 
-        self::assertInstanceOf(Item::class, $response);
+        self::assertInstanceOf(Delegated::class, $response);
     }
 
     public function test_it_can_return_collection_response(): void
@@ -108,7 +109,7 @@ class ResponseTest extends TestCase
         self::assertInstanceOf(Collection::class, $response);
     }
 
-    public function test_item_response_can_delegate()
+    public function test_item_response_can_delegate(): void
     {
         $item = new TestItemObject();
 

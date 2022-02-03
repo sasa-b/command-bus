@@ -6,8 +6,9 @@
  * Time: 11:00
  */
 
-namespace SasaB\CommandBus\Events;
+declare(strict_types=1);
 
+namespace SasaB\CommandBus\Events;
 
 interface Listener
 {

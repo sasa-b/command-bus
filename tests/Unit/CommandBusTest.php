@@ -6,8 +6,9 @@
  * Time: 21:11
  */
 
-namespace SasaB\CommandBus\Tests\Unit;
+declare(strict_types=1);
 
+namespace SasaB\CommandBus\Tests\Unit;
 
 use SasaB\CommandBus\Bus;
 use SasaB\CommandBus\Tests\EchoTestCommand;
@@ -15,10 +16,7 @@ use SasaB\CommandBus\Tests\TestCase;
 
 class CommandBusTest extends TestCase
 {
-    /**
-     * @var \SasaB\CommandBus\Bus
-     */
-    private $bus;
+    private Bus $bus;
 
     protected function setUp(): void
     {

@@ -6,13 +6,13 @@
  * Time: 11:57
  */
 
-namespace SasaB\CommandBus\Tests\Container;
+declare(strict_types=1);
 
+namespace SasaB\CommandBus\Tests\Container;
 
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
 final class ContainerException extends \Exception implements ContainerExceptionInterface, NotFoundExceptionInterface
 {
-
 }

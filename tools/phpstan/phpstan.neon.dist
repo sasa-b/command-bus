@@ -1,0 +1,9 @@
+includes:
+    - ../../vendor/phpstan/phpstan-phpunit/extension.neon
+
+parameters:
+    level: 8
+
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
+    inferPrivatePropertyTypeFromConstructor: true

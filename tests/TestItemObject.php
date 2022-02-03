@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace SasaB\CommandBus\Tests;
 
-
 class TestItemObject
 {
     public string $message = 'Item can delegate';

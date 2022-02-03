@@ -6,10 +6,10 @@
  * Time: 11:07
  */
 
+declare(strict_types=1);
+
 namespace SasaB\CommandBus\Tests;
 
-
-use SasaB\CommandBus\Bus;
 use SasaB\CommandBus\Tests\Container\InMemoryContainer;
 
 abstract class TestCase extends \PHPUnit\Framework\TestCase

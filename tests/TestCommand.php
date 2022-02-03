@@ -6,15 +6,17 @@
  * Time: 11:30
  */
 
+declare(strict_types=1);
+
 namespace SasaB\CommandBus\Tests;
 
-
 use SasaB\CommandBus\Command;
+use SasaB\CommandBus\Response\Concerns\CanIdentify;
 use function Tests\uuid;
 
 final class TestCommand implements Command
 {
-    private string $uuid;
+    use CanIdentify;
 
     private mixed $data;
 
@@ -29,7 +31,7 @@ final class TestCommand implements Command
         return $this->uuid;
     }
 
-    public function getData(): mixed
+    public function payload(): mixed
     {
         return $this->data;
     }

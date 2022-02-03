@@ -1,17 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sasa.blagojevic@mail.com
- * Date: 25/11/2020
- * Time: 15:20
- */
+
+declare(strict_types=1);
 
 namespace SasaB\CommandBus;
 
-
-interface Command
+interface Command extends HasIdentity
 {
-    public function uuid(): string;
-
-    public function getData(): mixed;
+    public function payload(): mixed;
 }

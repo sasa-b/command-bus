@@ -6,14 +6,17 @@
  * Time: 11:52
  */
 
-namespace SasaB\CommandBus\Tests\Container;
+declare(strict_types=1);
 
+namespace SasaB\CommandBus\Tests\Container;
 
 use Psr\Container\ContainerInterface;
 
 final class InMemoryContainer implements ContainerInterface
 {
-    public function __construct(private array $services) {}
+    public function __construct(private array $services)
+    {
+    }
 
     public function get($id)
     {

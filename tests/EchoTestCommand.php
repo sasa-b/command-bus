@@ -6,15 +6,17 @@
  * Time: 11:30
  */
 
+declare(strict_types=1);
+
 namespace SasaB\CommandBus\Tests;
 
-
 use SasaB\CommandBus\Command;
+use SasaB\CommandBus\Response\Concerns\CanIdentify;
 use function Tests\uuid;
 
 final class EchoTestCommand implements Command
 {
-    private string $uuid;
+    use CanIdentify;
 
     private string $message;
 
@@ -29,13 +31,12 @@ final class EchoTestCommand implements Command
         return $this->uuid;
     }
 
-    public function getMessage(): string
+    public function payload(): string
     {
         return $this->message;
     }
 
-    public function getData(): string
+    public function echo(): void
     {
-        return $this->message;
     }
 }

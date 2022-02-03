@@ -2,18 +2,19 @@
 /**
  * Created by PhpStorm.
  * User: sasa.blagojevic@mail.com
- * Date: 25/11/2020
- * Time: 15:38
+ * Date: 18. 12. 2020.
+ * Time: 12:51
  */
+
+declare(strict_types=1);
 
 namespace SasaB\CommandBus;
 
-
-interface Response
+abstract class Response implements HasIdentity
 {
-    public function uuid(): string;
-
-    public function setUuid(string $uuid): Response;
-
-    public function getContent();
+    public function content(): mixed
+    {
+        // Override or ignore and use read only properties
+        return null;
+    }
 }

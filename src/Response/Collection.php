@@ -6,21 +6,32 @@
  * Time: 16:36
  */
 
+declare(strict_types=1);
+
 namespace SasaB\CommandBus\Response;
 
+use SasaB\CommandBus\Response;
 
 class Collection extends Response implements \Countable, \IteratorAggregate, \ArrayAccess
 {
-    use Collection\CanCount;
-    use Collection\CanIterate;
-    use Collection\CanAccessAsArray;
+    use Concerns\CanCount;
+    use Concerns\CanIterate;
+    use Concerns\CanAccessAsArray;
+    use Concerns\CanIdentify;
 
     public function __construct(
-        private array $items = []
-    ) {}
+        /**
+         * @var array<int,mixed>
+         */
+        public readonly array $content
+    ) {
+    }
 
-    public function getContent(): array
+    /**
+     * @return array<int,mixed>
+     */
+    public function content(): array
     {
-        return $this->items;
+        return $this->content;
     }
 }

@@ -6,10 +6,23 @@
  * Time: 16:36
  */
 
+declare(strict_types=1);
+
 namespace SasaB\CommandBus\Response;
 
+use SasaB\CommandBus\Response;
 
 final class None extends Response
 {
-    public function getContent(): void {}
+    use Concerns\CanIdentify;
+
+    public function __construct(
+        public readonly mixed $content = null
+    ) {
+    }
+
+    public function content(): mixed
+    {
+        return null;
+    }
 }

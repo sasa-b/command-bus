@@ -6,8 +6,9 @@
  * Time: 08:59
  */
 
-namespace SasaB\CommandBus\Events;
+declare(strict_types=1);
 
+namespace SasaB\CommandBus\Events;
 
 final class Subscriber
 {
@@ -25,16 +26,16 @@ final class Subscriber
 
     public function removeListener(string $event, int $index = null): Subscriber
     {
-       if ($index === null) {
-           array_pop($this->listeners[$event]);
-           return $this;
-       }
+        if ($index === null) {
+            array_pop($this->listeners[$event]);
+            return $this;
+        }
 
-       unset($this->listeners[$event][$index]);
+        unset($this->listeners[$event][$index]);
 
-       $this->listeners[$event] = array_values($this->listeners[$event]);
+        $this->listeners[$event] = array_values($this->listeners[$event]);
 
-       return $this;
+        return $this;
     }
 
     public function getListeners(string $event): array

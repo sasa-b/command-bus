@@ -6,14 +6,16 @@
  * Time: 09:28
  */
 
-namespace SasaB\CommandBus\Events;
+declare(strict_types=1);
 
+namespace SasaB\CommandBus\Events;
 
 final class Emitter
 {
     public function __construct(
         private Subscriber $subscriber
-    ) {}
+    ) {
+    }
 
     public function emit(Event $event): void
     {

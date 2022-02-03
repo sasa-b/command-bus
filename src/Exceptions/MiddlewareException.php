@@ -6,16 +6,28 @@
  * Time: 14:17
  */
 
+declare(strict_types=1);
+
 namespace SasaB\CommandBus\Exceptions;
 
+use Throwable;
 
 class MiddlewareException extends Exception
 {
-    public static function invalid($middleware): MiddlewareException
+    final public static function invalid(mixed $middleware): MiddlewareException
     {
-        $name = is_object($middleware) ? get_class($middleware) : gettype($middleware);
-        return new static(
+        $name = get_debug_type($middleware);
+        return new self(
             "Invalid middleware '$name' in chain, it does not implement Middleware interface."
+        );
+    }
+
+    final public static function handler(string $handler, Throwable $error): MiddlewareException
+    {
+        return new self(
+            sprintf('Handler % error: %s', $handler, $error->getMessage()),
+            $error->getCode(),
+            $error
         );
     }
 }

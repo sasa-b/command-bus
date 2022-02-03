@@ -6,8 +6,9 @@
  * Time: 00:04
  */
 
-namespace SasaB\CommandBus\Response\Collection;
+declare(strict_types=1);
 
+namespace SasaB\CommandBus\Response\Concerns;
 
 use ArrayIterator;
 
@@ -15,6 +16,6 @@ trait CanIterate
 {
     public function getIterator(): \Traversable
     {
-        return new ArrayIterator($this->items);
+        return new ArrayIterator($this->content);
     }
 }

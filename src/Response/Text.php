@@ -6,17 +6,23 @@
  * Time: 19:03
  */
 
+declare(strict_types=1);
+
 namespace SasaB\CommandBus\Response;
 
+use SasaB\CommandBus\Response;
 
 final class Text extends Response
 {
-    public function __construct(
-       private string $value
-    ) {}
+    use Concerns\CanIdentify;
 
-    public function getContent(): string
+    public function __construct(
+        public readonly string $content
+    ) {
+    }
+
+    public function content(): string
     {
-        return $this->value;
+        return $this->content;
     }
 }

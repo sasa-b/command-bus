@@ -6,17 +6,23 @@
  * Time: 12:03
  */
 
+declare(strict_types=1);
+
 namespace SasaB\CommandBus\Response;
 
+use SasaB\CommandBus\Response;
 
 final class Double extends Response
 {
-    public function __construct(
-        private float $value
-    ) {}
+    use Concerns\CanIdentify;
 
-    public function getContent(): float
+    public function __construct(
+        public readonly float $content
+    ) {
+    }
+
+    public function content(): float
     {
-        return $this->value;
+        return $this->content;
     }
 }

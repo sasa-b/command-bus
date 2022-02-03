@@ -6,8 +6,9 @@
  * Time: 09:05
  */
 
-namespace SasaB\CommandBus\Events;
+declare(strict_types=1);
 
+namespace SasaB\CommandBus\Events;
 
 use SasaB\CommandBus\Command;
 

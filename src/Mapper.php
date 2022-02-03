@@ -6,8 +6,9 @@
  * Time: 11:16
  */
 
-namespace SasaB\CommandBus;
+declare(strict_types=1);
 
+namespace SasaB\CommandBus;
 
 interface Mapper
 {

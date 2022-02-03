@@ -6,9 +6,29 @@
  * Time: 00:47
  */
 
+declare(strict_types=1);
+
 namespace SasaB\CommandBus\Response;
 
-class Map extends Collection
-{
+use SasaB\CommandBus\Response;
 
+class Map extends Response implements \Countable, \IteratorAggregate, \ArrayAccess
+{
+    use Concerns\CanCount;
+    use Concerns\CanIterate;
+    use Concerns\CanAccessAsArray;
+    use Concerns\CanIdentify;
+
+    public function __construct(
+        /**
+         * @var array<string, mixed>
+         */
+        public readonly array $content
+    ) {
+    }
+
+    public function content(): array
+    {
+        return $this->content;
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: sasa.blagojevic@mail.com
@@ -6,10 +7,17 @@
  * Time: 16:08
  */
 
+declare(strict_types=1);
+
 namespace SasaB\CommandBus;
 
-
+/**
+ * @template T as Response
+ */
 interface Dispatcher
 {
+    /**
+     * @return T
+     */
     public function dispatch(Command $command): Response;
 }

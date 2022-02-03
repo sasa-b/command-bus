@@ -6,16 +6,25 @@
  * Time: 13:12
  */
 
-namespace SasaB\CommandBus\Tests;
+declare(strict_types=1);
 
+namespace SasaB\CommandBus\Tests;
 
 use SasaB\CommandBus\Command;
 use SasaB\CommandBus\Handler;
 
+/**
+ * @implements Handler<TestCommand>
+ */
 final class TestHandler implements Handler
 {
-    public function handle(Command $command)
+    /**
+     * @template T
+     * @param Command<T> $command
+     * @return mixed
+     */
+    public function handle(Command $command): mixed
     {
-        return $command->getData();
+        return $command->payload();
     }
 }

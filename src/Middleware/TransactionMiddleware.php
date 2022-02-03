@@ -8,10 +8,9 @@
 
 namespace SasaB\CommandBus\Middleware;
 
-
 use SasaB\CommandBus\Command;
+use SasaB\CommandBus\Exceptions\MiddlewareException;
 use SasaB\CommandBus\Middleware;
-use SasaB\CommandBus\Exceptions\Exception;
 
 final class TransactionMiddleware implements Middleware
 {
@@ -19,8 +18,12 @@ final class TransactionMiddleware implements Middleware
         private \Closure $begin,
         private \Closure $commit,
         private \Closure $rollback
-    ){}
+    ) {
+    }
 
+    /**
+     * @throws MiddlewareException
+     */
     public function handle(Command $command, \Closure $next)
     {
         call_user_func($this->begin);
@@ -28,7 +31,7 @@ final class TransactionMiddleware implements Middleware
             $result = $next($command);
         } catch (\Exception $e) {
             call_user_func($this->rollback);
-            throw new Exception($e->getMessage(), $e->getCode(), $e);
+            throw MiddlewareException::handler(handler: __CLASS__, error: $e);
         }
         call_user_func($this->commit);
         return $result;

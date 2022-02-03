@@ -6,10 +6,17 @@
  * Time: 15:24
  */
 
+declare(strict_types=1);
+
 namespace SasaB\CommandBus;
 
-
+/**
+ * @template TC of Command
+ */
 interface Handler
 {
-    public function handle(Command $command);
+    /**
+     * @param TC $command
+     */
+    public function handle(Command $command): mixed;
 }

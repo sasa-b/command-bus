@@ -1,3 +1,5 @@
 .idea
 .DS_Store
 vendor/
+tools/vendor
+.php-cs-fixer.cache

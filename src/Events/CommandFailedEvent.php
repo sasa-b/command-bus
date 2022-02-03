@@ -6,8 +6,9 @@
  * Time: 23:27
  */
 
-namespace SasaB\CommandBus\Events;
+declare(strict_types=1);
 
+namespace SasaB\CommandBus\Events;
 
 use SasaB\CommandBus\Command;
 
@@ -15,7 +16,8 @@ final class CommandFailedEvent implements Event
 {
     public function __construct(
         private Command $command
-    ) {}
+    ) {
+    }
 
     public function getName(): string
     {

@@ -6,14 +6,14 @@
  * Time: 00:04
  */
 
-namespace SasaB\CommandBus\Response\Collection;
+declare(strict_types=1);
 
-
+namespace SasaB\CommandBus\Response\Concerns;
 
 trait CanCount
 {
     public function count(): int
     {
-        return count($this->items);
+        return count($this->content);
     }
 }
