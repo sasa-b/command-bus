@@ -16,11 +16,6 @@ final class None extends Response
 {
     use Concerns\CanIdentify;
 
-    public function __construct(
-        public readonly mixed $content = null
-    ) {
-    }
-
     public function content(): mixed
     {
         return null;

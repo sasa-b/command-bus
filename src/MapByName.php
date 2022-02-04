@@ -15,8 +15,6 @@ use SasaB\CommandBus\Exceptions\HandlerNotFoundException;
 final class MapByName implements Mapper
 {
     /**
-     * @param Command $command
-     * @return string
      * @throws HandlerNotFoundException
      * @return class-string
      */
@@ -24,8 +22,12 @@ final class MapByName implements Mapper
     {
         $handler = preg_replace('/(Request|Command|Query)$/', 'Handler', $command::class);
 
-        if (!is_string($handler) || !class_exists($handler)) {
-            throw HandlerNotFoundException::for($command::class, $handler ?? '');
+        if (empty($handler)) {
+            throw HandlerNotFoundException::invalid($command::class);
+        }
+
+        if (!class_exists($handler)) {
+            throw HandlerNotFoundException::for($command::class, $handler);
         }
 
         return $handler;

@@ -12,7 +12,7 @@ final class TypeMapper
     {
         return match (true) {
             $response instanceof Response => $response,
-            is_null($response) => new None(content: null),
+            is_null($response) => new None(),
             is_int($response) => new Integer(content: $response),
             is_float($response) => new Double(content: $response),
             is_bool($response) => new Boolean(content: $response),

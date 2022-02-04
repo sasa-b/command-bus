@@ -12,5 +12,5 @@ namespace SasaB\CommandBus\Events;
 
 interface Listener
 {
-    public function __invoke(Event $event);
+    public function __invoke(Event $event): void;
 }

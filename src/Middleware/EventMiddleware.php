@@ -25,7 +25,7 @@ final class EventMiddleware implements Middleware
     ) {
     }
 
-    public function handle(Command $command, \Closure $next)
+    public function handle(Command $command, \Closure $next): mixed
     {
         $this->emitter->emit(new CommandReceivedEvent($command));
 

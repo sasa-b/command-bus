@@ -19,19 +19,24 @@ final class Bus implements Dispatcher
 {
     private Closure $chain;
 
+    private Mapper $mapper;
+
+    private Identity $identity;
+
     private TypeMapper $typeMapper;
 
     /**
      * @param ContainerInterface $container
-     * @param array<Middleware> $middlewares
+     * @param array $middlewares
      * @param Mapper|null $mapper
+     * @param Identity|null $identity
      * @throws MiddlewareException
      */
     public function __construct(
         private ContainerInterface $container,
         array $middlewares = [],
-        private ?Mapper $mapper = null,
-        private ?Identity $identity = null
+        ?Mapper $mapper = null,
+        ?Identity $identity = null
     ) {
         $this->chain = $this->createMiddlewareChain($middlewares);
         $this->mapper = $mapper ?? new MapByName();

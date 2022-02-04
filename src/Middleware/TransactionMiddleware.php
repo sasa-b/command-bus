@@ -24,7 +24,7 @@ final class TransactionMiddleware implements Middleware
     /**
      * @throws MiddlewareException
      */
-    public function handle(Command $command, \Closure $next)
+    public function handle(Command $command, \Closure $next): mixed
     {
         call_user_func($this->begin);
         try {

@@ -10,4 +10,9 @@ final class RandomStringIdentity implements Identity
     {
         return bin2hex(random_bytes(12));
     }
+
+    public function __toString()
+    {
+        return $this->generate();
+    }
 }

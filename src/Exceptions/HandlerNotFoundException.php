@@ -10,4 +10,9 @@ class HandlerNotFoundException extends Exception
     {
         return new self("Handler \"$handler\" for \"$command\" not found");
     }
+
+    public static function invalid(string $command): self
+    {
+        return new self("Invalid handler for $command no value provided");
+    }
 }
