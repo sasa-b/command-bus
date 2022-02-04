@@ -10,6 +10,9 @@ declare(strict_types=1);
 
 namespace SasaB\CommandBus;
 
+/**
+ * @template-covariant TR of Response
+ */
 abstract class Response implements HasIdentity
 {
     public function content(): mixed

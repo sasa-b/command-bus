@@ -14,17 +14,24 @@ use SasaB\CommandBus\Exceptions\ImmutableException;
 
 trait CanAccessAsArray
 {
+    /**
+     * @param int|string $offset
+     */
     public function offsetExists(mixed $offset): bool
     {
         return isset($this->content[$offset]);
     }
 
+    /**
+     * @param int|string $offset
+     */
     public function offsetGet(mixed $offset): mixed
     {
         return $this->content[$offset] ?? null;
     }
 
     /**
+     * @param int|string $offset
      * @throws ImmutableException
      */
     public function offsetSet(mixed $offset, mixed $value): void
@@ -33,6 +40,7 @@ trait CanAccessAsArray
     }
 
     /**
+     * @param int|string $offset
      * @throws ImmutableException
      */
     public function offsetUnset(mixed $offset): void

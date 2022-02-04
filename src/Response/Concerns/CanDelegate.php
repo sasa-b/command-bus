@@ -13,8 +13,8 @@ namespace SasaB\CommandBus\Response\Concerns;
 use SasaB\CommandBus\Exceptions\ImmutableException;
 
 /**
- * @template T
- * @mixin T
+ * @template TT
+ * @mixin TT
  */
 trait CanDelegate
 {
