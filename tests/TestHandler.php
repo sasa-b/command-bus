@@ -18,11 +18,6 @@ use SasaB\CommandBus\Handler;
  */
 final class TestHandler implements Handler
 {
-    /**
-     * @template T
-     * @param Command<T> $command
-     * @return mixed
-     */
     public function handle(Command $command): mixed
     {
         return $command->payload();

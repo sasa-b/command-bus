@@ -12,13 +12,9 @@ namespace SasaB\CommandBus\Response\Concerns;
 
 use SasaB\CommandBus\Exceptions\ImmutableException;
 
-/**
- * @template TT
- * @mixin TT
- */
 trait CanDelegate
 {
-    public function __get(string $name)
+    public function __get(string $name): mixed
     {
         return $this->content->{$name} ?? null;
     }
@@ -31,12 +27,12 @@ trait CanDelegate
     /**
      * @throws ImmutableException
      */
-    public function __set(string $property, mixed $value)
+    public function __set(string $property, mixed $value): void
     {
         throw ImmutableException::mutating(__CLASS__);
     }
 
-    public function __call(string $name, array $arguments)
+    public function __call(string $name, array $arguments): mixed
     {
         return $this->content->{$name}(...$arguments);
     }
