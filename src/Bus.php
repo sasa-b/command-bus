@@ -13,6 +13,8 @@ namespace SasaB\CommandBus;
 use Closure;
 use Psr\Container\ContainerInterface;
 use SasaB\CommandBus\Exceptions\MiddlewareException;
+use SasaB\CommandBus\Mapper\Mapper;
+use SasaB\CommandBus\Mapper\Strategy\MapByName;
 use SasaB\CommandBus\Response\TypeMapper;
 
 final class Bus implements Dispatcher
@@ -47,7 +49,7 @@ final class Bus implements Dispatcher
     private function getHandlerFor(Command $command): Handler
     {
         return $this->container->get(
-            $this->mapper->getHandlerName($command)
+            $this->mapper->getHandler($command)
         );
     }
 
@@ -75,7 +77,7 @@ final class Bus implements Dispatcher
                 throw MiddlewareException::invalid($middleware);
             }
 
-            $lastMiddleware = fn (Command $command) => $middleware->handle($command, $lastMiddleware);
+            $lastMiddleware = fn (Command $command) => ($middleware)($command, $lastMiddleware);
         }
 
         return $lastMiddleware;

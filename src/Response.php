@@ -17,7 +17,7 @@ abstract class Response implements HasIdentity
 {
     public function content(): mixed
     {
-        // Override or ignore and use read only properties
+        // Override or ignore and use public read only properties
         return null;
     }
 }

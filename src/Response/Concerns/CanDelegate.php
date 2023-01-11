@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace SasaB\CommandBus\Response\Concerns;
 
-use SasaB\CommandBus\Exceptions\ImmutableException;
+use SasaB\CommandBus\Exceptions\ImmutabilityException;
 
 trait CanDelegate
 {
@@ -25,11 +25,11 @@ trait CanDelegate
     }
 
     /**
-     * @throws ImmutableException
+     * @throws ImmutabilityException
      */
     public function __set(string $property, mixed $value): void
     {
-        throw ImmutableException::mutating(__CLASS__);
+        throw ImmutabilityException::mutating(__CLASS__);
     }
 
     public function __call(string $name, array $arguments): mixed

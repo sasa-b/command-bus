@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace SasaB\CommandBus\Tests;
+namespace SasaB\CommandBus\Tests\Stub;
 
 use SasaB\CommandBus\Command;
 use SasaB\CommandBus\Handler;

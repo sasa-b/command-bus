@@ -24,8 +24,7 @@ class Map extends Response implements \Countable, \IteratorAggregate, \ArrayAcce
          * @var array<string, mixed>
          */
         public readonly array $content
-    ) {
-    }
+    ) {}
 
     public function content(): array
     {

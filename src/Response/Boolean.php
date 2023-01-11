@@ -18,8 +18,7 @@ final class Boolean extends Response
 
     public function __construct(
         public readonly bool $content
-    ) {
-    }
+    ) {}
 
     public function content(): bool
     {

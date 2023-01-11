@@ -19,8 +19,7 @@ class Delegated extends Response
 
     public function __construct(
         public readonly object $content
-    ) {
-    }
+    ) {}
 
     public function content(): object
     {

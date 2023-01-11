@@ -24,8 +24,7 @@ class Collection extends Response implements \Countable, \IteratorAggregate, \Ar
          * @var array<int,mixed>
          */
         public readonly array $content
-    ) {
-    }
+    ) {}
 
     /**
      * @return array<int,mixed>

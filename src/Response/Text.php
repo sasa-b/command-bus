@@ -18,8 +18,7 @@ final class Text extends Response
 
     public function __construct(
         public readonly string $content
-    ) {
-    }
+    ) {}
 
     public function content(): string
     {

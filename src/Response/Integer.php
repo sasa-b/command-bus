@@ -18,8 +18,7 @@ final class Integer extends Response
 
     public function __construct(
         public readonly int $content
-    ) {
-    }
+    ) {}
 
     public function content(): int
     {

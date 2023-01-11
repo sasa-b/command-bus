@@ -17,7 +17,7 @@ use SasaB\CommandBus\Events\Emitter;
 use SasaB\CommandBus\Events\Subscriber;
 use SasaB\CommandBus\Middleware\EventMiddleware;
 use SasaB\CommandBus\Middleware\TransactionMiddleware;
-use SasaB\CommandBus\Tests\EchoTestCommand;
+use SasaB\CommandBus\Tests\Stub\EchoTestCommand;
 use SasaB\CommandBus\Tests\TestCase;
 
 class MiddlewareTest extends TestCase
@@ -42,9 +42,9 @@ class MiddlewareTest extends TestCase
 
         $eventMiddleware = new EventMiddleware($emitter);
 
-        $bus = new Bus($this->container, [$eventMiddleware]);
+        $fixture = new Bus($this->container, [$eventMiddleware]);
 
-        $bus->dispatch(new EchoTestCommand(message: 'EchoTestCommand'));
+        $fixture->dispatch(new EchoTestCommand(message: 'EchoTestCommand'));
     }
 
     public function test_it_can_execute_in_transaction(): void
@@ -65,8 +65,8 @@ class MiddlewareTest extends TestCase
             }
         );
 
-        $bus = new Bus($this->container, [$transactionMiddleware]);
+        $fixture = new Bus($this->container, [$transactionMiddleware]);
 
-        $bus->dispatch(new EchoTestCommand(message: 'EchoTestCommand'));
+        $fixture->dispatch(new EchoTestCommand(message: 'EchoTestCommand'));
     }
 }

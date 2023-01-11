@@ -9,12 +9,10 @@
 declare(strict_types=1);
 
 namespace Tests {
-
     use Ramsey\Uuid\Uuid;
 
     function uuid(): string
     {
         return Uuid::uuid4()->toString();
     }
-
 }

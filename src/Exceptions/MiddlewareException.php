@@ -18,14 +18,14 @@ class MiddlewareException extends Exception
     {
         $name = get_debug_type($middleware);
         return new self(
-            "Invalid middleware '$name' in chain, it does not implement Middleware interface."
+            \sprintf("Invalid middleware '%s' in chain, it does not implement Middleware interface.", $name)
         );
     }
 
     final public static function handler(string $handler, Throwable $error): MiddlewareException
     {
         return new self(
-            sprintf('Handler % error: %s', $handler, $error->getMessage()),
+            \sprintf('Handler % error: %s', $handler, $error->getMessage()),
             $error->getCode(),
             $error
         );

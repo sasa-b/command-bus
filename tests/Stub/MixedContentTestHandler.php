@@ -8,15 +8,15 @@
 
 declare(strict_types=1);
 
-namespace SasaB\CommandBus\Tests;
+namespace SasaB\CommandBus\Tests\Stub;
 
 use SasaB\CommandBus\Command;
 use SasaB\CommandBus\Handler;
 
 /**
- * @implements Handler<TestCommand>
+ * @implements Handler<MixedContentTestCommand>
  */
-final class TestHandler implements Handler
+final class MixedContentTestHandler implements Handler
 {
     public function handle(Command $command): mixed
     {

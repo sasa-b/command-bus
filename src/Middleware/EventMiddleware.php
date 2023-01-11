@@ -21,11 +21,10 @@ use SasaB\CommandBus\Middleware;
 final class EventMiddleware implements Middleware
 {
     public function __construct(
-        private Emitter $emitter
-    ) {
-    }
+        private readonly Emitter $emitter
+    ) {}
 
-    public function handle(Command $command, \Closure $next): mixed
+    public function __invoke(Command $command, \Closure $next): mixed
     {
         $this->emitter->emit(new CommandReceivedEvent($command));
 

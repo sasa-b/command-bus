@@ -16,8 +16,7 @@ final class CommandHandledEvent implements Event
 {
     public function __construct(
         private Command $command
-    ) {
-    }
+    ) {}
 
     public function getName(): string
     {

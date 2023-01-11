@@ -8,26 +8,28 @@
 
 declare(strict_types=1);
 
-namespace SasaB\CommandBus;
+namespace SasaB\CommandBus\Mapper\Strategy;
 
-use SasaB\CommandBus\Exceptions\HandlerNotFoundException;
+use SasaB\CommandBus\Command;
+use SasaB\CommandBus\Exceptions\HandlerException;
+use SasaB\CommandBus\Mapper\Mapper;
 
 final class MapByName implements Mapper
 {
     /**
-     * @throws HandlerNotFoundException
      * @return class-string
+     *@throws HandlerException
      */
-    public function getHandlerName(Command $command): string
+    public function getHandler(Command $command): string
     {
         $handler = preg_replace('/(Request|Command|Query)$/', 'Handler', $command::class);
 
         if (empty($handler)) {
-            throw HandlerNotFoundException::invalid($command::class);
+            throw HandlerException::invalid($command::class);
         }
 
         if (!class_exists($handler)) {
-            throw HandlerNotFoundException::for($command::class, $handler);
+            throw HandlerException::notFound($command::class, $handler);
         }
 
         return $handler;

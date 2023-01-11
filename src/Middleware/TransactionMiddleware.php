@@ -15,16 +15,15 @@ use SasaB\CommandBus\Middleware;
 final class TransactionMiddleware implements Middleware
 {
     public function __construct(
-        private \Closure $begin,
-        private \Closure $commit,
-        private \Closure $rollback
-    ) {
-    }
+        private readonly \Closure $begin,
+        private readonly \Closure $commit,
+        private readonly \Closure $rollback
+    ) {}
 
     /**
      * @throws MiddlewareException
      */
-    public function handle(Command $command, \Closure $next): mixed
+    public function __invoke(Command $command, \Closure $next): mixed
     {
         call_user_func($this->begin);
         try {

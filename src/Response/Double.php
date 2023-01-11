@@ -18,8 +18,7 @@ final class Double extends Response
 
     public function __construct(
         public readonly float $content
-    ) {
-    }
+    ) {}
 
     public function content(): float
     {

@@ -1,0 +1,12 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Access to an undefined property SasaB\\\\CommandBus\\\\Response\\\\Delegated\\:\\:\\$message\\.$#"
+			count: 1
+			path: tests/Unit/BusTest.php
+
+		-
+			message: "#^Call to an undefined method SasaB\\\\CommandBus\\\\Response\\\\Delegated\\:\\:getMessage\\(\\)\\.$#"
+			count: 1
+			path: tests/Unit/BusTest.php
+

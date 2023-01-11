@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace SasaB\CommandBus\Tests;
+namespace SasaB\CommandBus\Tests\Stub;
 
 class TestItemObject
 {

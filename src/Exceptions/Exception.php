@@ -10,6 +10,6 @@ declare(strict_types=1);
 
 namespace SasaB\CommandBus\Exceptions;
 
-class Exception extends \Exception
+abstract class Exception extends \RuntimeException
 {
 }
