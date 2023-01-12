@@ -13,6 +13,7 @@ namespace SasaB\CommandBus;
 use Closure;
 use Psr\Container\ContainerInterface;
 use SasaB\CommandBus\Exceptions\MiddlewareException;
+use SasaB\CommandBus\Identity\RandomString;
 use SasaB\CommandBus\Mapper\Mapper;
 use SasaB\CommandBus\Mapper\Strategy\MapByName;
 use SasaB\CommandBus\Response\TypeMapper;
@@ -21,28 +22,19 @@ final class Bus implements Dispatcher
 {
     private Closure $chain;
 
-    private Mapper $mapper;
-
-    private Identity $identity;
-
     private TypeMapper $typeMapper;
 
     /**
-     * @param ContainerInterface $container
-     * @param array $middlewares
-     * @param Mapper|null $mapper
-     * @param Identity|null $identity
+     * @param array<Middleware> $middlewares
      * @throws MiddlewareException
      */
     public function __construct(
-        private ContainerInterface $container,
+        private readonly ContainerInterface $container,
         array $middlewares = [],
-        ?Mapper $mapper = null,
-        ?Identity $identity = null
+        private readonly Mapper $mapper = new MapByName(),
+        private readonly Identity $identity = new RandomString()
     ) {
         $this->chain = $this->createMiddlewareChain($middlewares);
-        $this->mapper = $mapper ?? new MapByName();
-        $this->identity = $identity ?? new RandomStringIdentity();
         $this->typeMapper = new TypeMapper();
     }
 

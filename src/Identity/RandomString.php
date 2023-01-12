@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SasaB\CommandBus;
+namespace SasaB\CommandBus\Identity;
 
-final class RandomStringIdentity implements Identity
+use SasaB\CommandBus\Identity;
+
+final class RandomString implements Identity
 {
     public function generate(): string
     {

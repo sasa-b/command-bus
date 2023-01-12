@@ -15,7 +15,7 @@ use SasaB\CommandBus\Command;
 final class CommandFailedEvent implements Event
 {
     public function __construct(
-        private Command $command
+        private readonly Command $command
     ) {}
 
     public function getName(): string

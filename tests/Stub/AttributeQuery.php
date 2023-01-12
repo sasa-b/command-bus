@@ -9,7 +9,7 @@ use SasaB\CommandBus\Response\Concerns\CanIdentify;
 
 use function Tests\uuid;
 
-#[IsQuery(handledBy: AttributeHandler::class)]
+#[IsQuery(handler: AttributeHandler::class)]
 final class AttributeQuery
 {
     use CanIdentify;

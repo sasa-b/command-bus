@@ -30,7 +30,6 @@ final class MapByAttribute implements Mapper
 
         $attribute = $attribute->newInstance();
 
-
-        return $attribute->handledBy;
+        return $attribute->handler;
     }
 }

@@ -1,10 +1,12 @@
 {
     "name": "sasa-b/command-bus",
-    "description": "CommandBus pattern implementation",
+    "description": "Command Bus Pattern implementation library",
     "type": "library",
     "keywords": [
         "php",
-        "command-bus"
+        "command-bus",
+        "message-bus",
+        "cqrs"
     ],
     "version": "1.4.0",
     "license": "MIT",
@@ -43,6 +45,10 @@
         ],
         "phpstan": [
             "php -d memory_limit=4G vendor/bin/phpstan analyse src tests --configuration=tools/phpstan/phpstan.neon.dist"
+        ],
+        "cq": [
+            "@php-cs-fixer",
+            "@phpstan"
         ]
     }
 }

@@ -8,7 +8,7 @@ namespace SasaB\CommandBus\Attribute;
 class IsQuery
 {
     /**
-     * @param class-string $handledBy
+     * @param class-string $handler
      */
-    public function __construct(public readonly string $handledBy) {}
+    public function __construct(public readonly string $handler) {}
 }
