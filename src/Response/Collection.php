@@ -23,14 +23,14 @@ class Collection extends Response implements \Countable, \IteratorAggregate, \Ar
         /**
          * @var array<int,mixed>
          */
-        public readonly array $content
+        public readonly array $value
     ) {}
 
     /**
      * @return array<int,mixed>
      */
-    public function content(): array
+    public function value(): array
     {
-        return $this->content;
+        return $this->value;
     }
 }

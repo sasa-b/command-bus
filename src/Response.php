@@ -15,7 +15,16 @@ namespace SasaB\CommandBus;
  */
 abstract class Response implements HasIdentity
 {
+    /**
+     * @deprecated
+     */
     public function content(): mixed
+    {
+        // This method has been deprecated in favour of Response::value and will be removed
+        return null;
+    }
+
+    public function value(): mixed
     {
         // Override or ignore and use public read only properties
         return null;

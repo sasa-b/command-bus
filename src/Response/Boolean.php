@@ -17,11 +17,11 @@ final class Boolean extends Response
     use Concerns\CanIdentify;
 
     public function __construct(
-        public readonly bool $content
+        public readonly bool $value
     ) {}
 
-    public function content(): bool
+    public function value(): bool
     {
-        return $this->content;
+        return $this->value;
     }
 }

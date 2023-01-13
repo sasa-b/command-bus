@@ -11,10 +11,10 @@ declare(strict_types=1);
 namespace SasaB\CommandBus\Tests\Unit;
 
 use SasaB\CommandBus\Bus;
-use SasaB\CommandBus\Events\CommandHandledEvent;
-use SasaB\CommandBus\Events\CommandReceivedEvent;
-use SasaB\CommandBus\Events\Emitter;
-use SasaB\CommandBus\Events\Subscriber;
+use SasaB\CommandBus\Event\CommandHandledEvent;
+use SasaB\CommandBus\Event\CommandReceivedEvent;
+use SasaB\CommandBus\Event\Emitter;
+use SasaB\CommandBus\Event\Subscriber;
 use SasaB\CommandBus\Middleware\EventMiddleware;
 use SasaB\CommandBus\Middleware\TransactionMiddleware;
 use SasaB\CommandBus\Tests\Stub\EchoTestCommand;

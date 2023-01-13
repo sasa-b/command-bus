@@ -11,11 +11,11 @@ declare(strict_types=1);
 namespace SasaB\CommandBus\Middleware;
 
 use SasaB\CommandBus\Command;
-use SasaB\CommandBus\Events\CommandFailedEvent;
-use SasaB\CommandBus\Events\CommandHandledEvent;
-use SasaB\CommandBus\Events\CommandReceivedEvent;
-use SasaB\CommandBus\Events\Emitter;
-use SasaB\CommandBus\Exceptions\MiddlewareException;
+use SasaB\CommandBus\Event\CommandFailedEvent;
+use SasaB\CommandBus\Event\CommandHandledEvent;
+use SasaB\CommandBus\Event\CommandReceivedEvent;
+use SasaB\CommandBus\Event\Emitter;
+use SasaB\CommandBus\Exception\MiddlewareException;
 use SasaB\CommandBus\Middleware;
 
 final class EventMiddleware implements Middleware

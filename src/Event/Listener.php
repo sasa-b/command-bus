@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace SasaB\CommandBus\Events;
+namespace SasaB\CommandBus\Event;
 
 interface Listener
 {

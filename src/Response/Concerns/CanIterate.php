@@ -16,6 +16,6 @@ trait CanIterate
 {
     public function getIterator(): \Traversable
     {
-        return new ArrayIterator($this->content);
+        return new ArrayIterator($this->value);
     }
 }

@@ -13,14 +13,14 @@ final class TypeMapper
         return match (true) {
             $response instanceof Response => $response,
             is_null($response) => new None(),
-            is_int($response) => new Integer(content: $response),
-            is_float($response) => new Double(content: $response),
-            is_bool($response) => new Boolean(content: $response),
-            is_string($response) => new Text(content: $response),
-            is_array($response) && !empty($response) && array_is_list($response) => new Collection(content: $response),
-            is_array($response) && !empty($response) && !array_is_list($response) => new Map(content: $response),
-            is_array($response) && empty($response) => new Collection(content: $response),
-            default => new Delegated(content: $response),
+            is_int($response) => new Integer(value: $response),
+            is_float($response) => new Numeric(value: $response),
+            is_bool($response) => new Boolean(value: $response),
+            is_string($response) => new Text(value: $response),
+            is_array($response) && !empty($response) && array_is_list($response) => new Collection(value: $response),
+            is_array($response) && !empty($response) && !array_is_list($response) => new Map(value: $response),
+            is_array($response) && empty($response) => new Collection(value: $response),
+            default => new Delegated(value: $response),
         };
     }
 }

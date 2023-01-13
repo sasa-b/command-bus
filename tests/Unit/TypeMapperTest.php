@@ -29,15 +29,15 @@ class TypeMapperTest extends TestCase
 
     public function providesDataTypes(): iterable
     {
-        yield 'Integer' => [1, new Response\Integer(content: 1)];
-        yield 'Double' => [2.02, new Response\Double(content: 2.02)];
-        yield 'String' => ['xxx-xxx', new Response\Text(content: 'xxx-xxx')];
-        yield 'Object' => [$object = new \stdClass(), new Response\Delegated(content: $object)];
-        yield 'Map' => [$map = ['foo' => 'bar'], new Response\Map(content: $map)];
-        yield 'Empty Map' => [$map = [], new Response\Collection(content: $map)];
-        yield 'Collection' => [$collection = ['foo', 'bar'], new Response\Collection(content: $collection)];
-        yield 'Empty Collection' => [$collection = [], new Response\Collection(content: $collection)];
+        yield 'Integer' => [1, new Response\Integer(value: 1)];
+        yield 'Double' => [2.02, new Response\Numeric(value: 2.02)];
+        yield 'String' => ['xxx-xxx', new Response\Text(value: 'xxx-xxx')];
+        yield 'Object' => [$object = new \stdClass(), new Response\Delegated(value: $object)];
+        yield 'Map' => [$map = ['foo' => 'bar'], new Response\Map(value: $map)];
+        yield 'Empty Map' => [$map = [], new Response\Collection(value: $map)];
+        yield 'Collection' => [$collection = ['foo', 'bar'], new Response\Collection(value: $collection)];
+        yield 'Empty Collection' => [$collection = [], new Response\Collection(value: $collection)];
         yield 'Null' => [null, new Response\None()];
-        yield 'Boolean' => [true, new Response\Boolean(content: true)];
+        yield 'Boolean' => [true, new Response\Boolean(value: true)];
     }
 }

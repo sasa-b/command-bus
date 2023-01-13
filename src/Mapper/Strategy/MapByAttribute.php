@@ -7,7 +7,7 @@ namespace SasaB\CommandBus\Mapper\Strategy;
 use SasaB\CommandBus\Attribute\IsCommand;
 use SasaB\CommandBus\Attribute\IsQuery;
 use SasaB\CommandBus\Command;
-use SasaB\CommandBus\Exceptions\HandlerException;
+use SasaB\CommandBus\Exception\HandlerException;
 use SasaB\CommandBus\Mapper\Mapper;
 
 final class MapByAttribute implements Mapper

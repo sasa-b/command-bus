@@ -8,12 +8,12 @@
 
 declare(strict_types=1);
 
-namespace SasaB\CommandBus\Events;
+namespace SasaB\CommandBus\Event;
 
 final class Emitter
 {
     public function __construct(
-        private Subscriber $subscriber
+        private readonly Subscriber $subscriber
     ) {}
 
     public function emit(Event $event): void

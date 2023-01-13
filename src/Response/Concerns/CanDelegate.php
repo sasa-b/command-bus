@@ -10,18 +10,18 @@ declare(strict_types=1);
 
 namespace SasaB\CommandBus\Response\Concerns;
 
-use SasaB\CommandBus\Exceptions\ImmutabilityException;
+use SasaB\CommandBus\Exception\ImmutabilityException;
 
 trait CanDelegate
 {
     public function __get(string $name): mixed
     {
-        return $this->content->{$name} ?? null;
+        return $this->value->{$name} ?? null;
     }
 
     public function __isset(string $name): bool
     {
-        return isset($this->content->{$name});
+        return isset($this->value->{$name});
     }
 
     /**
@@ -34,6 +34,6 @@ trait CanDelegate
 
     public function __call(string $name, array $arguments): mixed
     {
-        return $this->content->{$name}(...$arguments);
+        return $this->value->{$name}(...$arguments);
     }
 }

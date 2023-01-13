@@ -17,11 +17,11 @@ final class Text extends Response
     use Concerns\CanIdentify;
 
     public function __construct(
-        public readonly string $content
+        public readonly string $value
     ) {}
 
-    public function content(): string
+    public function value(): string
     {
-        return $this->content;
+        return $this->value;
     }
 }

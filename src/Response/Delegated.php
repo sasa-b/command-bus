@@ -18,11 +18,11 @@ class Delegated extends Response
     use Concerns\CanIdentify;
 
     public function __construct(
-        public readonly object $content
+        public readonly object $value
     ) {}
 
-    public function content(): object
+    public function value(): object
     {
-        return $this->content;
+        return $this->value;
     }
 }

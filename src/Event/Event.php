@@ -8,12 +8,15 @@
 
 declare(strict_types=1);
 
-namespace SasaB\CommandBus\Events;
+namespace SasaB\CommandBus\Event;
 
 use SasaB\CommandBus\Command;
 
 interface Event
 {
+    /**
+     * @return class-string
+     */
     public function getName(): string;
 
     public function getCommand(): Command;

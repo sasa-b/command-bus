@@ -8,11 +8,11 @@
 
 declare(strict_types=1);
 
-namespace SasaB\CommandBus\Events;
+namespace SasaB\CommandBus\Event;
 
 use SasaB\CommandBus\Command;
 
-final class CommandFailedEvent implements Event
+final class CommandHandledEvent implements Event
 {
     public function __construct(
         private readonly Command $command

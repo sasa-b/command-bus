@@ -9,7 +9,7 @@
 namespace SasaB\CommandBus\Middleware;
 
 use SasaB\CommandBus\Command;
-use SasaB\CommandBus\Exceptions\MiddlewareException;
+use SasaB\CommandBus\Exception\MiddlewareException;
 use SasaB\CommandBus\Middleware;
 
 final class TransactionMiddleware implements Middleware

@@ -12,16 +12,16 @@ namespace SasaB\CommandBus\Response;
 
 use SasaB\CommandBus\Response;
 
-final class Double extends Response
+final class Numeric extends Response
 {
     use Concerns\CanIdentify;
 
     public function __construct(
-        public readonly float $content
+        public readonly float $value
     ) {}
 
-    public function content(): float
+    public function value(): float
     {
-        return $this->content;
+        return $this->value;
     }
 }

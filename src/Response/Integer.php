@@ -17,11 +17,11 @@ final class Integer extends Response
     use Concerns\CanIdentify;
 
     public function __construct(
-        public readonly int $content
+        public readonly int $value
     ) {}
 
-    public function content(): int
+    public function value(): int
     {
-        return $this->content;
+        return $this->value;
     }
 }

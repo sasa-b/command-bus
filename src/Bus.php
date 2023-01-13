@@ -12,7 +12,7 @@ namespace SasaB\CommandBus;
 
 use Closure;
 use Psr\Container\ContainerInterface;
-use SasaB\CommandBus\Exceptions\MiddlewareException;
+use SasaB\CommandBus\Exception\MiddlewareException;
 use SasaB\CommandBus\Identity\RandomString;
 use SasaB\CommandBus\Mapper\Mapper;
 use SasaB\CommandBus\Mapper\Strategy\MapByName;

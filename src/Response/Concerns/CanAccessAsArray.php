@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace SasaB\CommandBus\Response\Concerns;
 
-use SasaB\CommandBus\Exceptions\ImmutabilityException;
+use SasaB\CommandBus\Exception\ImmutabilityException;
 
 trait CanAccessAsArray
 {
@@ -19,7 +19,7 @@ trait CanAccessAsArray
      */
     public function offsetExists(mixed $offset): bool
     {
-        return isset($this->content[$offset]);
+        return isset($this->value[$offset]);
     }
 
     /**
@@ -28,7 +28,7 @@ trait CanAccessAsArray
      */
     public function offsetGet(mixed $offset): mixed
     {
-        return $this->content[$offset] ?? null;
+        return $this->value[$offset] ?? null;
     }
 
     /**

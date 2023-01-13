@@ -16,7 +16,10 @@ final class None extends Response
 {
     use Concerns\CanIdentify;
 
-    public function content(): mixed
+    /**
+     * @return null
+     */
+    public function value(): mixed
     {
         return null;
     }

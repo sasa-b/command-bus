@@ -6,7 +6,7 @@ namespace SasaB\CommandBus\Middleware\Enforce;
 
 use SasaB\CommandBus\Attribute\IsQuery;
 use SasaB\CommandBus\Command;
-use SasaB\CommandBus\Exceptions\InvalidResponse;
+use SasaB\CommandBus\Exception\InvalidResponse;
 use SasaB\CommandBus\Middleware;
 
 final class EmptyResponseMiddleware implements Middleware

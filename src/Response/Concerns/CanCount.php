@@ -14,6 +14,6 @@ trait CanCount
 {
     public function count(): int
     {
-        return count($this->content);
+        return count($this->value);
     }
 }
