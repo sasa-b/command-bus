@@ -11,12 +11,12 @@ use SasaB\CommandBus\Middleware;
 
 final class EmptyResponseMiddleware implements Middleware
 {
-    public function __invoke(Message $command, \Closure $next): mixed
+    public function __invoke(Message $message, \Closure $next): mixed
     {
-        $result = $next($command);
+        $result = $next($message);
 
-        if ($result !== null && $this->isNotQuery($command)) {
-            throw InvalidResponse::mutable($command::class);
+        if ($result !== null && $this->isNotQuery($message)) {
+            throw InvalidResponse::mutable($message::class);
         }
 
         return $result;

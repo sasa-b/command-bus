@@ -24,16 +24,16 @@ final class EventMiddleware implements Middleware
         private readonly Emitter $emitter
     ) {}
 
-    public function __invoke(Message $command, \Closure $next): mixed
+    public function __invoke(Message $message, \Closure $next): mixed
     {
-        $this->emitter->emit(new CommandReceivedEvent($command));
+        $this->emitter->emit(new CommandReceivedEvent($message));
 
         try {
-            $result = $next($command);
+            $result = $next($message);
 
-            $this->emitter->emit(new CommandHandledEvent($command));
+            $this->emitter->emit(new CommandHandledEvent($message));
         } catch (\Exception $e) {
-            $this->emitter->emit(new CommandFailedEvent($command));
+            $this->emitter->emit(new CommandFailedEvent($message));
             throw MiddlewareException::handler(handler: __CLASS__, error: $e);
         }
 

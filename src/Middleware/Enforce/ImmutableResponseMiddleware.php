@@ -13,9 +13,9 @@ final class ImmutableResponseMiddleware implements Middleware
     /**
      * @throws \ReflectionException
      */
-    public function __invoke(Message $command, \Closure $next): mixed
+    public function __invoke(Message $message, \Closure $next): mixed
     {
-        $result = $next($command);
+        $result = $next($message);
 
         $reflection = new \ReflectionClass($result);
 

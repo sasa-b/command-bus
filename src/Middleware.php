@@ -12,5 +12,5 @@ namespace SasaB\CommandBus;
 
 interface Middleware
 {
-    public function __invoke(Message $command, \Closure $next): mixed;
+    public function __invoke(Message $message, \Closure $next): mixed;
 }

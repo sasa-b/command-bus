@@ -23,11 +23,11 @@ final class TransactionMiddleware implements Middleware
     /**
      * @throws MiddlewareException
      */
-    public function __invoke(Message $command, \Closure $next): mixed
+    public function __invoke(Message $message, \Closure $next): mixed
     {
         $this->begin->call($this);
         try {
-            $result = $next($command);
+            $result = $next($message);
         } catch (\Exception $e) {
             $this->rollback->call($this);
             throw MiddlewareException::handler(handler: __CLASS__, error: $e);
