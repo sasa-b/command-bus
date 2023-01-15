@@ -15,7 +15,7 @@ use SasaB\CommandBus\Concern\CanIdentify;
 /**
  * @template-covariant TR of Response
  */
-abstract class Response implements Feedback
+abstract class Response implements HasIdentity, Payload
 {
     use CanIdentify;
 
@@ -24,11 +24,11 @@ abstract class Response implements Feedback
      */
     public function content(): mixed
     {
-        // This method has been deprecated in favour of Response::value and will be removed
+        // This method has been deprecated in favour of Response::payload and will be removed
         return null;
     }
 
-    public function value(): mixed
+    public function payload(): mixed
     {
         // Override or ignore and use public read only properties
         return null;
