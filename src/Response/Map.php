@@ -14,10 +14,9 @@ use SasaB\CommandBus\Response;
 
 class Map extends Response implements \Countable, \IteratorAggregate, \ArrayAccess
 {
-    use Concerns\CanCount;
-    use Concerns\CanIterate;
-    use Concerns\CanAccessAsArray;
-    use Concerns\CanIdentify;
+    use Concern\CanCount;
+    use Concern\CanIterate;
+    use Concern\CanAccessAsArray;
 
     public function __construct(
         /**

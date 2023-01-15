@@ -14,8 +14,7 @@ use SasaB\CommandBus\Response;
 
 class Delegated extends Response
 {
-    use Concerns\CanDelegate;
-    use Concerns\CanIdentify;
+    use Concern\CanDelegate;
 
     public function __construct(
         public readonly object $value

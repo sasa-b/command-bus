@@ -6,7 +6,7 @@ namespace SasaB\CommandBus\Tests\Stub;
 
 use SasaB\CommandBus\Attribute\IsQuery;
 use SasaB\CommandBus\Command;
-use SasaB\CommandBus\Response\Concerns\CanIdentify;
+use SasaB\CommandBus\Concern\CanIdentify;
 
 use function Tests\uuid;
 

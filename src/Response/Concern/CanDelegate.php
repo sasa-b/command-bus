@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace SasaB\CommandBus\Response\Concerns;
+namespace SasaB\CommandBus\Response\Concern;
 
 use SasaB\CommandBus\Exception\ImmutabilityException;
 

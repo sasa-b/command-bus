@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SasaB\CommandBus\Tests\Stub;
 
 use SasaB\CommandBus\Attribute\IsQuery;
-use SasaB\CommandBus\Response\Concerns\CanIdentify;
+use SasaB\CommandBus\Concern\CanIdentify;
 
 use function Tests\uuid;
 

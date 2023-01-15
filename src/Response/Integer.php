@@ -14,8 +14,6 @@ use SasaB\CommandBus\Response;
 
 final class Integer extends Response
 {
-    use Concerns\CanIdentify;
-
     public function __construct(
         public readonly int $value
     ) {}

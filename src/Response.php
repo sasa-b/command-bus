@@ -10,11 +10,15 @@ declare(strict_types=1);
 
 namespace SasaB\CommandBus;
 
+use SasaB\CommandBus\Concern\CanIdentify;
+
 /**
  * @template-covariant TR of Response
  */
 abstract class Response implements HasIdentity
 {
+    use CanIdentify;
+
     /**
      * @deprecated
      */

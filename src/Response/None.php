@@ -14,8 +14,6 @@ use SasaB\CommandBus\Response;
 
 final class None extends Response
 {
-    use Concerns\CanIdentify;
-
     /**
      * @return null
      */
