@@ -9,8 +9,8 @@ use SasaB\CommandBus\Message;
 
 final class AttributeHandler implements Handler
 {
-    public function __invoke(Message $command): mixed
+    public function __invoke(Message $message): mixed
     {
-        return $command->payload();
+        return $message->payload();
     }
 }

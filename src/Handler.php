@@ -11,12 +11,12 @@ declare(strict_types=1);
 namespace SasaB\CommandBus;
 
 /**
- * @template TC of Message
+ * @template TM of Message
  */
 interface Handler
 {
     /**
-     * @param TC $command
+     * @param TM $message
      */
-    public function __invoke(Message $command): mixed;
+    public function __invoke(Message $message): mixed;
 }

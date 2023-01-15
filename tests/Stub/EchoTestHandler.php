@@ -18,9 +18,9 @@ use SasaB\CommandBus\Message;
  */
 final class EchoTestHandler implements Handler
 {
-    public function __invoke(Message $command): int
+    public function __invoke(Message $message): int
     {
-        echo $command->payload() . " Successfully Dispatched";
+        echo $message->payload() . " Successfully Dispatched";
         return 0;
     }
 }
