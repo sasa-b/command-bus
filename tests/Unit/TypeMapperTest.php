@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SasaB\CommandBus\Tests\Unit;
+namespace SasaB\MessageBus\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use SasaB\CommandBus\Response;
-use SasaB\CommandBus\Response\TypeMapper;
+use SasaB\MessageBus\Response;
+use SasaB\MessageBus\Response\TypeMapper;
 
 class TypeMapperTest extends TestCase
 {

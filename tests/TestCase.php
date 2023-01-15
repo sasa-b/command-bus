@@ -8,18 +8,16 @@
 
 declare(strict_types=1);
 
-namespace SasaB\CommandBus\Tests;
+namespace SasaB\MessageBus\Tests;
 
-use SasaB\CommandBus\Tests\Stub\Container\InMemoryContainer;
-use SasaB\CommandBus\Tests\Stub\EchoTestHandler;
-use SasaB\CommandBus\Tests\Stub\MixedContentTestHandler;
+use Psr\Container\ContainerInterface;
+use SasaB\MessageBus\Tests\Stub\Container\InMemoryContainer;
+use SasaB\MessageBus\Tests\Stub\EchoTestHandler;
+use SasaB\MessageBus\Tests\Stub\MixedContentTestHandler;
 
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var \Psr\Container\ContainerInterface
-     */
-    protected $container;
+    protected ContainerInterface $container;
 
     protected function setUp(): void
     {
@@ -27,7 +25,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
         $this->container = new InMemoryContainer([
             EchoTestHandler::class => new EchoTestHandler(),
-            MixedContentTestHandler::class     => new MixedContentTestHandler()
+            MixedContentTestHandler::class => new MixedContentTestHandler()
         ]);
     }
 }

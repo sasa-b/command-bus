@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace SasaB\CommandBus\Response\Concern;
+namespace SasaB\MessageBus\Response\Concern;
 
 trait CanCount
 {

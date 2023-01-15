@@ -1,6 +1,6 @@
 {
     "name": "sasa-b/command-bus",
-    "description": "Command Bus Pattern implementation library",
+    "description": "Message Bus Pattern implementation library",
     "type": "library",
     "keywords": [
         "php",
@@ -19,12 +19,12 @@
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
-            "SasaB\\CommandBus\\": "src/"
+            "SasaB\\MessageBus\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "SasaB\\CommandBus\\Tests\\": "tests/"
+            "SasaB\\MessageBus\\Tests\\": "tests/"
         },
         "files": ["tests/functions.php"]
     },

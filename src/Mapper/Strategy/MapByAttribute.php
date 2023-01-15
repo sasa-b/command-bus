@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace SasaB\CommandBus\Mapper\Strategy;
+namespace SasaB\MessageBus\Mapper\Strategy;
 
-use SasaB\CommandBus\Attribute\IsCommand;
-use SasaB\CommandBus\Attribute\IsQuery;
-use SasaB\CommandBus\Exception\HandlerException;
-use SasaB\CommandBus\Mapper\Mapper;
-use SasaB\CommandBus\Message;
+use SasaB\MessageBus\Attribute\IsCommand;
+use SasaB\MessageBus\Attribute\IsQuery;
+use SasaB\MessageBus\Exception\HandlerException;
+use SasaB\MessageBus\Mapper\Mapper;
+use SasaB\MessageBus\Message;
 
 final class MapByAttribute implements Mapper
 {

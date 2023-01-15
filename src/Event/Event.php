@@ -8,9 +8,9 @@
 
 declare(strict_types=1);
 
-namespace SasaB\CommandBus\Event;
+namespace SasaB\MessageBus\Event;
 
-use SasaB\CommandBus\Message;
+use SasaB\MessageBus\Message;
 
 interface Event
 {

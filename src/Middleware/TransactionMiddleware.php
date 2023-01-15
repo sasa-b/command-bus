@@ -6,11 +6,11 @@
  * Time: 23:36
  */
 
-namespace SasaB\CommandBus\Middleware;
+namespace SasaB\MessageBus\Middleware;
 
-use SasaB\CommandBus\Exception\MiddlewareException;
-use SasaB\CommandBus\Message;
-use SasaB\CommandBus\Middleware;
+use SasaB\MessageBus\Exception\MiddlewareException;
+use SasaB\MessageBus\Message;
+use SasaB\MessageBus\Middleware;
 
 final class TransactionMiddleware implements Middleware
 {

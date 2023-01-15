@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SasaB\CommandBus\Exception;
+namespace SasaB\MessageBus\Exception;
 
-use SasaB\CommandBus\Event\Event;
+use SasaB\MessageBus\Event\Event;
 
 class EventException extends Exception
 {

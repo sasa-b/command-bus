@@ -8,9 +8,9 @@
 
 declare(strict_types=1);
 
-namespace SasaB\CommandBus\Response;
+namespace SasaB\MessageBus\Response;
 
-use SasaB\CommandBus\Response;
+use SasaB\MessageBus\Response;
 
 class Map extends Response implements \Countable, \IteratorAggregate, \ArrayAccess
 {

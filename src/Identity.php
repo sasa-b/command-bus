@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SasaB\CommandBus;
+namespace SasaB\MessageBus;
 
 interface Identity
 {

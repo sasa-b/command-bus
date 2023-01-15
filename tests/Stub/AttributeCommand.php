@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace SasaB\CommandBus\Tests\Stub;
+namespace SasaB\MessageBus\Tests\Stub;
 
-use SasaB\CommandBus\Attribute\IsQuery;
-use SasaB\CommandBus\Concern\CanIdentify;
-use SasaB\CommandBus\Message;
+use SasaB\MessageBus\Attribute\IsQuery;
+use SasaB\MessageBus\Concern\CanIdentify;
+use SasaB\MessageBus\Message;
 
 use function Tests\uuid;
 
 #[IsQuery(handler: AttributeHandler::class)]
-final class AttributeMessage implements Message
+final class AttributeCommand implements Message
 {
     use CanIdentify;
 

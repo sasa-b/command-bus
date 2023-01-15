@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SasaB\CommandBus\Middleware\Enforce;
+namespace SasaB\MessageBus\Middleware\Enforce;
 
-use SasaB\CommandBus\Exception\InvalidResponse;
-use SasaB\CommandBus\Message;
-use SasaB\CommandBus\Middleware;
+use SasaB\MessageBus\Exception\InvalidResponse;
+use SasaB\MessageBus\Message;
+use SasaB\MessageBus\Middleware;
 
 final class ImmutableResponseMiddleware implements Middleware
 {

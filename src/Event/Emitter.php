@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace SasaB\CommandBus\Event;
+namespace SasaB\MessageBus\Event;
 
 final class Emitter
 {

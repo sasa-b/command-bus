@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SasaB\CommandBus\Exception;
+namespace SasaB\MessageBus\Exception;
 
 final class ImmutabilityException extends Exception
 {

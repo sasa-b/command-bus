@@ -8,9 +8,9 @@
 
 declare(strict_types=1);
 
-namespace SasaB\CommandBus;
+namespace SasaB\MessageBus;
 
-use SasaB\CommandBus\Concern\CanIdentify;
+use SasaB\MessageBus\Concern\CanIdentify;
 
 /**
  * @template-covariant TR of Response

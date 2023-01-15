@@ -8,9 +8,9 @@
 
 declare(strict_types=1);
 
-namespace SasaB\CommandBus\Response\Concern;
+namespace SasaB\MessageBus\Response\Concern;
 
-use SasaB\CommandBus\Exception\ImmutabilityException;
+use SasaB\MessageBus\Exception\ImmutabilityException;
 
 trait CanAccessAsArray
 {

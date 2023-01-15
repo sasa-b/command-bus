@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SasaB\CommandBus\Tests\Stub;
+namespace SasaB\MessageBus\Tests\Stub;
 
-use SasaB\CommandBus\Handler;
-use SasaB\CommandBus\Message;
+use SasaB\MessageBus\Handler;
+use SasaB\MessageBus\Message;
 
 final class AttributeHandler implements Handler
 {

@@ -8,14 +8,14 @@
 
 declare(strict_types=1);
 
-namespace SasaB\CommandBus\Tests\Stub;
+namespace SasaB\MessageBus\Tests\Stub;
 
-use SasaB\CommandBus\Concern\CanIdentify;
-use SasaB\CommandBus\Message;
+use SasaB\MessageBus\Concern\CanIdentify;
+use SasaB\MessageBus\Message;
 
 use function Tests\uuid;
 
-final class EchoTestMessage implements Message
+final class EchoTestCommand implements Message
 {
     use CanIdentify;
 

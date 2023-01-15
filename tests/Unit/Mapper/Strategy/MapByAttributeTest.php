@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace SasaB\CommandBus\Tests\Unit\Mapper\Strategy;
+namespace SasaB\MessageBus\Tests\Unit\Mapper\Strategy;
 
-use SasaB\CommandBus\Mapper\Strategy\MapByAttribute;
-use SasaB\CommandBus\Message;
-use SasaB\CommandBus\Tests\Stub\AttributeHandler;
-use SasaB\CommandBus\Tests\Stub\AttributeMessage;
-use SasaB\CommandBus\Tests\TestCase;
+use SasaB\MessageBus\Mapper\Strategy\MapByAttribute;
+use SasaB\MessageBus\Message;
+use SasaB\MessageBus\Tests\Stub\AttributeCommand;
+use SasaB\MessageBus\Tests\Stub\AttributeHandler;
+use SasaB\MessageBus\Tests\TestCase;
 
 class MapByAttributeTest extends TestCase
 {
@@ -31,7 +31,7 @@ class MapByAttributeTest extends TestCase
 
     public function provideTestData(): iterable
     {
-        yield ['command' => new AttributeMessage()];
-        yield ['query' => new AttributeMessage()];
+        yield ['command' => new AttributeCommand()];
+        yield ['query' => new AttributeCommand()];
     }
 }

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SasaB\CommandBus\Tests\Stub;
+namespace SasaB\MessageBus\Tests\Stub;
 
-use SasaB\CommandBus\Attribute\IsQuery;
-use SasaB\CommandBus\Concern\CanIdentify;
+use SasaB\MessageBus\Attribute\IsQuery;
+use SasaB\MessageBus\Concern\CanIdentify;
 
 use function Tests\uuid;
 

@@ -8,13 +8,13 @@
 
 declare(strict_types=1);
 
-namespace SasaB\CommandBus\Tests\Stub\Container;
+namespace SasaB\MessageBus\Tests\Stub\Container;
 
 use Psr\Container\ContainerInterface;
 
 final class InMemoryContainer implements ContainerInterface
 {
-    public function __construct(private array $services) {}
+    public function __construct(private readonly array $services) {}
 
     public function get($id)
     {
