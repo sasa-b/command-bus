@@ -10,15 +10,15 @@ declare(strict_types=1);
 
 namespace SasaB\CommandBus\Tests\Stub;
 
-use SasaB\CommandBus\Command;
 use SasaB\CommandBus\Handler;
+use SasaB\CommandBus\Message;
 
 /**
- * @implements Handler<EchoTestCommand>
+ * @implements Handler<EchoTestMessage>
  */
 final class EchoTestHandler implements Handler
 {
-    public function handle(Command $command): int
+    public function __invoke(Message $command): int
     {
         echo $command->payload() . " Successfully Dispatched";
         return 0;

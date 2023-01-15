@@ -6,9 +6,9 @@ namespace SasaB\CommandBus\Mapper\Strategy;
 
 use SasaB\CommandBus\Attribute\IsCommand;
 use SasaB\CommandBus\Attribute\IsQuery;
-use SasaB\CommandBus\Command;
 use SasaB\CommandBus\Exception\HandlerException;
 use SasaB\CommandBus\Mapper\Mapper;
+use SasaB\CommandBus\Message;
 
 final class MapByAttribute implements Mapper
 {
@@ -16,7 +16,7 @@ final class MapByAttribute implements Mapper
      * @return class-string
      * @throws HandlerException
      */
-    public function getHandler(Command $command): string
+    public function getHandler(Message $command): string
     {
         $reflection = new \ReflectionClass($command);
 

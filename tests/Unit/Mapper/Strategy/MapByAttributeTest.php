@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace SasaB\CommandBus\Tests\Unit\Mapper\Strategy;
 
-use SasaB\CommandBus\Command;
 use SasaB\CommandBus\Mapper\Strategy\MapByAttribute;
-use SasaB\CommandBus\Tests\Stub\AttributeCommand;
+use SasaB\CommandBus\Message;
 use SasaB\CommandBus\Tests\Stub\AttributeHandler;
+use SasaB\CommandBus\Tests\Stub\AttributeMessage;
 use SasaB\CommandBus\Tests\TestCase;
 
 class MapByAttributeTest extends TestCase
@@ -24,14 +24,14 @@ class MapByAttributeTest extends TestCase
     /**
      * @dataProvider  provideTestData
      */
-    public function test_it_can_map_handler_by_attribute(Command $command): void
+    public function test_it_can_map_handler_by_attribute(Message $command): void
     {
         $this->assertSame(AttributeHandler::class, $this->fixture->getHandler($command));
     }
 
     public function provideTestData(): iterable
     {
-        yield ['command' => new AttributeCommand()];
-        yield ['query' => new AttributeCommand()];
+        yield ['command' => new AttributeMessage()];
+        yield ['query' => new AttributeMessage()];
     }
 }

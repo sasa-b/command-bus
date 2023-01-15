@@ -10,9 +10,9 @@ declare(strict_types=1);
 
 namespace SasaB\CommandBus\Mapper\Strategy;
 
-use SasaB\CommandBus\Command;
 use SasaB\CommandBus\Exception\HandlerException;
 use SasaB\CommandBus\Mapper\Mapper;
+use SasaB\CommandBus\Message;
 
 final class MapByName implements Mapper
 {
@@ -20,7 +20,7 @@ final class MapByName implements Mapper
      * @return class-string
      *@throws HandlerException
      */
-    public function getHandler(Command $command): string
+    public function getHandler(Message $command): string
     {
         $handler = preg_replace('/(Request|Command|Query)$/', 'Handler', $command::class);
 

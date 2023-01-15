@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace SasaB\CommandBus\Tests\Unit\Mapper\Strategy;
 
-use SasaB\CommandBus\Command;
 use SasaB\CommandBus\Mapper\Strategy\MapByName;
-use SasaB\CommandBus\Tests\Stub\EchoTestCommand;
+use SasaB\CommandBus\Message;
 use SasaB\CommandBus\Tests\Stub\EchoTestHandler;
-use SasaB\CommandBus\Tests\Stub\MixedContentTestCommand;
+use SasaB\CommandBus\Tests\Stub\EchoTestMessage;
 use SasaB\CommandBus\Tests\Stub\MixedContentTestHandler;
+use SasaB\CommandBus\Tests\Stub\MixedContentTestMessage;
 use SasaB\CommandBus\Tests\TestCase;
 
 class MapByNameTest extends TestCase
@@ -26,14 +26,14 @@ class MapByNameTest extends TestCase
     /**
      * @dataProvider  provideTestData
      */
-    public function test_it_can_map_handler_by_attribute(Command $command, string $expectedHandler): void
+    public function test_it_can_map_handler_by_attribute(Message $command, string $expectedHandler): void
     {
         $this->assertSame($expectedHandler, $this->fixture->getHandler($command));
     }
 
     public function provideTestData(): iterable
     {
-        yield [new EchoTestCommand(''), EchoTestHandler::class];
-        yield [new MixedContentTestCommand(), MixedContentTestHandler::class];
+        yield [new EchoTestMessage(''), EchoTestHandler::class];
+        yield [new MixedContentTestMessage(), MixedContentTestHandler::class];
     }
 }

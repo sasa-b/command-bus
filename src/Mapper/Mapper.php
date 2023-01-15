@@ -10,12 +10,12 @@ declare(strict_types=1);
 
 namespace SasaB\CommandBus\Mapper;
 
-use SasaB\CommandBus\Command;
+use SasaB\CommandBus\Message;
 
 interface Mapper
 {
     /**
      * @return class-string
      */
-    public function getHandler(Command $command): string;
+    public function getHandler(Message $command): string;
 }

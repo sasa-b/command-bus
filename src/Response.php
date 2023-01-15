@@ -15,7 +15,7 @@ use SasaB\CommandBus\Concern\CanIdentify;
 /**
  * @template-covariant TR of Response
  */
-abstract class Response implements HasIdentity
+abstract class Response implements Feedback
 {
     use CanIdentify;
 

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace SasaB\CommandBus\Middleware\Enforce;
 
-use SasaB\CommandBus\Command;
 use SasaB\CommandBus\Exception\InvalidResponse;
+use SasaB\CommandBus\Message;
 use SasaB\CommandBus\Middleware;
 
 final class ImmutableResponseMiddleware implements Middleware
@@ -13,7 +13,7 @@ final class ImmutableResponseMiddleware implements Middleware
     /**
      * @throws \ReflectionException
      */
-    public function __invoke(Command $command, \Closure $next): mixed
+    public function __invoke(Message $command, \Closure $next): mixed
     {
         $result = $next($command);
 

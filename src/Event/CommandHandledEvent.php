@@ -10,12 +10,12 @@ declare(strict_types=1);
 
 namespace SasaB\CommandBus\Event;
 
-use SasaB\CommandBus\Command;
+use SasaB\CommandBus\Message;
 
 final class CommandHandledEvent implements Event
 {
     public function __construct(
-        private readonly Command $command
+        private readonly Message $command
     ) {}
 
     public function getName(): string
@@ -23,7 +23,7 @@ final class CommandHandledEvent implements Event
         return self::class;
     }
 
-    public function getCommand(): Command
+    public function getCommand(): Message
     {
         return $this->command;
     }

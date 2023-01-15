@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace SasaB\CommandBus\Tests\Stub;
 
 use SasaB\CommandBus\Attribute\IsQuery;
-use SasaB\CommandBus\Command;
 use SasaB\CommandBus\Concern\CanIdentify;
+use SasaB\CommandBus\Message;
 
 use function Tests\uuid;
 
 #[IsQuery(handler: AttributeHandler::class)]
-final class AttributeCommand implements Command
+final class AttributeMessage implements Message
 {
     use CanIdentify;
 

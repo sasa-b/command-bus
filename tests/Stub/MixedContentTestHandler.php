@@ -10,15 +10,15 @@ declare(strict_types=1);
 
 namespace SasaB\CommandBus\Tests\Stub;
 
-use SasaB\CommandBus\Command;
 use SasaB\CommandBus\Handler;
+use SasaB\CommandBus\Message;
 
 /**
- * @implements Handler<MixedContentTestCommand>
+ * @implements Handler<MixedContentTestMessage>
  */
 final class MixedContentTestHandler implements Handler
 {
-    public function handle(Command $command): mixed
+    public function __invoke(Message $command): mixed
     {
         return $command->payload();
     }

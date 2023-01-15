@@ -6,7 +6,7 @@ namespace SasaB\CommandBus;
 
 use SasaB\CommandBus\Concern\CanIdentify;
 
-abstract class Command implements Message
+abstract class Query implements Message
 {
     use CanIdentify;
 }

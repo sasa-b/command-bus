@@ -19,8 +19,8 @@ use SasaB\CommandBus\Response\Map;
 use SasaB\CommandBus\Response\None;
 use SasaB\CommandBus\Response\Numeric;
 use SasaB\CommandBus\Response\Text;
-use SasaB\CommandBus\Tests\Stub\EchoTestCommand;
-use SasaB\CommandBus\Tests\Stub\MixedContentTestCommand;
+use SasaB\CommandBus\Tests\Stub\EchoTestMessage;
+use SasaB\CommandBus\Tests\Stub\MixedContentTestMessage;
 use SasaB\CommandBus\Tests\Stub\TestItemObject;
 use SasaB\CommandBus\Tests\TestCase;
 
@@ -37,17 +37,17 @@ class BusTest extends TestCase
 
     public function test_it_can_dispatch_command(): void
     {
-        $this->expectOutputString(EchoTestCommand::class . " Successfully Dispatched");
+        $this->expectOutputString(EchoTestMessage::class . " Successfully Dispatched");
 
         $this->fixture->dispatch(
-            new EchoTestCommand(EchoTestCommand::class)
+            new EchoTestMessage(EchoTestMessage::class)
         );
     }
 
     public function test_command_uuid_and_response_uuid_are_same(): void
     {
         $response = $this->fixture->dispatch(
-            $command = new EchoTestCommand(message: EchoTestCommand::class)
+            $command = new EchoTestMessage(message: EchoTestMessage::class)
         );
 
         self::assertSame($command->uuid(), $response->uuid());
@@ -56,7 +56,7 @@ class BusTest extends TestCase
     public function test_it_can_return_void_response(): void
     {
         $response = $this->fixture->dispatch(
-            new MixedContentTestCommand()
+            new MixedContentTestMessage()
         );
 
         self::assertInstanceOf(None::class, $response);
@@ -65,7 +65,7 @@ class BusTest extends TestCase
     public function test_it_can_return_integer_response(): void
     {
         $response = $this->fixture->dispatch(
-            new MixedContentTestCommand(data: 1)
+            new MixedContentTestMessage(data: 1)
         );
 
         self::assertInstanceOf(Integer::class, $response);
@@ -74,7 +74,7 @@ class BusTest extends TestCase
     public function test_it_can_return_double_response(): void
     {
         $response = $this->fixture->dispatch(
-            new MixedContentTestCommand(data: 2.0)
+            new MixedContentTestMessage(data: 2.0)
         );
 
         self::assertInstanceOf(Numeric::class, $response);
@@ -83,7 +83,7 @@ class BusTest extends TestCase
     public function test_it_can_return_string_response(): void
     {
         $response = $this->fixture->dispatch(
-            new MixedContentTestCommand(data: 'Hello World')
+            new MixedContentTestMessage(data: 'Hello World')
         );
 
         self::assertInstanceOf(Text::class, $response);
@@ -92,7 +92,7 @@ class BusTest extends TestCase
     public function test_it_can_return_boolean_response(): void
     {
         $response = $this->fixture->dispatch(
-            new MixedContentTestCommand(data: true)
+            new MixedContentTestMessage(data: true)
         );
 
         self::assertInstanceOf(Boolean::class, $response);
@@ -101,7 +101,7 @@ class BusTest extends TestCase
     public function test_it_can_return_map_response(): void
     {
         $response = $this->fixture->dispatch(
-            new MixedContentTestCommand(data: ['foo' => 'bar'])
+            new MixedContentTestMessage(data: ['foo' => 'bar'])
         );
 
         self::assertInstanceOf(Map::class, $response);
@@ -113,7 +113,7 @@ class BusTest extends TestCase
         $item->foo = 'bar';
 
         $response = $this->fixture->dispatch(
-            new MixedContentTestCommand(data: $item)
+            new MixedContentTestMessage(data: $item)
         );
 
         self::assertInstanceOf(Delegated::class, $response);
@@ -122,7 +122,7 @@ class BusTest extends TestCase
     public function test_it_can_return_collection_response(): void
     {
         $response = $this->fixture->dispatch(
-            new MixedContentTestCommand(data: ['foo', 'bar'])
+            new MixedContentTestMessage(data: ['foo', 'bar'])
         );
 
         self::assertInstanceOf(Collection::class, $response);
@@ -133,7 +133,7 @@ class BusTest extends TestCase
         $item = new TestItemObject();
 
         $response = $this->fixture->dispatch(
-            new MixedContentTestCommand(data: $item)
+            new MixedContentTestMessage(data: $item)
         );
 
         self::assertInstanceOf(Delegated::class, $response);

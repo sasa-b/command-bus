@@ -38,14 +38,14 @@ final class Bus implements Dispatcher
         $this->typeMapper = new TypeMapper();
     }
 
-    private function getHandlerFor(Command $command): Handler
+    private function getHandlerFor(Message $command): Handler
     {
         return $this->container->get(
             $this->mapper->getHandler($command)
         );
     }
 
-    public function dispatch(Command $command): Response
+    public function dispatch(Message $command): Response
     {
         $command->setUuid(
             $this->identity->generate()
@@ -62,14 +62,14 @@ final class Bus implements Dispatcher
      */
     private function createMiddlewareChain(array $chain): Closure
     {
-        $lastMiddleware = fn (Command $command) => $this->getHandlerFor($command)->handle($command);
+        $lastMiddleware = fn (Message $command) => $this->getHandlerFor($command)($command);
 
         while ($middleware = array_pop($chain)) {
             if (!$middleware instanceof Middleware) {
                 throw MiddlewareException::invalid($middleware);
             }
 
-            $lastMiddleware = fn (Command $command) => ($middleware)($command, $lastMiddleware);
+            $lastMiddleware = fn (Message $command) => ($middleware)($command, $lastMiddleware);
         }
 
         return $lastMiddleware;

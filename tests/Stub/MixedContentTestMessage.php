@@ -10,16 +10,16 @@ declare(strict_types=1);
 
 namespace SasaB\CommandBus\Tests\Stub;
 
-use SasaB\CommandBus\Command;
 use SasaB\CommandBus\Concern\CanIdentify;
+use SasaB\CommandBus\Message;
 
 use function Tests\uuid;
 
-final class EchoTestCommand implements Command
+final class MixedContentTestMessage implements Message
 {
     use CanIdentify;
 
-    public function __construct(public string $message)
+    public function __construct(public mixed $data = null)
     {
         $this->setUuid(uuid());
     }
@@ -29,8 +29,8 @@ final class EchoTestCommand implements Command
         return $this->uuid;
     }
 
-    public function payload(): string
+    public function payload(): mixed
     {
-        return $this->message;
+        return $this->data;
     }
 }

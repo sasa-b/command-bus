@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace SasaB\CommandBus\Event;
 
-use SasaB\CommandBus\Command;
+use SasaB\CommandBus\Message;
 
 interface Event
 {
@@ -19,5 +19,5 @@ interface Event
      */
     public function getName(): string;
 
-    public function getCommand(): Command;
+    public function getCommand(): Message;
 }
