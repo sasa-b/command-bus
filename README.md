@@ -280,7 +280,7 @@ services:
 ### Using with Laravel Framework
 To use it effectively with Laravel framework all you have to do is register the Bus in [Laravel's Service Container](https://laravel.com/docs/9.x/container) and provide the container as an argument to the library's Bus class:
 ```php
-$this->app->singleton(\SasaB\MessageBus\Bus::class, function ($app) {
+$this->app->bind(\SasaB\MessageBus\Bus::class, function ($app) {
     return new \SasaB\MessageBus\Bus($app);
 });
 ```
