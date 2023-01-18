@@ -40,9 +40,74 @@ some Middleware out of the box:
 * **EmptyResponseMiddleware** - throws an Exception if anything aside from null is returned in _Command_ responses to enforce the _Command-Query Segregation_
 * **ImmutableResponseMiddleware** - throws an Exception if you have properties without _readonly_ modifier defined on your response objects
 
+To create your own custom middleware you need to implement the `SasaB\MessageBus\Middleware` interface and provide it
+to the bus:
+
+```php
+use SasaB\MessageBus\Bus;
+use SasaB\MessageBus\Message;
+use SasaB\MessageBus\Middleware;
+
+class CustomMiddleware implements Middleware
+{
+    public function __invoke(Message $message,\Closure $next) : mixed
+    {
+        // Do something before message handling
+        
+        $result = $next($message);
+        
+        // Do something after message handling
+        
+        return $result;
+    }
+}
+
+$bus = new Bus(middlewares: [new CustomMiddleware()]);
+```
+
 ### Event
 If you add the `SasaB\MessageBus\Middleware\EventMiddleware` you will be able to subscribe to the following events:
-* 
+
+**MessageReceivedEvent** - raised when the message is received but before being handled.
+```php
+use SasaB\MessageBus\Event\Subscriber;
+use SasaB\MessageBus\Event\MessageReceivedEvent;
+
+$subscriber = new Subscriber();
+
+$subscriber->addListener(MessageReceivedEvent::class, function (MessageReceivedEvent $event) {
+  $event->getName(); // Name of the Event
+  $event->getMessage();; // Command or Query that has been received
+});
+```
+
+**MessageHandledEvent** - raised after the message has been handled successfully.
+```php
+use SasaB\MessageBus\Event\Subscriber;
+use SasaB\MessageBus\Event\MessageHandledEvent;
+
+$subscriber = new Subscriber();
+
+$subscriber->addListener(MessageHandledEvent::class, function (MessageHandledEvent $event) {
+    $event->getName(); // Name of the Event
+    $event->getMessage(); // Command or Query being handled
+    $event->getResponse(); // Response for the handled message
+});
+```
+
+**MessageFailedEvent** - raised when the message handling fails and an exception gets thrown.
+```php
+use SasaB\MessageBus\Event\Subscriber;
+use SasaB\MessageBus\Event\MessageFailedEvent;
+
+$subscriber = new Subscriber();
+
+$subscriber->addListener(MessageFailedEvent::class, function (MessageFailedEvent $event) {
+    $event->getName(); // Name of the Event
+    $event->getMessage(); // Command or Query being handled
+    $event->getError(); // Captured Exception
+});
+```
 
 ### Response Types
 
