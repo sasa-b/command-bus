@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace SasaB\MessageBus\Tests;
 
 use Psr\Container\ContainerInterface;
+use SasaB\MessageBus\Tests\Stub\AttributeTestHandler;
 use SasaB\MessageBus\Tests\Stub\Container\InMemoryContainer;
 use SasaB\MessageBus\Tests\Stub\EchoTestHandler;
 use SasaB\MessageBus\Tests\Stub\FailingTestHandler;
@@ -28,6 +29,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
             EchoTestHandler::class => new EchoTestHandler(),
             MixedContentTestHandler::class => new MixedContentTestHandler(),
             FailingTestHandler::class => new FailingTestHandler(),
+            AttributeTestHandler::class => new AttributeTestHandler(),
         ]);
     }
 }
