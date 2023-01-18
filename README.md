@@ -6,6 +6,19 @@ enforce no return values in Command Handlers to keep you in line with [CQRS patt
 This is a **stand-alone library**, the only two dependencies being the [PSR-11 Container](https://www.php-fig.org/psr/psr-11/) and [PSR-3 Log](https://www.php-fig.org/psr/psr-3/) interfaces to allow for better 
 interoperability.
 
+**Table of Contents:**
+* [Core Concepts](#core-concepts)
+  * [Identity](#identity)
+  * [Handler Mapping Strategy](#handler-mapping-strategy)
+  * [Middleware](#middleware)
+  * [Event](#event)
+  * [Transaction](#transaction)
+  * [Response Types](#response-types)
+* [Getting Started](#getting-started)
+  * [Stand-alone usage](#stand-alone-usage)
+  * [Using with Symfony Framework](#using-with-symfony-framework)
+  * [Using with Laravel Framework](#using-with-laravel-framework)
+
 ## Core Concepts
 
 ### Identity
@@ -109,14 +122,32 @@ $subscriber->addListener(MessageFailedEvent::class, function (MessageFailedEvent
 });
 ```
 
+### Transaction
+
 ### Response Types
+
+Library wraps the Handler return values into __Response value objects__ to provide a consistent API and so that you can
+depend on the return values always being of the same type.
+
+All Response value objects extend the `SasaB\MessageBus\Response` abstract class and can be divided into 3 groups:
+1. The ones which wrap primitive values:
+   * `SasaB\MessageBus\Response\Boolean`
+   * `SasaB\MessageBus\Response\Integer`
+   * `SasaB\MessageBus\Response\Numeric`
+   * `SasaB\MessageBus\Response\Text`
+   * `SasaB\MessageBus\Response\None` (wraps null values)
+2. `SasaB\MessageBus\Response\Delegated` which wraps objects and delegates calls to properties and methods to the underlying object
+3. `SasaB\MessageBus\Response\Collection` and `SasaB\MessageBus\Response\Map` which wrap number indexed arrays (lists) and string indexed arrays (maps) and implement `\Countable`, `\ArrayAccess` and `\IteratorAggregate` interfaces
 
 ## Getting Started
 
+### Stand-alone usage
+
 ### Using with Symfony Framework
 
-## Development
+### Using with Laravel Framework
 
+## Contribute
 
 ### Style Guide
 Library follows the [PSR-12 standard](https://www.php-fig.org/psr/psr-12/).
