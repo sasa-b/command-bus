@@ -143,6 +143,20 @@ All Response value objects extend the `SasaB\MessageBus\Response` abstract class
 
 ### Stand-alone usage
 
+You will need to follow the [PSR-4 autoloading standard](https://www.php-fig.org/psr/psr-4/) and either create your own Service Container class, which is a matter of implementing the `Psr\Container\ContainerInterface` and can be as simple as what
+the library is using for its test suite `SasaB\MessageBus\Tests\Stub\Container\InMemoryContainer`, or you can composer require a Service Container library which
+adheres to the [PSR-11 Standard](https://www.php-fig.org/psr/psr-11/) like [PHP-DI](https://php-di.org/).
+
+```php
+require 'vendor/autoload.php'
+
+$container = new InMemoryContainer($services)
+
+$bus = new \SasaB\MessageBus\Bus($container);
+
+$bus->dispatch(new FindPostByIdQuery(1))
+```
+
 ### Using with Symfony Framework
 
 We can use two approaches here, decorating the Bus class provided by the library, or injecting the Service Locator. For more 
@@ -250,6 +264,12 @@ services:
 ```
 
 ### Using with Laravel Framework
+To use it effectively with Laravel framework all you have to do is register the Bus in [Laravel's Service Container](https://laravel.com/docs/9.x/container) and provide the container as an argument to the library's Bus class:
+```php
+$this->app->singleton(\SasaB\MessageBus\Bus::class, function ($app) {
+    return new \SasaB\MessageBus\Bus($app);
+});
+```
 
 ## Contribute
 
