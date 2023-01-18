@@ -46,7 +46,7 @@ For example an `FindPostByIdQuery` will get mapped to `FindPostByIdHandler` or a
 3. **Custom** - if you want to create your own custom mapping strategy you can do so by implementing the `SasaB\MessageBus\Mapper` interface.
 
 ### Middleware
-Each command will be passed through a chain of Middlewares. By the default the chain is empty, but the library does offer 
+Each command will be passed through a chain of Middlewares. By default the chain is empty, but the library does offer 
 some Middleware out of the box:
 * **EventMiddleware** - raises events before and after handling a command or query, and on failure
 * **TransactionMiddleware** - runs individual _Commands_ or _Queries_ in a Transaction, `begin`, `commit` and `rollback` steps are plain `\Closure` objects, so you can use whichever ORM or Persistence approach you prefer. 
