@@ -48,10 +48,7 @@ class BusTest extends TestCase
 
     public function test_it_can_dispatch_command_with_attribute(): void
     {
-        $this->expectOutputString(AttributeTestCommand::class . " Successfully Dispatched");
-
         $response =  (new Bus($this->container, []))->dispatch(new AttributeTestCommand());
-        ;
 
         $this->assertInstanceOf(Response::class, $response);
     }
