@@ -112,7 +112,7 @@ class MiddlewareTest extends TestCase
     public function test_it_rollbacks_transaction_on_error(): void
     {
         $this->expectOutputString(
-            "Begin|Rollback"
+            "Begin|Rollback Command Fails"
         );
 
         $transactionMiddleware = new TransactionMiddleware(
@@ -122,8 +122,8 @@ class MiddlewareTest extends TestCase
             function () {
                 echo "|Commit";
             },
-            function () {
-                echo "Rollback";
+            function (\Throwable $throwable) {
+                echo "Rollback ".$throwable->getMessage();
             },
         );
 

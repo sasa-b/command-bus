@@ -29,7 +29,7 @@ final class TransactionMiddleware implements Middleware
         try {
             $result = $next($message);
         } catch (\Exception $e) {
-            $this->rollback->call($this);
+            $this->rollback->call($this, $e);
             throw MiddlewareException::handler(handler: __CLASS__, error: $e);
         }
         $this->commit->call($this);

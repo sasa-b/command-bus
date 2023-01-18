@@ -124,6 +124,18 @@ $subscriber->addListener(MessageFailedEvent::class, function (MessageFailedEvent
 
 ### Transaction
 
+Transaction Middleware accepts three function arguments, each for every stage of the transaction: begin, commit, and rollback. 
+Going with this approach allows you to use any ORM you prefer or even using the native \PDO object to interact with your persistence layer.
+```php
+$pdo = new \PDO('{connection_dsn}')
+
+$transaction = new \SasaB\MessageBus\Middleware\TransactionMiddleware(
+    fn(): void => $pdo->beginTransaction();,
+    fn(): void => $pdo->commit();,
+    fn(\Throwable $error): void => $pdo->rollBack();,
+);
+```
+
 ### Response Types
 
 Library wraps the Handler return values into __Response value objects__ to provide a consistent API and so that you can
@@ -138,6 +150,8 @@ All Response value objects extend the `SasaB\MessageBus\Response` abstract class
    * `SasaB\MessageBus\Response\None` (wraps null values)
 2. `SasaB\MessageBus\Response\Delegated` which wraps objects and delegates calls to properties and methods to the underlying object
 3. `SasaB\MessageBus\Response\Collection` and `SasaB\MessageBus\Response\Map` which wrap number indexed arrays (lists) and string indexed arrays (maps) and implement `\Countable`, `\ArrayAccess` and `\IteratorAggregate` interfaces
+
+You can also add your own custom Response value objects by extending the abstract class `SasaB\MessageBus\Response` and returning them in the appropriate handler.
 
 ## Getting Started
 
