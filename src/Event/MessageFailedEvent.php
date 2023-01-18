@@ -12,10 +12,11 @@ namespace SasaB\MessageBus\Event;
 
 use SasaB\MessageBus\Message;
 
-final class CommandHandledEvent implements Event
+final class MessageFailedEvent implements Event
 {
     public function __construct(
-        private readonly Message $command
+        private readonly Message $message,
+        private readonly \Throwable $error,
     ) {}
 
     public function getName(): string
@@ -23,8 +24,13 @@ final class CommandHandledEvent implements Event
         return self::class;
     }
 
-    public function getCommand(): Message
+    public function getMessage(): Message
     {
-        return $this->command;
+        return $this->message;
+    }
+
+    public function getError(): \Throwable
+    {
+        return $this->error;
     }
 }

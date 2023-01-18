@@ -15,7 +15,7 @@ use SasaB\MessageBus\Response;
 final class Boolean extends Response
 {
     public function __construct(
-        public readonly bool $value
+        public readonly bool $value,
     ) {}
 
     public function value(): bool

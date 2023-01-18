@@ -24,11 +24,6 @@ final class MixedContentTestCommand implements Message
         $this->setUuid(uuid());
     }
 
-    public function uuid(): string
-    {
-        return $this->uuid;
-    }
-
     public function payload(): mixed
     {
         return $this->data;

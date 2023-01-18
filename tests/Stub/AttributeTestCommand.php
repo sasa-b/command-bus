@@ -6,11 +6,12 @@ namespace SasaB\MessageBus\Tests\Stub;
 
 use SasaB\MessageBus\Attribute\IsQuery;
 use SasaB\MessageBus\Concern\CanIdentify;
+use SasaB\MessageBus\Message;
 
 use function Tests\uuid;
 
-#[IsQuery(handler: AttributeHandler::class)]
-final class AttributeQuery
+#[IsQuery(handler: AttributeTestHandler::class)]
+final class AttributeTestCommand implements Message
 {
     use CanIdentify;
 
@@ -21,6 +22,6 @@ final class AttributeQuery
 
     public function payload(): string
     {
-        return 'Query is mapped by attribute';
+        return 'Command is mapped by attribute';
     }
 }

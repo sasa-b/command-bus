@@ -26,9 +26,9 @@ class MapByNameTest extends TestCase
     /**
      * @dataProvider  provideTestData
      */
-    public function test_it_can_map_handler_by_attribute(Message $command, string $expectedHandler): void
+    public function test_it_can_map_handler_by_attribute(Message $message, string $expectedHandler): void
     {
-        $this->assertSame($expectedHandler, $this->fixture->getHandler($command));
+        $this->assertSame($expectedHandler, $this->fixture->getHandler($message));
     }
 
     public function provideTestData(): iterable

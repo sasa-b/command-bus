@@ -22,8 +22,8 @@ final class EmptyResponseMiddleware implements Middleware
         return $result;
     }
 
-    private function isNotQuery(Message $command): bool
+    private function isNotQuery(Message $message): bool
     {
-        return ((new \ReflectionClass($command))->getAttributes(IsQuery::class)[0] ?? null) === null;
+        return ((new \ReflectionClass($message))->getAttributes(IsQuery::class)[0] ?? null) === null;
     }
 }

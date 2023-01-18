@@ -15,9 +15,9 @@ use SasaB\MessageBus\Exception\EventException;
 final class Subscriber
 {
     private array $listeners = [
-        CommandReceivedEvent::class => [],
-        CommandHandledEvent::class  => [],
-        CommandFailedEvent::class   => [],
+        MessageReceivedEvent::class => [],
+        MessageHandledEvent::class  => [],
+        MessageFailedEvent::class   => [],
     ];
 
     /**

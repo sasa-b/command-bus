@@ -7,10 +7,13 @@ namespace SasaB\MessageBus\Tests\Stub;
 use SasaB\MessageBus\Handler;
 use SasaB\MessageBus\Message;
 
-final class AttributeHandler implements Handler
+/**
+ * @implements Handler<FailingTestCommand>
+ */
+final class FailingTestHandler implements Handler
 {
     public function __invoke(Message $message): mixed
     {
-        return $message->payload();
+        throw new \RuntimeException('Command Fails');
     }
 }

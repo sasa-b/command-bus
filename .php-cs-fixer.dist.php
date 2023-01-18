@@ -14,5 +14,6 @@ return $config->setRules([
     'no_unused_imports' => true,
     'yoda_style' => false,
     'php_unit_method_casing' => ['case' => 'snake_case'],
+    'trailing_comma_in_multiline' => ['elements' => ['arrays', 'match', 'parameters']],
     PhpCsFixerCustomFixers\Fixer\ConstructorEmptyBracesFixer::name() => true
 ])->setFinder($finder);

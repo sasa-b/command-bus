@@ -10,30 +10,32 @@ declare(strict_types=1);
 
 namespace SasaB\MessageBus\Middleware;
 
-use SasaB\MessageBus\Event\CommandFailedEvent;
-use SasaB\MessageBus\Event\CommandHandledEvent;
-use SasaB\MessageBus\Event\CommandReceivedEvent;
 use SasaB\MessageBus\Event\Emitter;
+use SasaB\MessageBus\Event\MessageFailedEvent;
+use SasaB\MessageBus\Event\MessageHandledEvent;
+use SasaB\MessageBus\Event\MessageReceivedEvent;
 use SasaB\MessageBus\Exception\MiddlewareException;
 use SasaB\MessageBus\Message;
 use SasaB\MessageBus\Middleware;
+use SasaB\MessageBus\Response\TypeMapper;
 
 final class EventMiddleware implements Middleware
 {
     public function __construct(
-        private readonly Emitter $emitter
+        private readonly Emitter $emitter,
+        private readonly TypeMapper $typeMapper,
     ) {}
 
     public function __invoke(Message $message, \Closure $next): mixed
     {
-        $this->emitter->emit(new CommandReceivedEvent($message));
+        $this->emitter->emit(new MessageReceivedEvent($message));
 
         try {
             $result = $next($message);
 
-            $this->emitter->emit(new CommandHandledEvent($message));
+            $this->emitter->emit(new MessageHandledEvent($message, $this->typeMapper->map($result)));
         } catch (\Exception $e) {
-            $this->emitter->emit(new CommandFailedEvent($message));
+            $this->emitter->emit(new MessageFailedEvent($message, $e));
             throw MiddlewareException::handler(handler: __CLASS__, error: $e);
         }
 

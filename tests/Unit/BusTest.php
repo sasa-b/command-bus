@@ -56,7 +56,7 @@ class BusTest extends TestCase
     public function test_it_can_return_void_response(): void
     {
         $response = $this->fixture->dispatch(
-            new MixedContentTestCommand()
+            new MixedContentTestCommand(),
         );
 
         self::assertInstanceOf(None::class, $response);
@@ -74,7 +74,7 @@ class BusTest extends TestCase
     public function test_it_can_return_double_response(): void
     {
         $response = $this->fixture->dispatch(
-            new MixedContentTestCommand(data: 2.0)
+            new MixedContentTestCommand(data: 2.0),
         );
 
         self::assertInstanceOf(Numeric::class, $response);
@@ -83,7 +83,7 @@ class BusTest extends TestCase
     public function test_it_can_return_string_response(): void
     {
         $response = $this->fixture->dispatch(
-            new MixedContentTestCommand(data: 'Hello World')
+            new MixedContentTestCommand(data: 'Hello World'),
         );
 
         self::assertInstanceOf(Text::class, $response);

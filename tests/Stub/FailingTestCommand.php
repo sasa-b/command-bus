@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sasa.blagojevic@mail.com
- * Date: 18. 12. 2020.
- * Time: 11:30
- */
 
 declare(strict_types=1);
 
@@ -15,7 +9,7 @@ use SasaB\MessageBus\Message;
 
 use function Tests\uuid;
 
-final class EchoTestCommand implements Message
+final class FailingTestCommand implements Message
 {
     use CanIdentify;
 

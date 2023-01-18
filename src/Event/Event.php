@@ -19,5 +19,5 @@ interface Event
      */
     public function getName(): string;
 
-    public function getCommand(): Message;
+    public function getMessage(): Message;
 }

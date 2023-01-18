@@ -17,7 +17,7 @@ final class TransactionMiddleware implements Middleware
     public function __construct(
         private readonly \Closure $begin,
         private readonly \Closure $commit,
-        private readonly \Closure $rollback
+        private readonly \Closure $rollback,
     ) {}
 
     /**

@@ -17,5 +17,5 @@ interface Mapper
     /**
      * @return class-string
      */
-    public function getHandler(Message $command): string;
+    public function getHandler(Message $message): string;
 }

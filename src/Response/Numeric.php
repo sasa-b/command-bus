@@ -15,7 +15,7 @@ use SasaB\MessageBus\Response;
 final class Numeric extends Response
 {
     public function __construct(
-        public readonly float $value
+        public readonly float $value,
     ) {}
 
     public function value(): float

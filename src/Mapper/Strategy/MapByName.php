@@ -20,16 +20,16 @@ final class MapByName implements Mapper
      * @return class-string
      *@throws HandlerException
      */
-    public function getHandler(Message $command): string
+    public function getHandler(Message $message): string
     {
-        $handler = preg_replace('/(Request|Command|Query)$/', 'Handler', $command::class);
+        $handler = preg_replace('/(Request|Command|Query)$/', 'Handler', $message::class);
 
         if (empty($handler)) {
-            throw HandlerException::invalid($command::class);
+            throw HandlerException::invalid($message::class);
         }
 
         if (!class_exists($handler)) {
-            throw HandlerException::notFound($command::class, $handler);
+            throw HandlerException::notFound($message::class, $handler);
         }
 
         return $handler;

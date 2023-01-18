@@ -32,28 +32,28 @@ final class Bus implements Dispatcher
         private readonly ContainerInterface $container,
         array $middlewares = [],
         private readonly Mapper $mapper = new MapByName(),
-        private readonly Identity $identity = new RandomString()
+        private readonly Identity $identity = new RandomString(),
     ) {
         $this->chain = $this->createMiddlewareChain($middlewares);
         $this->typeMapper = new TypeMapper();
     }
 
-    private function getHandlerFor(Message $command): Handler
+    private function getHandlerFor(Message $message): Handler
     {
         return $this->container->get(
-            $this->mapper->getHandler($command)
+            $this->mapper->getHandler($message),
         );
     }
 
-    public function dispatch(Message $command): Response
+    public function dispatch(Message $message): Response
     {
-        $command->setUuid(
-            $this->identity->generate()
+        $message->setUuid(
+            $this->identity->generate(),
         );
 
         return $this->typeMapper->map(
-            ($this->chain)($command)
-        )->setUuid($command->uuid());
+            ($this->chain)($message),
+        )->setUuid($message->uuid());
     }
 
     /**
@@ -62,14 +62,14 @@ final class Bus implements Dispatcher
      */
     private function createMiddlewareChain(array $chain): Closure
     {
-        $lastMiddleware = fn (Message $command) => $this->getHandlerFor($command)($command);
+        $lastMiddleware = fn (Message $message) => $this->getHandlerFor($message)($message);
 
         while ($middleware = array_pop($chain)) {
             if (!$middleware instanceof Middleware) {
                 throw MiddlewareException::invalid($middleware);
             }
 
-            $lastMiddleware = fn (Message $command) => ($middleware)($command, $lastMiddleware);
+            $lastMiddleware = fn (Message $message) => ($middleware)($message, $lastMiddleware);
         }
 
         return $lastMiddleware;

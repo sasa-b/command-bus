@@ -22,7 +22,7 @@ class Map extends Response implements \Countable, \IteratorAggregate, \ArrayAcce
         /**
          * @var array<string, mixed>
          */
-        public readonly array $value
+        public readonly array $value,
     ) {}
 
     public function value(): array

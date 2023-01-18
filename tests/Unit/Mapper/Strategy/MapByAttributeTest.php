@@ -6,8 +6,8 @@ namespace SasaB\MessageBus\Tests\Unit\Mapper\Strategy;
 
 use SasaB\MessageBus\Mapper\Strategy\MapByAttribute;
 use SasaB\MessageBus\Message;
-use SasaB\MessageBus\Tests\Stub\AttributeCommand;
-use SasaB\MessageBus\Tests\Stub\AttributeHandler;
+use SasaB\MessageBus\Tests\Stub\AttributeTestCommand;
+use SasaB\MessageBus\Tests\Stub\AttributeTestHandler;
 use SasaB\MessageBus\Tests\TestCase;
 
 class MapByAttributeTest extends TestCase
@@ -24,14 +24,14 @@ class MapByAttributeTest extends TestCase
     /**
      * @dataProvider  provideTestData
      */
-    public function test_it_can_map_handler_by_attribute(Message $command): void
+    public function test_it_can_map_handler_by_attribute(Message $message): void
     {
-        $this->assertSame(AttributeHandler::class, $this->fixture->getHandler($command));
+        $this->assertSame(AttributeTestHandler::class, $this->fixture->getHandler($message));
     }
 
     public function provideTestData(): iterable
     {
-        yield ['command' => new AttributeCommand()];
-        yield ['query' => new AttributeCommand()];
+        yield ['command' => new AttributeTestCommand()];
+        yield ['query' => new AttributeTestCommand()];
     }
 }

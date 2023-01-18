@@ -11,11 +11,13 @@ declare(strict_types=1);
 namespace SasaB\MessageBus\Event;
 
 use SasaB\MessageBus\Message;
+use SasaB\MessageBus\Response;
 
-final class CommandReceivedEvent implements Event
+final class MessageHandledEvent implements Event
 {
     public function __construct(
-        private readonly Message $command
+        private readonly Message  $message,
+        private readonly Response $response,
     ) {}
 
     public function getName(): string
@@ -23,8 +25,13 @@ final class CommandReceivedEvent implements Event
         return self::class;
     }
 
-    public function getCommand(): Message
+    public function getMessage(): Message
     {
-        return $this->command;
+        return $this->message;
+    }
+
+    public function getResponse(): Response
+    {
+        return $this->response;
     }
 }

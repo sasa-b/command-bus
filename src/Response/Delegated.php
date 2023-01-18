@@ -17,7 +17,7 @@ class Delegated extends Response
     use Concern\CanDelegate;
 
     public function __construct(
-        public readonly object $value
+        public readonly object $value,
     ) {}
 
     public function value(): object

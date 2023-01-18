@@ -13,6 +13,7 @@ namespace SasaB\MessageBus\Tests;
 use Psr\Container\ContainerInterface;
 use SasaB\MessageBus\Tests\Stub\Container\InMemoryContainer;
 use SasaB\MessageBus\Tests\Stub\EchoTestHandler;
+use SasaB\MessageBus\Tests\Stub\FailingTestHandler;
 use SasaB\MessageBus\Tests\Stub\MixedContentTestHandler;
 
 abstract class TestCase extends \PHPUnit\Framework\TestCase
@@ -25,7 +26,8 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
         $this->container = new InMemoryContainer([
             EchoTestHandler::class => new EchoTestHandler(),
-            MixedContentTestHandler::class => new MixedContentTestHandler()
+            MixedContentTestHandler::class => new MixedContentTestHandler(),
+            FailingTestHandler::class => new FailingTestHandler(),
         ]);
     }
 }

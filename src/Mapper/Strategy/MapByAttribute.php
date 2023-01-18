@@ -16,16 +16,16 @@ final class MapByAttribute implements Mapper
      * @return class-string
      * @throws HandlerException
      */
-    public function getHandler(Message $command): string
+    public function getHandler(Message $message): string
     {
-        $reflection = new \ReflectionClass($command);
+        $reflection = new \ReflectionClass($message);
 
         $attribute = $reflection->getAttributes(IsCommand::class)[0]
             ?? $reflection->getAttributes(IsQuery::class)[0]
             ?? null;
 
         if ($attribute === null) {
-            throw HandlerException::invalid($command::class);
+            throw HandlerException::invalid($message::class);
         }
 
         $attribute = $attribute->newInstance();

@@ -15,7 +15,7 @@ use SasaB\MessageBus\Response;
 final class Text extends Response
 {
     public function __construct(
-        public readonly string $value
+        public readonly string $value,
     ) {}
 
     public function value(): string
