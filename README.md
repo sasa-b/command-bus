@@ -145,6 +145,110 @@ All Response value objects extend the `SasaB\MessageBus\Response` abstract class
 
 ### Using with Symfony Framework
 
+We can use two approaches here, decorating the Bus class provided by the library, or injecting the Service Locator. For more 
+info you can read [Symfony Docs](https://symfony.com/doc/current/service_container/service_subscribers_locators.html)
+
+#### Decorating the Bus
+We can create a new Decorator class which will implement Symfony's `Symfony\Contracts\Service\ServiceSubscriberInterface` interface:
+```php
+use SasaB\MessageBus\Bus;
+use SasaB\MessageBus\Message;
+use SasaB\MessageBus\Response;
+use Psr\Container\ContainerInterface;
+use Symfony\Contracts\Service\ServiceSubscriberInterface;
+
+class MessageBus implements ServiceSubscriberInterface
+{
+    private Bus $bus;
+
+    public function __construct(ContainerInterface $locator)
+    {
+        $this->bus = new Bus($locator, [], null, new UuidV4Identity());
+    }
+
+    public function dispatch(\SasaB\MessageBus\Message $message): Response
+    {
+        return $this->bus->dispatch($message);
+    }
+
+    public static function getSubscribedServices(): array
+    {
+        return [
+            FindPostByIdHandler::class,
+            SavePostHandler::class
+        ];
+    }
+}
+```
+With this approach all handlers in you application will have to be added to the array returned by `getSubscribedServices`, since services in Symfony are not 
+public by default, and they really shouldn't be, so unless you add your handlers to this array when the mapper is done mapping 
+it won't be able to find the handler and a service not found container exception will be thrown. 
+
+#### Injecting the ServiceLocator
+
+A different approach would be to inject a Service Locator with all the handlers into the library's Bus. This would be done in the 
+service registration yaml files:
+```yaml
+services:
+    _defaults:
+      autowire: true      
+      autoconfigure: true 
+
+    # Anonymous Service Locator
+    SasaB\MessageBus\Bus:
+      arguments:
+        $container: !service_locator
+                      - '@FindPostByIdHandler'
+                      - '@SavePostHandler'
+```
+Or you could explicitly define a Service Locator as a service:
+```yaml
+services:
+    _defaults:
+      autowire: true      
+      autoconfigure: true 
+
+    # Explicit Service Locator
+    message_handler_service_locator:
+      class: Symfony\Component\DependencyInjection\ServiceLocator
+      arguments:
+        $factories:
+          - '@FindPostByIdHandler'
+          - '@SavePostHandler' 
+
+    SasaB\MessageBus\Bus:
+      arguments:
+        $container: '@message_handler_service_locator'
+```
+We can also expand on these configurations to utilise the auto-wiring feature and not to have to add handlers manually to the yaml file:
+```yaml
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    
+  _instanceof: 
+    SasaB\MessageBus\Handler:
+      tags: ['message_handler']
+
+  # Anonymous Service Locator
+  SasaB\MessageBus\Bus:
+    arguments:
+      $container: !service_locator
+        - !tagged_iterator message_handler
+
+  # Or the Explicit Service Locator
+  message_handler_service_locator:
+    class: Symfony\Component\DependencyInjection\ServiceLocator
+    arguments:
+      $factories:
+        - !tagged_iterator message_handler
+
+  SasaB\MessageBus\Bus:
+    arguments:
+      $container: '@message_handler_service_locator'
+```
+
 ### Using with Laravel Framework
 
 ## Contribute
