@@ -130,9 +130,9 @@ Going with this approach allows you to use any ORM you prefer or even using the 
 $pdo = new \PDO('{connection_dsn}')
 
 $transaction = new \SasaB\MessageBus\Middleware\TransactionMiddleware(
-    fn(): void => $pdo->beginTransaction();,
-    fn(): void => $pdo->commit();,
-    fn(\Throwable $error): void => $pdo->rollBack();,
+    fn(): bool => $pdo->beginTransaction(),
+    fn(): bool => $pdo->commit(),
+    fn(\Throwable $error): bool => $pdo->rollBack(),
 );
 ```
 
