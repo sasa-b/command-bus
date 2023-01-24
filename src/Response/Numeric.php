@@ -18,7 +18,7 @@ final class Numeric extends Response
         public readonly float $value,
     ) {}
 
-    public function value(): float
+    public function payload(): float
     {
         return $this->value;
     }

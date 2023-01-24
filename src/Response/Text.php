@@ -18,7 +18,7 @@ final class Text extends Response
         public readonly string $value,
     ) {}
 
-    public function value(): string
+    public function payload(): string
     {
         return $this->value;
     }

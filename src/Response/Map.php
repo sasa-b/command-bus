@@ -25,7 +25,7 @@ class Map extends Response implements \Countable, \IteratorAggregate, \ArrayAcce
         public readonly array $value,
     ) {}
 
-    public function value(): array
+    public function payload(): array
     {
         return $this->value;
     }

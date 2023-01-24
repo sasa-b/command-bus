@@ -17,7 +17,7 @@ final class None extends Response
     /**
      * @return null
      */
-    public function value(): mixed
+    public function payload(): mixed
     {
         return null;
     }

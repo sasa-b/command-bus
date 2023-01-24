@@ -20,7 +20,7 @@ class Delegated extends Response
         public readonly object $value,
     ) {}
 
-    public function value(): object
+    public function payload(): object
     {
         return $this->value;
     }

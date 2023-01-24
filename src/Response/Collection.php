@@ -28,7 +28,7 @@ class Collection extends Response implements \Countable, \IteratorAggregate, \Ar
     /**
      * @return array<int,mixed>
      */
-    public function value(): array
+    public function payload(): array
     {
         return $this->value;
     }

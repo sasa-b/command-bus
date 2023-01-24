@@ -18,7 +18,7 @@ final class Boolean extends Response
         public readonly bool $value,
     ) {}
 
-    public function value(): bool
+    public function payload(): bool
     {
         return $this->value;
     }

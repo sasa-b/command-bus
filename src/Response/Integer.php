@@ -18,7 +18,7 @@ final class Integer extends Response
         public readonly int $value,
     ) {}
 
-    public function value(): int
+    public function payload(): int
     {
         return $this->value;
     }

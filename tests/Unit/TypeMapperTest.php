@@ -25,6 +25,7 @@ class TypeMapperTest extends TestCase
     public function test_it_can_map_type_to_response(mixed $data, Response $response): void
     {
         $this->assertEquals($this->typeMapper->map($data), $response);
+        $this->assertSame($data, $response->payload());
     }
 
     public function providesDataTypes(): iterable
