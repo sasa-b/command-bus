@@ -17,7 +17,7 @@ final class AttributeTestCommand implements Message
 
     public function __construct()
     {
-        $this->setUuid(uuid());
+        $this->setId(uuid());
     }
 
     public function payload(): string

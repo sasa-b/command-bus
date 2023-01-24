@@ -8,14 +8,14 @@ trait CanIdentify
 {
     protected string $uuid;
 
-    public function uuid(): string
+    public function id(): string
     {
         return $this->uuid;
     }
 
-    public function setUuid(string $uuid): static
+    public function setId(string $id): static
     {
-        $this->uuid = $uuid;
+        $this->uuid = $id;
         return $this;
     }
 }

@@ -47,13 +47,13 @@ final class Bus implements Dispatcher
 
     public function dispatch(Message $message): Response
     {
-        $message->setUuid(
+        $message->setId(
             $this->identity->generate(),
         );
 
         return $this->typeMapper->map(
             ($this->chain)($message),
-        )->setUuid($message->uuid());
+        )->setId($message->id());
     }
 
     /**

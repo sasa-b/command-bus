@@ -15,7 +15,7 @@ final class FailingTestCommand implements Message
 
     public function __construct(public string $message)
     {
-        $this->setUuid(uuid());
+        $this->setId(uuid());
     }
 
     public function payload(): string

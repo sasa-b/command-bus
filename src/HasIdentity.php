@@ -6,7 +6,7 @@ namespace SasaB\MessageBus;
 
 interface HasIdentity
 {
-    public function uuid(): string;
+    public function id(): string;
 
-    public function setUuid(string $uuid): static;
+    public function setId(string $id): static;
 }

@@ -59,7 +59,7 @@ class BusTest extends TestCase
             $command = new EchoTestCommand(message: EchoTestCommand::class)
         );
 
-        $this->assertSame($command->uuid(), $response->uuid());
+        $this->assertSame($command->id(), $response->id());
     }
 
     public function test_it_can_return_void_response(): void

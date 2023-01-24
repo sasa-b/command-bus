@@ -21,7 +21,7 @@ final class MixedContentTestCommand implements Message
 
     public function __construct(public mixed $data = null)
     {
-        $this->setUuid(uuid());
+        $this->setId(uuid());
     }
 
     public function payload(): mixed

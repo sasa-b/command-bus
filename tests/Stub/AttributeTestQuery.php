@@ -16,7 +16,7 @@ final class AttributeTestQuery
 
     public function __construct()
     {
-        $this->setUuid(uuid());
+        $this->setId(uuid());
     }
 
     public function payload(): string
