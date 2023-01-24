@@ -6,16 +6,16 @@ namespace SasaB\MessageBus\Concern;
 
 trait CanIdentify
 {
-    protected string $uuid;
+    protected string $id;
 
     public function id(): string
     {
-        return $this->uuid;
+        return $this->id;
     }
 
     public function setId(string $id): static
     {
-        $this->uuid = $id;
+        $this->id = $id;
         return $this;
     }
 }
