@@ -215,9 +215,9 @@ it won't be able to find the handler and a service not found container exception
 #### Injecting the ServiceLocator
 
 A different approach would be to inject a Service Locator with all the handlers into the library's Bus. This would be done in the 
-service registration yaml files. We can do this two ways:
+service registration yaml files.
 
-Anonymous service way
+Anonymous service locator:
 ```yaml
 services:
     _defaults:
@@ -228,11 +228,11 @@ services:
     SasaB\MessageBus\Bus:
       arguments:
         $container: !service_locator
-                      - '@FindPostByIdHandler'
-                      - '@SavePostHandler'
+                        '@FindPostByIdHandler': 'handler_one'
+                        '@SavePostHandler': 'handler_two'
 ```
 
-Explicit service definition way
+Explicit service locator definition:
 ```yaml
 services:
     _defaults:
@@ -243,7 +243,6 @@ services:
     message_handler_service_locator:
       class: Symfony\Component\DependencyInjection\ServiceLocator
       arguments:
-        $factories:
           - '@FindPostByIdHandler'
           - '@SavePostHandler' 
 
@@ -254,7 +253,7 @@ services:
 
 Let's expand these configurations and use the tags feature of Symfony's service container to automatically add handlers to the Bus:
 
-Anonymous service way
+Using `!tagged_locator`:
 ```yaml
 services:
   _defaults:
@@ -268,11 +267,10 @@ services:
   # Anonymous Service Locator
   SasaB\MessageBus\Bus:
     arguments:
-      $container: !service_locator
-        - !tagged_iterator message_handler
+      $container: !tagged_locator message_handler
 ```
 
-Explicit service definition way
+Explicit service locator definition:
 ```yaml
 services:
   _defaults:
@@ -287,8 +285,7 @@ services:
   message_handler_service_locator:
     class: Symfony\Component\DependencyInjection\ServiceLocator
     arguments:
-      $factories:
-        - !tagged_iterator message_handler
+      - !tagged_iterator message_handler
 
   SasaB\MessageBus\Bus:
     arguments:
