@@ -9,7 +9,7 @@ use SasaB\MessageBus\Exception\InvalidResponse;
 use SasaB\MessageBus\Message;
 use SasaB\MessageBus\Middleware;
 
-final class EmptyResponseMiddleware implements Middleware
+final class EmptyCommandResponseMiddleware implements Middleware
 {
     public function __invoke(Message $message, \Closure $next): mixed
     {

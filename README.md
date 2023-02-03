@@ -50,7 +50,7 @@ Each command will be passed through a chain of Middlewares. By default the chain
 some Middleware out of the box:
 * **EventMiddleware** - raises events before and after handling a command or query, and on failure
 * **TransactionMiddleware** - runs individual _Commands_ or _Queries_ in a Transaction, `begin`, `commit` and `rollback` steps are plain `\Closure` objects, so you can use whichever ORM or Persistence approach you prefer. 
-* **EmptyResponseMiddleware** - throws an Exception if anything aside from null is returned in _Command_ responses to enforce the _Command-Query Segregation_
+* **EmptyCommandResponseMiddleware** - throws an Exception if anything aside from null is returned in _Command_ responses to enforce the _Command-Query Segregation_
 * **ImmutableResponseMiddleware** - throws an Exception if you have properties without _readonly_ modifier defined on your response objects
 
 To create your own custom middleware you need to implement the `SasaB\MessageBus\Middleware` interface and provide it
