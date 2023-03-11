@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace SasaB\MessageBus\Tests\Unit;
+namespace SasaB\MessageBus\Tests\Unit\Middleware;
 
 use RuntimeException;
 use SasaB\MessageBus\Bus;
@@ -18,14 +18,13 @@ use SasaB\MessageBus\Event\MessageHandledEvent;
 use SasaB\MessageBus\Event\MessageReceivedEvent;
 use SasaB\MessageBus\Event\Subscriber;
 use SasaB\MessageBus\Middleware\EventMiddleware;
-use SasaB\MessageBus\Middleware\TransactionMiddleware;
 use SasaB\MessageBus\Response;
 use SasaB\MessageBus\Response\TypeMapper;
 use SasaB\MessageBus\Tests\Stub\EchoTestCommand;
 use SasaB\MessageBus\Tests\Stub\FailingTestCommand;
 use SasaB\MessageBus\Tests\TestCase;
 
-class MiddlewareTest extends TestCase
+class EventMiddlewareTest extends TestCase
 {
     public function test_it_can_emmit_success_events(): void
     {
@@ -79,55 +78,6 @@ class MiddlewareTest extends TestCase
         $eventMiddleware = new EventMiddleware($emitter, new TypeMapper());
 
         $fixture = new Bus($this->container, [$eventMiddleware]);
-
-        try {
-            $fixture->dispatch(new FailingTestCommand('Whoops'));
-        } catch (\Throwable) {
-        }
-    }
-
-    public function test_it_can_execute_in_transaction(): void
-    {
-        $this->expectOutputString(
-            "Begin|EchoTestCommand Successfully Dispatched|Commit"
-        );
-
-        $transactionMiddleware = new TransactionMiddleware(
-            function () {
-                echo "Begin|";
-            },
-            function () {
-                echo "|Commit";
-            },
-            function () {
-                echo "|Rollback";
-            },
-        );
-
-        $fixture = new Bus($this->container, [$transactionMiddleware]);
-
-        $fixture->dispatch(new EchoTestCommand(message: 'EchoTestCommand'));
-    }
-
-    public function test_it_rollbacks_transaction_on_error(): void
-    {
-        $this->expectOutputString(
-            "Begin|Rollback Command Fails"
-        );
-
-        $transactionMiddleware = new TransactionMiddleware(
-            function () {
-                echo "Begin|";
-            },
-            function () {
-                echo "|Commit";
-            },
-            function (\Throwable $throwable) {
-                echo "Rollback ".$throwable->getMessage();
-            },
-        );
-
-        $fixture = new Bus($this->container, [$transactionMiddleware]);
 
         try {
             $fixture->dispatch(new FailingTestCommand('Whoops'));

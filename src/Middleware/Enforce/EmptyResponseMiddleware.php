@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace SasaB\MessageBus\Middleware\Enforce;
 
-use SasaB\MessageBus\Attribute\EmptyResponse;
 use SasaB\MessageBus\Attribute\IsQuery;
+use SasaB\MessageBus\Command;
 use SasaB\MessageBus\Exception\InvalidResponse;
 use SasaB\MessageBus\Message;
 use SasaB\MessageBus\Middleware;
 
-final class EmptyCommandResponseMiddleware implements Middleware
+final class EmptyResponseMiddleware implements Middleware
 {
     public function __invoke(Message $message, \Closure $next): mixed
     {
@@ -25,7 +25,6 @@ final class EmptyCommandResponseMiddleware implements Middleware
 
     private function shouldBeEmpty(Message $message): bool
     {
-        $reflection = new \ReflectionClass($message);
-        return ($reflection->getAttributes(EmptyResponse::class)[0] ?? $reflection->getAttributes(IsQuery::class)[0] ?? null) === null;
+        return $message instanceof Command || ((new \ReflectionClass($message))->getAttributes(IsQuery::class)[0] ?? null) === null;
     }
 }
