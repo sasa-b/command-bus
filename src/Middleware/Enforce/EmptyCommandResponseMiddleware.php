@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SasaB\MessageBus\Middleware\Enforce;
 
+use SasaB\MessageBus\Attribute\EmptyResponse;
 use SasaB\MessageBus\Attribute\IsQuery;
 use SasaB\MessageBus\Exception\InvalidResponse;
 use SasaB\MessageBus\Message;
@@ -15,15 +16,16 @@ final class EmptyCommandResponseMiddleware implements Middleware
     {
         $result = $next($message);
 
-        if ($result !== null && $this->isNotQuery($message)) {
-            throw InvalidResponse::nonEmpty($message::class);
+        if ($result !== null && $this->shouldBeEmpty($message)) {
+            throw InvalidResponse::nonEmpty($message::class, $result);
         }
 
         return $result;
     }
 
-    private function isNotQuery(Message $message): bool
+    private function shouldBeEmpty(Message $message): bool
     {
-        return ((new \ReflectionClass($message))->getAttributes(IsQuery::class)[0] ?? null) === null;
+        $reflection = new \ReflectionClass($message);
+        return ($reflection->getAttributes(EmptyResponse::class)[0] ?? $reflection->getAttributes(IsQuery::class)[0] ?? null) === null;
     }
 }
