@@ -16,7 +16,7 @@ final class EmptyCommandResponseMiddleware implements Middleware
         $result = $next($message);
 
         if ($result !== null && $this->isNotQuery($message)) {
-            throw InvalidResponse::mutable($message::class);
+            throw InvalidResponse::nonEmpty($message::class);
         }
 
         return $result;
