@@ -25,6 +25,6 @@ final class EmptyResponseMiddleware implements Middleware
 
     private function shouldBeEmpty(Message $message): bool
     {
-        return $message instanceof Command || ((new \ReflectionClass($message))->getAttributes(IsQuery::class)[0] ?? null) === null;
+        return $message instanceof Command || ((new \ReflectionClass($message))->getAttributes(IsQuery::class)[0] ?? null) !== null;
     }
 }
