@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace SasaB\MessageBus\Tests\Stub;
 
-use SasaB\MessageBus\Attribute\IsQuery;
+use SasaB\MessageBus\Attribute\IsCommand;
 use SasaB\MessageBus\Concern\CanIdentify;
 use SasaB\MessageBus\Message;
 
 use function Tests\uuid;
 
-#[IsQuery(handler: AttributeTestHandler::class)]
+#[IsCommand(handler: AttributeTestHandler::class)]
 final class AttributeTestCommand implements Message
 {
     use CanIdentify;
