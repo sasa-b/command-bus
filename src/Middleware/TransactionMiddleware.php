@@ -8,7 +8,6 @@
 
 namespace SasaB\MessageBus\Middleware;
 
-use SasaB\MessageBus\Exception\MiddlewareException;
 use SasaB\MessageBus\Message;
 use SasaB\MessageBus\Middleware;
 
@@ -21,7 +20,7 @@ final class TransactionMiddleware implements Middleware
     ) {}
 
     /**
-     * @throws MiddlewareException
+     * @throws \Exception
      */
     public function __invoke(Message $message, \Closure $next): mixed
     {
@@ -30,7 +29,7 @@ final class TransactionMiddleware implements Middleware
             $result = $next($message);
         } catch (\Exception $e) {
             $this->rollback->call($this, $e);
-            throw MiddlewareException::handler(handler: __CLASS__, error: $e);
+            throw $e;
         }
         $this->commit->call($this);
         return $result;

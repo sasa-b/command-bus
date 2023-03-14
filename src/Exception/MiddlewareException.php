@@ -10,8 +10,6 @@ declare(strict_types=1);
 
 namespace SasaB\MessageBus\Exception;
 
-use Throwable;
-
 class MiddlewareException extends Exception
 {
     final public static function invalid(mixed $middleware): MiddlewareException
@@ -19,15 +17,6 @@ class MiddlewareException extends Exception
         $name = get_debug_type($middleware);
         return new self(
             \sprintf("Invalid middleware '%s' in chain, it does not implement Middleware interface.", $name)
-        );
-    }
-
-    final public static function handler(string $handler, Throwable $error): MiddlewareException
-    {
-        return new self(
-            \sprintf('Handler % error: %s', $handler, $error->getMessage()),
-            $error->getCode(),
-            $error
         );
     }
 }

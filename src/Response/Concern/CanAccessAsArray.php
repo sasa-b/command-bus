@@ -38,7 +38,7 @@ trait CanAccessAsArray
      */
     public function offsetSet(mixed $offset, mixed $value): void
     {
-        throw ImmutabilityException::mutating(__CLASS__);
+        throw ImmutabilityException::mutating(static::class);
     }
 
     /**
@@ -47,6 +47,6 @@ trait CanAccessAsArray
      */
     public function offsetUnset(mixed $offset): void
     {
-        throw ImmutabilityException::mutating(__CLASS__);
+        throw ImmutabilityException::mutating(static::class);
     }
 }

@@ -29,7 +29,7 @@ trait CanDelegate
      */
     public function __set(string $property, mixed $value): void
     {
-        throw ImmutabilityException::mutating(__CLASS__);
+        throw ImmutabilityException::mutating(static::class);
     }
 
     public function __call(string $name, array $arguments): mixed

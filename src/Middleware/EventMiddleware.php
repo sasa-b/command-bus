@@ -14,7 +14,6 @@ use SasaB\MessageBus\Event\Emitter;
 use SasaB\MessageBus\Event\MessageFailedEvent;
 use SasaB\MessageBus\Event\MessageHandledEvent;
 use SasaB\MessageBus\Event\MessageReceivedEvent;
-use SasaB\MessageBus\Exception\MiddlewareException;
 use SasaB\MessageBus\Message;
 use SasaB\MessageBus\Middleware;
 use SasaB\MessageBus\Response\TypeMapper;
@@ -36,7 +35,7 @@ final class EventMiddleware implements Middleware
             $this->emitter->emit(new MessageHandledEvent($message, $this->typeMapper->map($result)));
         } catch (\Exception $e) {
             $this->emitter->emit(new MessageFailedEvent($message, $e));
-            throw MiddlewareException::handler(handler: __CLASS__, error: $e);
+            throw $e;
         }
 
         return $result;
