@@ -12,6 +12,11 @@ use SasaB\MessageBus\Middleware;
 
 final class EmptyResponseMiddleware implements Middleware
 {
+    /**
+     * @var array<class-string>
+     */
+    public static array $exclude = [];
+
     public function __invoke(Message $message, \Closure $next): mixed
     {
         $result = $next($message);
@@ -25,6 +30,6 @@ final class EmptyResponseMiddleware implements Middleware
 
     private function shouldBeEmpty(Message $message): bool
     {
-        return $message instanceof Command || ((new \ReflectionClass($message))->getAttributes(IsCommand::class)[0] ?? null) !== null;
+        return ($message instanceof Command || ((new \ReflectionClass($message))->getAttributes(IsCommand::class)[0] ?? null) !== null) && !in_array($message::class, self::$exclude, true);
     }
 }
