@@ -21,8 +21,8 @@ use SasaB\MessageBus\Result\ResultMapper;
 final class EventMiddleware implements Middleware
 {
     public function __construct(
-        private readonly Emitter      $emitter,
-        private readonly ResultMapper $typeMapper,
+        private readonly Emitter $emitter,
+        private readonly ResultMapper $resultMapper,
     ) {}
 
     public function __invoke(Message $message, \Closure $next): mixed
@@ -32,7 +32,7 @@ final class EventMiddleware implements Middleware
         try {
             $result = $next($message);
 
-            $this->emitter->emit(new MessageHandledEvent($message, $this->typeMapper->map($result)));
+            $this->emitter->emit(new MessageHandledEvent($message, $this->resultMapper->map($result)));
         } catch (\Exception $e) {
             $this->emitter->emit(new MessageFailedEvent($message, $e));
             throw $e;

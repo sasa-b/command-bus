@@ -10,13 +10,13 @@ use SasaB\MessageBus\Result\ResultMapper;
 
 class ResultMapperTest extends TestCase
 {
-    private ResultMapper $typeMapper;
+    private ResultMapper $resultMapper;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->typeMapper = new ResultMapper();
+        $this->resultMapper = new ResultMapper();
     }
 
     /**
@@ -24,7 +24,7 @@ class ResultMapperTest extends TestCase
      */
     public function test_it_can_map_type_to_result(mixed $data, Result $result): void
     {
-        $this->assertEquals($this->typeMapper->map($data), $result);
+        $this->assertEquals($this->resultMapper->map($data), $result);
         $this->assertSame($data, $result->payload());
     }
 

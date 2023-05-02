@@ -22,7 +22,7 @@ final class MapByName implements Mapper
      */
     public function getHandler(Message $message): string
     {
-        $handler = preg_replace('/(Request|Command|Query)$/', 'Handler', $message::class);
+        $handler = preg_replace('/(Command|Query)$/', 'Handler', $message::class);
 
         if (empty($handler)) {
             throw HandlerException::invalid($message::class);

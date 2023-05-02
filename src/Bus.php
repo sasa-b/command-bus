@@ -28,10 +28,10 @@ final class Bus implements Dispatcher
      */
     public function __construct(
         private readonly ContainerInterface $container,
-        array                               $middlewares = [],
-        private readonly Mapper             $mapper = new MapByName(),
-        private readonly Identity           $identity = new RandomString(),
-        private readonly ?ResultMapper      $resultMapper = new ResultMapper(),
+        array $middlewares = [],
+        private readonly Mapper $mapper = new MapByName(),
+        private readonly Identity $identity = new RandomString(),
+        private readonly ?ResultMapper $resultMapper = new ResultMapper(),
     ) {
         $this->chain = $this->createMiddlewareChain($middlewares);
     }
