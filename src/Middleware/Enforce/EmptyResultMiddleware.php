@@ -6,11 +6,11 @@ namespace SasaB\MessageBus\Middleware\Enforce;
 
 use SasaB\MessageBus\Attribute\IsCommand;
 use SasaB\MessageBus\Command;
-use SasaB\MessageBus\Exception\InvalidResponse;
+use SasaB\MessageBus\Exception\InvalidResult;
 use SasaB\MessageBus\Message;
 use SasaB\MessageBus\Middleware;
 
-final class EmptyResponseMiddleware implements Middleware
+final class EmptyResultMiddleware implements Middleware
 {
     /**
      * @var array<class-string>
@@ -22,7 +22,7 @@ final class EmptyResponseMiddleware implements Middleware
         $result = $next($message);
 
         if ($result !== null && $this->shouldBeEmpty($message)) {
-            throw InvalidResponse::nonEmpty($message::class, $result);
+            throw InvalidResult::nonEmpty($message::class, $result);
         }
 
         return $result;

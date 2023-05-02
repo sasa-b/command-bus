@@ -11,13 +11,13 @@ declare(strict_types=1);
 namespace SasaB\MessageBus\Event;
 
 use SasaB\MessageBus\Message;
-use SasaB\MessageBus\Response;
+use SasaB\MessageBus\Result;
 
 final class MessageHandledEvent implements Event
 {
     public function __construct(
-        private readonly Message  $message,
-        private readonly Response $response,
+        private readonly Message $message,
+        private readonly Result  $result,
     ) {}
 
     public function getName(): string
@@ -30,8 +30,8 @@ final class MessageHandledEvent implements Event
         return $this->message;
     }
 
-    public function getResponse(): Response
+    public function getResult(): Result
     {
-        return $this->response;
+        return $this->result;
     }
 }

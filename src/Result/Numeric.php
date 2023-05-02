@@ -3,22 +3,22 @@
  * Created by PhpStorm.
  * User: sasa.blagojevic@mail.com
  * Date: 18. 12. 2020.
- * Time: 19:03
+ * Time: 12:03
  */
 
 declare(strict_types=1);
 
-namespace SasaB\MessageBus\Response;
+namespace SasaB\MessageBus\Result;
 
-use SasaB\MessageBus\Response;
+use SasaB\MessageBus\Result;
 
-final class Text extends Response
+final class Numeric extends Result
 {
     public function __construct(
-        public readonly string $value,
+        public readonly float $value,
     ) {}
 
-    public function payload(): string
+    public function payload(): float
     {
         return $this->value;
     }

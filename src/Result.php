@@ -13,20 +13,11 @@ namespace SasaB\MessageBus;
 use SasaB\MessageBus\Concern\CanIdentify;
 
 /**
- * @template-covariant TR of Response
+ * @template T
  */
-abstract class Response implements HasIdentity, Payload
+abstract class Result implements HasIdentity, Payload
 {
     use CanIdentify;
-
-    /**
-     * @deprecated
-     */
-    public function content(): mixed
-    {
-        // This method has been deprecated in favour of Response::payload and will be removed
-        return null;
-    }
 
     public function payload(): mixed
     {

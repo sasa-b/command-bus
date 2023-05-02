@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace SasaB\MessageBus\Response\Concern;
+namespace SasaB\MessageBus\Result\Concern;
 
 use SasaB\MessageBus\Exception\ImmutabilityException;
 

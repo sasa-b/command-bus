@@ -1,12 +1,12 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Access to an undefined property SasaB\\\\MessageBus\\\\Response\\\\Delegated\\:\\:\\$message\\.$#"
+			message: "#^Access to an undefined property SasaB\\\\MessageBus\\\\Result\\\\Delegated\\:\\:\\$message\\.$#"
 			count: 1
 			path: tests/Unit/BusTest.php
 
 		-
-			message: "#^Call to an undefined method SasaB\\\\MessageBus\\\\Response\\\\Delegated\\:\\:getMessage\\(\\)\\.$#"
+			message: "#^Call to an undefined method SasaB\\\\MessageBus\\\\Result\\\\Delegated\\:\\:getMessage\\(\\)\\.$#"
 			count: 1
 			path: tests/Unit/BusTest.php
 

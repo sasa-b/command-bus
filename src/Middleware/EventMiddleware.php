@@ -16,13 +16,13 @@ use SasaB\MessageBus\Event\MessageHandledEvent;
 use SasaB\MessageBus\Event\MessageReceivedEvent;
 use SasaB\MessageBus\Message;
 use SasaB\MessageBus\Middleware;
-use SasaB\MessageBus\Response\TypeMapper;
+use SasaB\MessageBus\Result\ResultMapper;
 
 final class EventMiddleware implements Middleware
 {
     public function __construct(
-        private readonly Emitter $emitter,
-        private readonly TypeMapper $typeMapper,
+        private readonly Emitter      $emitter,
+        private readonly ResultMapper $typeMapper,
     ) {}
 
     public function __invoke(Message $message, \Closure $next): mixed

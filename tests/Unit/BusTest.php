@@ -11,15 +11,15 @@ declare(strict_types=1);
 namespace SasaB\MessageBus\Tests\Unit;
 
 use SasaB\MessageBus\Bus;
-use SasaB\MessageBus\Response;
-use SasaB\MessageBus\Response\Boolean;
-use SasaB\MessageBus\Response\Collection;
-use SasaB\MessageBus\Response\Delegated;
-use SasaB\MessageBus\Response\Integer;
-use SasaB\MessageBus\Response\Map;
-use SasaB\MessageBus\Response\None;
-use SasaB\MessageBus\Response\Numeric;
-use SasaB\MessageBus\Response\Text;
+use SasaB\MessageBus\Result;
+use SasaB\MessageBus\Result\Boolean;
+use SasaB\MessageBus\Result\Collection;
+use SasaB\MessageBus\Result\Delegated;
+use SasaB\MessageBus\Result\Integer;
+use SasaB\MessageBus\Result\Map;
+use SasaB\MessageBus\Result\None;
+use SasaB\MessageBus\Result\Numeric;
+use SasaB\MessageBus\Result\Text;
 use SasaB\MessageBus\Tests\Stub\AttributeTestCommand;
 use SasaB\MessageBus\Tests\Stub\EchoTestCommand;
 use SasaB\MessageBus\Tests\Stub\MixedContentTestCommand;
@@ -48,105 +48,105 @@ class BusTest extends TestCase
 
     public function test_it_can_dispatch_command_with_attribute(): void
     {
-        $response =  (new Bus($this->container, []))->dispatch(new AttributeTestCommand());
+        $result =  (new Bus($this->container, []))->dispatch(new AttributeTestCommand());
 
-        $this->assertInstanceOf(Response::class, $response);
+        $this->assertInstanceOf(Result::class, $result);
     }
 
-    public function test_command_uuid_and_response_uuid_are_same(): void
+    public function test_command_uuid_and_result_uuid_are_same(): void
     {
-        $response = $this->fixture->dispatch(
+        $result = $this->fixture->dispatch(
             $command = new EchoTestCommand(message: EchoTestCommand::class)
         );
 
-        $this->assertSame($command->id(), $response->id());
+        $this->assertSame($command->id(), $result->id());
     }
 
-    public function test_it_can_return_void_response(): void
+    public function test_it_can_return_void_result(): void
     {
-        $response = $this->fixture->dispatch(
+        $result = $this->fixture->dispatch(
             new MixedContentTestCommand(),
         );
 
-        $this->assertInstanceOf(None::class, $response);
+        $this->assertInstanceOf(None::class, $result);
     }
 
-    public function test_it_can_return_integer_response(): void
+    public function test_it_can_return_integer_result(): void
     {
-        $response = $this->fixture->dispatch(
+        $result = $this->fixture->dispatch(
             new MixedContentTestCommand(data: 1)
         );
 
-        $this->assertInstanceOf(Integer::class, $response);
+        $this->assertInstanceOf(Integer::class, $result);
     }
 
-    public function test_it_can_return_double_response(): void
+    public function test_it_can_return_double_result(): void
     {
-        $response = $this->fixture->dispatch(
+        $result = $this->fixture->dispatch(
             new MixedContentTestCommand(data: 2.0),
         );
 
-        $this->assertInstanceOf(Numeric::class, $response);
+        $this->assertInstanceOf(Numeric::class, $result);
     }
 
-    public function test_it_can_return_string_response(): void
+    public function test_it_can_return_string_result(): void
     {
-        $response = $this->fixture->dispatch(
+        $result = $this->fixture->dispatch(
             new MixedContentTestCommand(data: 'Hello World'),
         );
 
-        $this->assertInstanceOf(Text::class, $response);
+        $this->assertInstanceOf(Text::class, $result);
     }
 
-    public function test_it_can_return_boolean_response(): void
+    public function test_it_can_return_boolean_result(): void
     {
-        $response = $this->fixture->dispatch(
+        $result = $this->fixture->dispatch(
             new MixedContentTestCommand(data: true)
         );
 
-        $this->assertInstanceOf(Boolean::class, $response);
+        $this->assertInstanceOf(Boolean::class, $result);
     }
 
-    public function test_it_can_return_map_response(): void
+    public function test_it_can_return_map_result(): void
     {
-        $response = $this->fixture->dispatch(
+        $result = $this->fixture->dispatch(
             new MixedContentTestCommand(data: ['foo' => 'bar'])
         );
 
-        $this->assertInstanceOf(Map::class, $response);
+        $this->assertInstanceOf(Map::class, $result);
     }
 
-    public function test_it_can_return_item_response(): void
+    public function test_it_can_return_item_result(): void
     {
         $item = new \stdClass();
         $item->foo = 'bar';
 
-        $response = $this->fixture->dispatch(
+        $result = $this->fixture->dispatch(
             new MixedContentTestCommand(data: $item)
         );
 
-        $this->assertInstanceOf(Delegated::class, $response);
+        $this->assertInstanceOf(Delegated::class, $result);
     }
 
-    public function test_it_can_return_collection_response(): void
+    public function test_it_can_return_collection_result(): void
     {
-        $response = $this->fixture->dispatch(
+        $result = $this->fixture->dispatch(
             new MixedContentTestCommand(data: ['foo', 'bar'])
         );
 
-        $this->assertInstanceOf(Collection::class, $response);
+        $this->assertInstanceOf(Collection::class, $result);
     }
 
-    public function test_item_response_can_delegate(): void
+    public function test_item_result_can_delegate(): void
     {
         $item = new TestItemObject();
 
-        $response = $this->fixture->dispatch(
+        $result = $this->fixture->dispatch(
             new MixedContentTestCommand(data: $item)
         );
 
-        $this->assertInstanceOf(Delegated::class, $response);
-        $this->assertSame("Item can delegate", $response->message);
-        $this->assertSame("Item can delegate", $response->getMessage());
+        $this->assertInstanceOf(Delegated::class, $result);
+        $this->assertSame("Item can delegate", $result->message);
+        $this->assertSame("Item can delegate", $result->getMessage());
     }
 }

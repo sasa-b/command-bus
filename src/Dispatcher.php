@@ -12,5 +12,5 @@ namespace SasaB\MessageBus;
 
 interface Dispatcher
 {
-    public function dispatch(Message $message): Response;
+    public function dispatch(Message $message): Result;
 }

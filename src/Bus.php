@@ -16,13 +16,11 @@ use SasaB\MessageBus\Exception\MiddlewareException;
 use SasaB\MessageBus\Identity\RandomString;
 use SasaB\MessageBus\Mapper\Mapper;
 use SasaB\MessageBus\Mapper\Strategy\MapByName;
-use SasaB\MessageBus\Response\TypeMapper;
+use SasaB\MessageBus\Result\ResultMapper;
 
 final class Bus implements Dispatcher
 {
     private Closure $chain;
-
-    private TypeMapper $typeMapper;
 
     /**
      * @param array<Middleware> $middlewares
@@ -30,12 +28,12 @@ final class Bus implements Dispatcher
      */
     public function __construct(
         private readonly ContainerInterface $container,
-        array $middlewares = [],
-        private readonly Mapper $mapper = new MapByName(),
-        private readonly Identity $identity = new RandomString(),
+        array                               $middlewares = [],
+        private readonly Mapper             $mapper = new MapByName(),
+        private readonly Identity           $identity = new RandomString(),
+        private readonly ?ResultMapper      $resultMapper = new ResultMapper(),
     ) {
         $this->chain = $this->createMiddlewareChain($middlewares);
-        $this->typeMapper = new TypeMapper();
     }
 
     private function getHandlerFor(Message $message): Handler
@@ -45,15 +43,15 @@ final class Bus implements Dispatcher
         );
     }
 
-    public function dispatch(Message $message): Response
+    public function dispatch(Message $message): Result
     {
         $message->setId(
             $this->identity->generate(),
         );
 
-        return $this->typeMapper->map(
-            ($this->chain)($message),
-        )->setId($message->id());
+        $result = ($this->chain)($message);
+
+        return $this->resultMapper !== null ? $this->resultMapper->map($result)->setId($message->id()) : $result;
     }
 
     /**

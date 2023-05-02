@@ -18,8 +18,8 @@ use SasaB\MessageBus\Event\MessageHandledEvent;
 use SasaB\MessageBus\Event\MessageReceivedEvent;
 use SasaB\MessageBus\Event\Subscriber;
 use SasaB\MessageBus\Middleware\EventMiddleware;
-use SasaB\MessageBus\Response;
-use SasaB\MessageBus\Response\TypeMapper;
+use SasaB\MessageBus\Result;
+use SasaB\MessageBus\Result\ResultMapper;
 use SasaB\MessageBus\Tests\Stub\EchoTestCommand;
 use SasaB\MessageBus\Tests\Stub\FailingTestCommand;
 use SasaB\MessageBus\Tests\TestCase;
@@ -42,12 +42,12 @@ class EventMiddlewareTest extends TestCase
         $subscriber->addListener(MessageHandledEvent::class, function (MessageHandledEvent $event) {
             echo '|'.$event->getName();
             $this->assertInstanceOf(EchoTestCommand::class, $event->getMessage());
-            $this->assertInstanceOf(Response::class, $event->getResponse());
+            $this->assertInstanceOf(Result::class, $event->getResult());
         });
 
         $emitter = new Emitter($subscriber);
 
-        $eventMiddleware = new EventMiddleware($emitter, new TypeMapper());
+        $eventMiddleware = new EventMiddleware($emitter, new ResultMapper());
 
         $fixture = new Bus($this->container, [$eventMiddleware]);
 
@@ -75,7 +75,7 @@ class EventMiddlewareTest extends TestCase
 
         $emitter = new Emitter($subscriber);
 
-        $eventMiddleware = new EventMiddleware($emitter, new TypeMapper());
+        $eventMiddleware = new EventMiddleware($emitter, new ResultMapper());
 
         $fixture = new Bus($this->container, [$eventMiddleware]);
 

@@ -13,7 +13,7 @@ interoperability.
   * [Middleware](#middleware)
   * [Event](#event)
   * [Transaction](#transaction)
-  * [Response Types](#response-types)
+  * [Result Types](#result-types)
 * [Getting Started](#getting-started)
   * [Stand-alone usage](#stand-alone-usage)
   * [Using with Symfony Framework](#using-with-symfony-framework)
@@ -22,7 +22,7 @@ interoperability.
 ## Core Concepts
 
 ### Identity
-Each _Command_ or _Query_ and their respective _Response_ object combo will be assigned a unique Identity, e.g. a _Command,_ and its respective _Response_ object will have and identity of `00000001`. 
+Each _Command_ or _Query_ and their respective _Result_ object combo will be assigned a unique Identity, e.g. a _Command,_ and its respective _Result_ object will have and identity of `00000001`. 
 This can be useful for logging, auditing or debugging purposes. 
 
 The default Identity generation strategy is a simple `SasaB\MessageBus\Identity\RandomString` generator to keep the external dependencies to a minimum. To use something else you could require a library like https://github.com/ramsey/uuid and implement the `\SasaB\MessageBus\Identity`.
@@ -50,8 +50,8 @@ Each command will be passed through a chain of Middlewares. By default the chain
 some Middleware out of the box:
 * **EventMiddleware** - raises events before and after handling a command or query, and on failure
 * **TransactionMiddleware** - runs individual _Commands_ or _Queries_ in a Transaction, `begin`, `commit` and `rollback` steps are plain `\Closure` objects, so you can use whichever ORM or Persistence approach you prefer. 
-* **EmptyResponseMiddleware** - throws an Exception if anything aside from null is returned in _Command_ responses to enforce the _Command-Query Segregation_
-* **ImmutableResponseMiddleware** - throws an Exception if you have properties without _readonly_ modifier defined on your response objects
+* **EmptyResultMiddleware** - throws an Exception if anything aside from null is returned in _Command_ Results to enforce the _Command-Query Segregation_
+* **ImmutableResultMiddleware** - throws an Exception if you have properties without _readonly_ modifier defined on your Result objects
 
 To create your own custom middleware you need to implement the `SasaB\MessageBus\Middleware` interface and provide it
 to the bus:
@@ -95,6 +95,7 @@ $subscriber->addListener(MessageReceivedEvent::class, function (MessageReceivedE
 ```
 
 **MessageHandledEvent** - raised after the message has been handled successfully.
+
 ```php
 use SasaB\MessageBus\Event\Subscriber;
 use SasaB\MessageBus\Event\MessageHandledEvent;
@@ -104,7 +105,7 @@ $subscriber = new Subscriber();
 $subscriber->addListener(MessageHandledEvent::class, function (MessageHandledEvent $event) {
     $event->getName(); // Name of the Event
     $event->getMessage(); // Command or Query being handled
-    $event->getResponse(); // Response for the handled message
+    $event->getResult(); // Result for the handled message
 });
 ```
 
@@ -136,22 +137,22 @@ $transaction = new \SasaB\MessageBus\Middleware\TransactionMiddleware(
 );
 ```
 
-### Response Types
+### Result Types
 
-Library wraps the Handler return values into __Response value objects__ to provide a consistent API and so that you can
+Library wraps the Handler return values into __Result value objects__ to provide a consistent API and so that you can
 depend on the return values always being of the same type.
 
-All Response value objects extend the `SasaB\MessageBus\Response` abstract class and can be divided into 3 groups:
+All Result value objects extend the `SasaB\MessageBus\Result` abstract class and can be divided into 3 groups:
 1. The ones which wrap primitive values:
-   * `SasaB\MessageBus\Response\Boolean`
-   * `SasaB\MessageBus\Response\Integer`
-   * `SasaB\MessageBus\Response\Numeric`
-   * `SasaB\MessageBus\Response\Text`
-   * `SasaB\MessageBus\Response\None` (wraps null values)
-2. `SasaB\MessageBus\Response\Delegated` which wraps objects and delegates calls to properties and methods to the underlying object
-3. `SasaB\MessageBus\Response\Collection` and `SasaB\MessageBus\Response\Map` which wrap number indexed arrays (lists) and string indexed arrays (maps) and implement `\Countable`, `\ArrayAccess` and `\IteratorAggregate` interfaces
+   * `SasaB\MessageBus\Result\Boolean`
+   * `SasaB\MessageBus\Result\Integer`
+   * `SasaB\MessageBus\Result\Numeric`
+   * `SasaB\MessageBus\Result\Text`
+   * `SasaB\MessageBus\Result\None` (wraps null values)
+2. `SasaB\MessageBus\Result\Delegated` which wraps objects and delegates calls to properties and methods to the underlying object
+3. `SasaB\MessageBus\Result\Collection` and `SasaB\MessageBus\Result\Map` which wrap number indexed arrays (lists) and string indexed arrays (maps) and implement `\Countable`, `\ArrayAccess` and `\IteratorAggregate` interfaces
 
-You can also add your own custom Response value objects by extending the abstract class `SasaB\MessageBus\Response` and returning them in the appropriate handler.
+You can also add your own custom Result value objects by extending the abstract class `SasaB\MessageBus\Result` and returning them in the appropriate handler.
 
 ## Getting Started
 
@@ -178,10 +179,11 @@ info you can read [Symfony Docs](https://symfony.com/doc/current/service_contain
 
 #### Decorating the Bus
 We can create a new Decorator class which will implement Symfony's `Symfony\Contracts\Service\ServiceSubscriberInterface` interface:
+
 ```php
 use SasaB\MessageBus\Bus;
 use SasaB\MessageBus\Message;
-use SasaB\MessageBus\Response;
+use SasaB\MessageBus\Result;
 use Psr\Container\ContainerInterface;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
 
@@ -194,7 +196,7 @@ class MessageBus implements ServiceSubscriberInterface
         $this->bus = new Bus($locator, [], null, new UuidV4Identity());
     }
 
-    public function dispatch(\SasaB\MessageBus\Message $message): Response
+    public function dispatch(\SasaB\MessageBus\Message $message): Result
     {
         return $this->bus->dispatch($message);
     }
@@ -306,4 +308,4 @@ $this->app->bind(\SasaB\MessageBus\Bus::class, function ($app) {
 Library follows the [PSR-12 standard](https://www.php-fig.org/psr/psr-12/).
 
 ### TO DO:
-1. Add PSR Cache interface and implementation for caching responses
+1. Add PSR Cache interface and implementation for caching Results

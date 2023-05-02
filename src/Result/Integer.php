@@ -8,11 +8,11 @@
 
 declare(strict_types=1);
 
-namespace SasaB\MessageBus\Response;
+namespace SasaB\MessageBus\Result;
 
-use SasaB\MessageBus\Response;
+use SasaB\MessageBus\Result;
 
-final class Integer extends Response
+final class Integer extends Result
 {
     public function __construct(
         public readonly int $value,

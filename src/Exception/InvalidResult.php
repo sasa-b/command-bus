@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SasaB\MessageBus\Exception;
 
-class InvalidResponse extends Exception
+class InvalidResult extends Exception
 {
     /**
      * @param class-string $class

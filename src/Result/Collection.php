@@ -8,11 +8,11 @@
 
 declare(strict_types=1);
 
-namespace SasaB\MessageBus\Response;
+namespace SasaB\MessageBus\Result;
 
-use SasaB\MessageBus\Response;
+use SasaB\MessageBus\Result;
 
-class Collection extends Response implements \Countable, \IteratorAggregate, \ArrayAccess
+class Collection extends Result implements \Countable, \IteratorAggregate, \ArrayAccess
 {
     use Concern\CanCount;
     use Concern\CanIterate;

@@ -8,11 +8,11 @@
 
 declare(strict_types=1);
 
-namespace SasaB\MessageBus\Response;
+namespace SasaB\MessageBus\Result;
 
-use SasaB\MessageBus\Response;
+use SasaB\MessageBus\Result;
 
-class Delegated extends Response
+class Delegated extends Result
 {
     use Concern\CanDelegate;
 

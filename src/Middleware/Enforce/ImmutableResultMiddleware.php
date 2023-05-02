@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace SasaB\MessageBus\Middleware\Enforce;
 
-use SasaB\MessageBus\Exception\InvalidResponse;
+use SasaB\MessageBus\Exception\InvalidResult;
 use SasaB\MessageBus\Message;
 use SasaB\MessageBus\Middleware;
 
-final class ImmutableResponseMiddleware implements Middleware
+final class ImmutableResultMiddleware implements Middleware
 {
     /**
      * @throws \ReflectionException
@@ -21,7 +21,7 @@ final class ImmutableResponseMiddleware implements Middleware
 
         foreach ($reflection->getProperties() as $property) {
             if (!$property->isReadOnly()) {
-                throw InvalidResponse::mutable($result::class);
+                throw InvalidResult::mutable($result::class);
             }
         }
 
