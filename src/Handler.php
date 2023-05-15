@@ -16,7 +16,9 @@ namespace SasaB\MessageBus;
 interface Handler
 {
     /**
-     * @param TM $message
+     * @param TM&Message $message
+     *
+     * @return void|Result|mixed
      */
-    public function __invoke(Message $message): mixed;
+    public function __invoke(Message $message);
 }
