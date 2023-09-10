@@ -46,7 +46,10 @@
         "phpstan": [
             "php -d memory_limit=4G vendor/bin/phpstan analyse src tests --configuration=tools/phpstan/phpstan.neon.dist"
         ],
-        "cq": [
+        "code:fixer": [
+            "@php-cs-fixer"
+        ],
+        "code:quality": [
             "@php-cs-fixer",
             "@phpstan"
         ],
