@@ -8,7 +8,7 @@
         "message-bus",
         "cqrs"
     ],
-    "version": "1.8.2",
+    "version": "1.8.3",
     "license": "MIT",
     "authors": [
         {
@@ -34,7 +34,7 @@
         "psr/log": "*"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.5",
+        "phpunit/phpunit": "^10.0",
         "ramsey/uuid": "^4.1",
         "phpstan/phpstan": "*",
         "phpstan/phpstan-phpunit": "*"

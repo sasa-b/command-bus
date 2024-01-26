@@ -17,7 +17,7 @@ class EmptyResultMiddlewareTest extends TestCase
     public function test_it_throws_an_error_when_extending_abstract_command_and_returning_value(): void
     {
         $this->expectException(InvalidResult::class);
-        $this->expectErrorMessage('Commands cannot return values other than null. SasaB\MessageBus\Tests\Stub\MixedContentTestCommand returns object.');
+        $this->expectExceptionMessage('Commands cannot return values other than null. SasaB\MessageBus\Tests\Stub\MixedContentTestCommand returns object.');
 
         $fixture = new Bus($this->container, [new EmptyResultMiddleware()]);
 
@@ -27,7 +27,7 @@ class EmptyResultMiddlewareTest extends TestCase
     public function test_it_throws_an_error_when_having_command_attribute_and_returning_value(): void
     {
         $this->expectException(InvalidResult::class);
-        $this->expectErrorMessage('Commands cannot return values other than null. SasaB\MessageBus\Tests\Stub\AttributeTestCommand returns string.');
+        $this->expectExceptionMessage('Commands cannot return values other than null. SasaB\MessageBus\Tests\Stub\AttributeTestCommand returns string.');
 
         $fixture = new Bus($this->container, [new EmptyResultMiddleware()]);
 
