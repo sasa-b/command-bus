@@ -1,5 +1,5 @@
 {
-    "name": "sco/command-bus",
+    "name": "sasa-b/command-bus",
     "description": "Message Bus Pattern implementation library",
     "type": "library",
     "keywords": [
