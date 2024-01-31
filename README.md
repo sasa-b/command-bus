@@ -7,6 +7,10 @@ This is a **stand-alone library**, the only two dependencies being the [PSR-11 C
 interoperability.
 
 **Table of Contents:**
+* [Getting Started](#getting-started)
+    * [Stand-alone usage](#stand-alone-usage)
+    * [Using with Symfony Framework](#using-with-symfony-framework)
+    * [Using with Laravel Framework](#using-with-laravel-framework)
 * [Core Concepts](#core-concepts)
   * [Identity](#identity)
   * [Handler Mapping Strategy](#handler-mapping-strategy)
@@ -14,10 +18,159 @@ interoperability.
   * [Event](#event)
   * [Transaction](#transaction)
   * [Result Types](#result-types)
-* [Getting Started](#getting-started)
-  * [Stand-alone usage](#stand-alone-usage)
-  * [Using with Symfony Framework](#using-with-symfony-framework)
-  * [Using with Laravel Framework](#using-with-laravel-framework)
+
+## Getting Started
+
+Install the library using composer:
+```bash
+composer require sco/message-bus
+```
+
+### Stand-alone usage
+
+You will need to follow the [PSR-4 autoloading standard](https://www.php-fig.org/psr/psr-4/) and either create your own Service Container class, which is a matter of implementing the `Psr\Container\ContainerInterface` and can be as simple as what
+the library is using for its test suite `SasaB\MessageBus\Tests\Stub\Container\InMemoryContainer`, or you can composer require a Service Container library which
+adheres to the [PSR-11 Standard](https://www.php-fig.org/psr/psr-11/) like [PHP-DI](https://php-di.org/).
+
+```php
+require 'vendor/autoload.php'
+
+$container = new InMemoryContainer($services)
+
+$bus = new \SasaB\MessageBus\Bus($container);
+
+$bus->dispatch(new FindPostByIdQuery(1))
+```
+
+### Using with Symfony Framework
+
+We can use two approaches here, decorating the Bus class provided by the library, or injecting the Service Locator. For more
+info you can read [Symfony Docs](https://symfony.com/doc/current/service_container/service_subscribers_locators.html)
+
+#### Decorating the Bus
+We can create a new Decorator class which will implement Symfony's `Symfony\Contracts\Service\ServiceSubscriberInterface` interface:
+
+```php
+use SasaB\MessageBus\Bus;
+use SasaB\MessageBus\Message;
+use SasaB\MessageBus\Result;
+use Psr\Container\ContainerInterface;
+use Symfony\Contracts\Service\ServiceSubscriberInterface;
+
+class MessageBus implements ServiceSubscriberInterface
+{
+    private Bus $bus;
+
+    public function __construct(ContainerInterface $locator)
+    {
+        $this->bus = new Bus($locator, [], null, new UuidV4Identity());
+    }
+
+    public function dispatch(\SasaB\MessageBus\Message $message): Result
+    {
+        return $this->bus->dispatch($message);
+    }
+
+    public static function getSubscribedServices(): array
+    {
+        return [
+            FindPostByIdHandler::class,
+            SavePostHandler::class
+        ];
+    }
+}
+```
+With this approach all handlers in you application will have to be added to the array returned by `getSubscribedServices`, since services in Symfony are not
+public by default, and they really shouldn't be, so unless you add your handlers to this array when the mapper is done mapping
+it won't be able to find the handler and a service not found container exception will be thrown.
+
+#### Injecting the ServiceLocator
+
+A different approach would be to inject a Service Locator with all the handlers into the library's Bus. This would be done in the
+service registration yaml files.
+
+Anonymous service locator:
+```yaml
+services:
+    _defaults:
+      autowire: true      
+      autoconfigure: true 
+
+    # Anonymous Service Locator
+    SasaB\MessageBus\Bus:
+      arguments:
+        $container: !service_locator
+                        '@FindPostByIdHandler': 'handler_one'
+                        '@SavePostHandler': 'handler_two'
+```
+
+Explicit service locator definition:
+```yaml
+services:
+    _defaults:
+      autowire: true      
+      autoconfigure: true 
+
+    # Explicit Service Locator
+    message_handler_service_locator:
+      class: Symfony\Component\DependencyInjection\ServiceLocator
+      arguments:
+          - '@FindPostByIdHandler'
+          - '@SavePostHandler' 
+
+    SasaB\MessageBus\Bus:
+      arguments:
+        $container: '@message_handler_service_locator'
+```
+
+Let's expand these configurations and use the tags feature of Symfony's service container to automatically add handlers to the Bus:
+
+Using `!tagged_locator`:
+```yaml
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    
+  _instanceof: 
+    SasaB\MessageBus\Handler:
+      tags: ['message_handler']
+
+  # Anonymous Service Locator
+  SasaB\MessageBus\Bus:
+    arguments:
+      $container: !tagged_locator message_handler
+```
+
+Explicit service locator definition:
+```yaml
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  _instanceof:
+    SasaB\MessageBus\Handler:
+      tags: ['message_handler']
+      
+  # Explicit Service Locator
+  message_handler_service_locator:
+    class: Symfony\Component\DependencyInjection\ServiceLocator
+    arguments:
+      - !tagged_iterator message_handler
+
+  SasaB\MessageBus\Bus:
+    arguments:
+      $container: '@message_handler_service_locator'
+```
+
+### Using with Laravel Framework
+To use it effectively with Laravel framework all you have to do is register the Bus in [Laravel's Service Container](https://laravel.com/docs/9.x/container) and provide the container as an argument to the library's Bus class:
+```php
+$this->app->bind(\SasaB\MessageBus\Bus::class, function ($app) {
+    return new \SasaB\MessageBus\Bus($app);
+});
+```
 
 ## Core Concepts
 
@@ -153,154 +306,6 @@ All Result value objects extend the `SasaB\MessageBus\Result` abstract class and
 3. `SasaB\MessageBus\Result\Collection` and `SasaB\MessageBus\Result\Map` which wrap number indexed arrays (lists) and string indexed arrays (maps) and implement `\Countable`, `\ArrayAccess` and `\IteratorAggregate` interfaces
 
 You can also add your own custom Result value objects by extending the abstract class `SasaB\MessageBus\Result` and returning them in the appropriate handler.
-
-## Getting Started
-
-### Stand-alone usage
-
-You will need to follow the [PSR-4 autoloading standard](https://www.php-fig.org/psr/psr-4/) and either create your own Service Container class, which is a matter of implementing the `Psr\Container\ContainerInterface` and can be as simple as what
-the library is using for its test suite `SasaB\MessageBus\Tests\Stub\Container\InMemoryContainer`, or you can composer require a Service Container library which
-adheres to the [PSR-11 Standard](https://www.php-fig.org/psr/psr-11/) like [PHP-DI](https://php-di.org/).
-
-```php
-require 'vendor/autoload.php'
-
-$container = new InMemoryContainer($services)
-
-$bus = new \SasaB\MessageBus\Bus($container);
-
-$bus->dispatch(new FindPostByIdQuery(1))
-```
-
-### Using with Symfony Framework
-
-We can use two approaches here, decorating the Bus class provided by the library, or injecting the Service Locator. For more 
-info you can read [Symfony Docs](https://symfony.com/doc/current/service_container/service_subscribers_locators.html)
-
-#### Decorating the Bus
-We can create a new Decorator class which will implement Symfony's `Symfony\Contracts\Service\ServiceSubscriberInterface` interface:
-
-```php
-use SasaB\MessageBus\Bus;
-use SasaB\MessageBus\Message;
-use SasaB\MessageBus\Result;
-use Psr\Container\ContainerInterface;
-use Symfony\Contracts\Service\ServiceSubscriberInterface;
-
-class MessageBus implements ServiceSubscriberInterface
-{
-    private Bus $bus;
-
-    public function __construct(ContainerInterface $locator)
-    {
-        $this->bus = new Bus($locator, [], null, new UuidV4Identity());
-    }
-
-    public function dispatch(\SasaB\MessageBus\Message $message): Result
-    {
-        return $this->bus->dispatch($message);
-    }
-
-    public static function getSubscribedServices(): array
-    {
-        return [
-            FindPostByIdHandler::class,
-            SavePostHandler::class
-        ];
-    }
-}
-```
-With this approach all handlers in you application will have to be added to the array returned by `getSubscribedServices`, since services in Symfony are not 
-public by default, and they really shouldn't be, so unless you add your handlers to this array when the mapper is done mapping 
-it won't be able to find the handler and a service not found container exception will be thrown. 
-
-#### Injecting the ServiceLocator
-
-A different approach would be to inject a Service Locator with all the handlers into the library's Bus. This would be done in the 
-service registration yaml files.
-
-Anonymous service locator:
-```yaml
-services:
-    _defaults:
-      autowire: true      
-      autoconfigure: true 
-
-    # Anonymous Service Locator
-    SasaB\MessageBus\Bus:
-      arguments:
-        $container: !service_locator
-                        '@FindPostByIdHandler': 'handler_one'
-                        '@SavePostHandler': 'handler_two'
-```
-
-Explicit service locator definition:
-```yaml
-services:
-    _defaults:
-      autowire: true      
-      autoconfigure: true 
-
-    # Explicit Service Locator
-    message_handler_service_locator:
-      class: Symfony\Component\DependencyInjection\ServiceLocator
-      arguments:
-          - '@FindPostByIdHandler'
-          - '@SavePostHandler' 
-
-    SasaB\MessageBus\Bus:
-      arguments:
-        $container: '@message_handler_service_locator'
-```
-
-Let's expand these configurations and use the tags feature of Symfony's service container to automatically add handlers to the Bus:
-
-Using `!tagged_locator`:
-```yaml
-services:
-  _defaults:
-    autowire: true
-    autoconfigure: true
-    
-  _instanceof: 
-    SasaB\MessageBus\Handler:
-      tags: ['message_handler']
-
-  # Anonymous Service Locator
-  SasaB\MessageBus\Bus:
-    arguments:
-      $container: !tagged_locator message_handler
-```
-
-Explicit service locator definition:
-```yaml
-services:
-  _defaults:
-    autowire: true
-    autoconfigure: true
-
-  _instanceof:
-    SasaB\MessageBus\Handler:
-      tags: ['message_handler']
-      
-  # Explicit Service Locator
-  message_handler_service_locator:
-    class: Symfony\Component\DependencyInjection\ServiceLocator
-    arguments:
-      - !tagged_iterator message_handler
-
-  SasaB\MessageBus\Bus:
-    arguments:
-      $container: '@message_handler_service_locator'
-```
-
-### Using with Laravel Framework
-To use it effectively with Laravel framework all you have to do is register the Bus in [Laravel's Service Container](https://laravel.com/docs/9.x/container) and provide the container as an argument to the library's Bus class:
-```php
-$this->app->bind(\SasaB\MessageBus\Bus::class, function ($app) {
-    return new \SasaB\MessageBus\Bus($app);
-});
-```
 
 ## Contribute
 
