@@ -6,10 +6,10 @@
  * Time: 23:36
  */
 
-namespace SasaB\MessageBus\Middleware;
+namespace Sco\MessageBus\Middleware;
 
-use SasaB\MessageBus\Message;
-use SasaB\MessageBus\Middleware;
+use Sco\MessageBus\Message;
+use Sco\MessageBus\Middleware;
 
 final class TransactionMiddleware implements Middleware
 {

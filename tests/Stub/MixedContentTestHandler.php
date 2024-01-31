@@ -8,10 +8,10 @@
 
 declare(strict_types=1);
 
-namespace SasaB\MessageBus\Tests\Stub;
+namespace Sco\MessageBus\Tests\Stub;
 
-use SasaB\MessageBus\Handler;
-use SasaB\MessageBus\Message;
+use Sco\MessageBus\Handler;
+use Sco\MessageBus\Message;
 
 /**
  * @implements Handler<MixedContentTestCommand>

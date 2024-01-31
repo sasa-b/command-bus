@@ -8,9 +8,9 @@
 
 declare(strict_types=1);
 
-namespace SasaB\MessageBus\Result;
+namespace Sco\MessageBus\Result;
 
-use SasaB\MessageBus\Result;
+use Sco\MessageBus\Result;
 
 final class Numeric extends Result
 {

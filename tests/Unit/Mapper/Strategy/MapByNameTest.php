@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace SasaB\MessageBus\Tests\Unit\Mapper\Strategy;
+namespace Sco\MessageBus\Tests\Unit\Mapper\Strategy;
 
-use SasaB\MessageBus\Mapper\Strategy\MapByName;
-use SasaB\MessageBus\Message;
-use SasaB\MessageBus\Tests\Stub\EchoTestCommand;
-use SasaB\MessageBus\Tests\Stub\EchoTestHandler;
-use SasaB\MessageBus\Tests\Stub\MixedContentTestCommand;
-use SasaB\MessageBus\Tests\Stub\MixedContentTestHandler;
-use SasaB\MessageBus\Tests\TestCase;
+use Sco\MessageBus\Mapper\Strategy\MapByName;
+use Sco\MessageBus\Message;
+use Sco\MessageBus\Tests\Stub\EchoTestCommand;
+use Sco\MessageBus\Tests\Stub\EchoTestHandler;
+use Sco\MessageBus\Tests\Stub\MixedContentTestCommand;
+use Sco\MessageBus\Tests\Stub\MixedContentTestHandler;
+use Sco\MessageBus\Tests\TestCase;
 
 class MapByNameTest extends TestCase
 {

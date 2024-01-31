@@ -8,10 +8,10 @@
 
 declare(strict_types=1);
 
-namespace SasaB\MessageBus\Event;
+namespace Sco\MessageBus\Event;
 
-use SasaB\MessageBus\Message;
-use SasaB\MessageBus\Result;
+use Sco\MessageBus\Message;
+use Sco\MessageBus\Result;
 
 final class MessageHandledEvent implements Event
 {

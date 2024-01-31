@@ -8,9 +8,9 @@
 
 declare(strict_types=1);
 
-namespace SasaB\MessageBus\Tests\Stub;
+namespace Sco\MessageBus\Tests\Stub;
 
-use SasaB\MessageBus\Command;
+use Sco\MessageBus\Command;
 
 use function Tests\uuid;
 

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SasaB\MessageBus\Tests\Unit;
+namespace Sco\MessageBus\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use SasaB\MessageBus\Result;
-use SasaB\MessageBus\Result\ResultMapper;
+use Sco\MessageBus\Result;
+use Sco\MessageBus\Result\ResultMapper;
 
 class ResultMapperTest extends TestCase
 {

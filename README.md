@@ -29,7 +29,7 @@ composer require sco/message-bus
 ### Stand-alone usage
 
 You will need to follow the [PSR-4 autoloading standard](https://www.php-fig.org/psr/psr-4/) and either create your own Service Container class, which is a matter of implementing the `Psr\Container\ContainerInterface` and can be as simple as what
-the library is using for its test suite `SasaB\MessageBus\Tests\Stub\Container\InMemoryContainer`, or you can composer require a Service Container library which
+the library is using for its test suite `Sco\MessageBus\Tests\Stub\Container\InMemoryContainer`, or you can composer require a Service Container library which
 adheres to the [PSR-11 Standard](https://www.php-fig.org/psr/psr-11/) like [PHP-DI](https://php-di.org/).
 
 ```php
@@ -37,7 +37,7 @@ require 'vendor/autoload.php'
 
 $container = new InMemoryContainer($services)
 
-$bus = new \SasaB\MessageBus\Bus($container);
+$bus = new \Sco\MessageBus\Bus($container);
 
 $bus->dispatch(new FindPostByIdQuery(1))
 ```
@@ -51,9 +51,9 @@ info you can read [Symfony Docs](https://symfony.com/doc/current/service_contain
 We can create a new Decorator class which will implement Symfony's `Symfony\Contracts\Service\ServiceSubscriberInterface` interface:
 
 ```php
-use SasaB\MessageBus\Bus;
-use SasaB\MessageBus\Message;
-use SasaB\MessageBus\Result;
+use Sco\MessageBus\Bus;
+use Sco\MessageBus\Message;
+use Sco\MessageBus\Result;
 use Psr\Container\ContainerInterface;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
 
@@ -66,7 +66,7 @@ class MessageBus implements ServiceSubscriberInterface
         $this->bus = new Bus($locator, [], null, new UuidV4Identity());
     }
 
-    public function dispatch(\SasaB\MessageBus\Message $message): Result
+    public function dispatch(\Sco\MessageBus\Message $message): Result
     {
         return $this->bus->dispatch($message);
     }
@@ -97,7 +97,7 @@ services:
       autoconfigure: true 
 
     # Anonymous Service Locator
-    SasaB\MessageBus\Bus:
+    Sco\MessageBus\Bus:
       arguments:
         $container: !service_locator
                         '@FindPostByIdHandler': 'handler_one'
@@ -118,7 +118,7 @@ services:
           - '@FindPostByIdHandler'
           - '@SavePostHandler' 
 
-    SasaB\MessageBus\Bus:
+    Sco\MessageBus\Bus:
       arguments:
         $container: '@message_handler_service_locator'
 ```
@@ -133,11 +133,11 @@ services:
     autoconfigure: true
     
   _instanceof: 
-    SasaB\MessageBus\Handler:
+    Sco\MessageBus\Handler:
       tags: ['message_handler']
 
   # Anonymous Service Locator
-  SasaB\MessageBus\Bus:
+  Sco\MessageBus\Bus:
     arguments:
       $container: !tagged_locator message_handler
 ```
@@ -150,7 +150,7 @@ services:
     autoconfigure: true
 
   _instanceof:
-    SasaB\MessageBus\Handler:
+    Sco\MessageBus\Handler:
       tags: ['message_handler']
       
   # Explicit Service Locator
@@ -159,7 +159,7 @@ services:
     arguments:
       - !tagged_iterator message_handler
 
-  SasaB\MessageBus\Bus:
+  Sco\MessageBus\Bus:
     arguments:
       $container: '@message_handler_service_locator'
 ```
@@ -167,8 +167,8 @@ services:
 ### Using with Laravel Framework
 To use it effectively with Laravel framework all you have to do is register the Bus in [Laravel's Service Container](https://laravel.com/docs/9.x/container) and provide the container as an argument to the library's Bus class:
 ```php
-$this->app->bind(\SasaB\MessageBus\Bus::class, function ($app) {
-    return new \SasaB\MessageBus\Bus($app);
+$this->app->bind(\Sco\MessageBus\Bus::class, function ($app) {
+    return new \Sco\MessageBus\Bus($app);
 });
 ```
 
@@ -178,10 +178,10 @@ $this->app->bind(\SasaB\MessageBus\Bus::class, function ($app) {
 Each _Command_ or _Query_ and their respective _Result_ object combo will be assigned a unique Identity, e.g. a _Command,_ and its respective _Result_ object will have and identity of `00000001`. 
 This can be useful for logging, auditing or debugging purposes. 
 
-The default Identity generation strategy is a simple `SasaB\MessageBus\Identity\RandomString` generator to keep the external dependencies to a minimum. To use something else you could require a library like https://github.com/ramsey/uuid and implement the `\SasaB\MessageBus\Identity`.
+The default Identity generation strategy is a simple `Sco\MessageBus\Identity\RandomString` generator to keep the external dependencies to a minimum. To use something else you could require a library like https://github.com/ramsey/uuid and implement the `\Sco\MessageBus\Identity`.
 
 ```php
-use SasaB\MessageBus\Identity;
+use Sco\MessageBus\Identity;
 
 class UuidIdentity implements Identity
 {
@@ -196,7 +196,7 @@ class UuidIdentity implements Identity
 1. **MapByName** - this strategy takes into account the [FQN](https://www.php.net/manual/en/language.namespaces.rules.php) and requires a _Command_ or _Query_ suffix in the class name. 
 For example an `FindPostByIdQuery` will get mapped to `FindPostByIdHandler` or a `SavePostCommand` will get mapped to `SavePostHandler`.
 2. **MapByAttribute** - this strategy uses PHP attributes, add either `#[IsCommand(handler: SavePostHandler::class)]` or `#[IsQuery(handler: FindPostByIdHandler::class)]` to your Command/Query class. The `handler` parameter name can be omitted, it's up to your personal preference.
-3. **Custom** - if you want to create your own custom mapping strategy you can do so by implementing the `SasaB\MessageBus\Mapper` interface.
+3. **Custom** - if you want to create your own custom mapping strategy you can do so by implementing the `Sco\MessageBus\Mapper` interface.
 
 ### Middleware
 Each command will be passed through a chain of Middlewares. By default the chain is empty, but the library does offer 
@@ -206,13 +206,13 @@ some Middleware out of the box:
 * **EmptyResultMiddleware** - throws an Exception if anything aside from null is returned in _Command_ Results to enforce the _Command-Query Segregation_
 * **ImmutableResultMiddleware** - throws an Exception if you have properties without _readonly_ modifier defined on your Result objects
 
-To create your own custom middleware you need to implement the `SasaB\MessageBus\Middleware` interface and provide it
+To create your own custom middleware you need to implement the `Sco\MessageBus\Middleware` interface and provide it
 to the bus:
 
 ```php
-use SasaB\MessageBus\Bus;
-use SasaB\MessageBus\Message;
-use SasaB\MessageBus\Middleware;
+use Sco\MessageBus\Bus;
+use Sco\MessageBus\Message;
+use Sco\MessageBus\Middleware;
 
 class CustomMiddleware implements Middleware
 {
@@ -232,12 +232,12 @@ $bus = new Bus(middlewares: [new CustomMiddleware()]);
 ```
 
 ### Event
-If you add the `SasaB\MessageBus\Middleware\EventMiddleware` you will be able to subscribe to the following events:
+If you add the `Sco\MessageBus\Middleware\EventMiddleware` you will be able to subscribe to the following events:
 
 **MessageReceivedEvent** - raised when the message is received but before being handled.
 ```php
-use SasaB\MessageBus\Event\Subscriber;
-use SasaB\MessageBus\Event\MessageReceivedEvent;
+use Sco\MessageBus\Event\Subscriber;
+use Sco\MessageBus\Event\MessageReceivedEvent;
 
 $subscriber = new Subscriber();
 
@@ -250,8 +250,8 @@ $subscriber->addListener(MessageReceivedEvent::class, function (MessageReceivedE
 **MessageHandledEvent** - raised after the message has been handled successfully.
 
 ```php
-use SasaB\MessageBus\Event\Subscriber;
-use SasaB\MessageBus\Event\MessageHandledEvent;
+use Sco\MessageBus\Event\Subscriber;
+use Sco\MessageBus\Event\MessageHandledEvent;
 
 $subscriber = new Subscriber();
 
@@ -264,8 +264,8 @@ $subscriber->addListener(MessageHandledEvent::class, function (MessageHandledEve
 
 **MessageFailedEvent** - raised when the message handling fails and an exception gets thrown.
 ```php
-use SasaB\MessageBus\Event\Subscriber;
-use SasaB\MessageBus\Event\MessageFailedEvent;
+use Sco\MessageBus\Event\Subscriber;
+use Sco\MessageBus\Event\MessageFailedEvent;
 
 $subscriber = new Subscriber();
 
@@ -283,7 +283,7 @@ Going with this approach allows you to use any ORM you prefer or even using the 
 ```php
 $pdo = new \PDO('{connection_dsn}')
 
-$transaction = new \SasaB\MessageBus\Middleware\TransactionMiddleware(
+$transaction = new \Sco\MessageBus\Middleware\TransactionMiddleware(
     fn(): bool => $pdo->beginTransaction(),
     fn(): bool => $pdo->commit(),
     fn(\Throwable $error): bool => $pdo->rollBack(),
@@ -295,17 +295,17 @@ $transaction = new \SasaB\MessageBus\Middleware\TransactionMiddleware(
 Library wraps the Handler return values into __Result value objects__ to provide a consistent API and so that you can
 depend on the return values always being of the same type.
 
-All Result value objects extend the `SasaB\MessageBus\Result` abstract class and can be divided into 3 groups:
+All Result value objects extend the `Sco\MessageBus\Result` abstract class and can be divided into 3 groups:
 1. The ones which wrap primitive values:
-   * `SasaB\MessageBus\Result\Boolean`
-   * `SasaB\MessageBus\Result\Integer`
-   * `SasaB\MessageBus\Result\Numeric`
-   * `SasaB\MessageBus\Result\Text`
-   * `SasaB\MessageBus\Result\None` (wraps null values)
-2. `SasaB\MessageBus\Result\Delegated` which wraps objects and delegates calls to properties and methods to the underlying object
-3. `SasaB\MessageBus\Result\Collection` and `SasaB\MessageBus\Result\Map` which wrap number indexed arrays (lists) and string indexed arrays (maps) and implement `\Countable`, `\ArrayAccess` and `\IteratorAggregate` interfaces
+   * `Sco\MessageBus\Result\Boolean`
+   * `Sco\MessageBus\Result\Integer`
+   * `Sco\MessageBus\Result\Numeric`
+   * `Sco\MessageBus\Result\Text`
+   * `Sco\MessageBus\Result\None` (wraps null values)
+2. `Sco\MessageBus\Result\Delegated` which wraps objects and delegates calls to properties and methods to the underlying object
+3. `Sco\MessageBus\Result\Collection` and `Sco\MessageBus\Result\Map` which wrap number indexed arrays (lists) and string indexed arrays (maps) and implement `\Countable`, `\ArrayAccess` and `\IteratorAggregate` interfaces
 
-You can also add your own custom Result value objects by extending the abstract class `SasaB\MessageBus\Result` and returning them in the appropriate handler.
+You can also add your own custom Result value objects by extending the abstract class `Sco\MessageBus\Result` and returning them in the appropriate handler.
 
 ## Contribute
 

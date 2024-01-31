@@ -8,15 +8,15 @@
 
 declare(strict_types=1);
 
-namespace SasaB\MessageBus\Middleware;
+namespace Sco\MessageBus\Middleware;
 
-use SasaB\MessageBus\Event\Emitter;
-use SasaB\MessageBus\Event\MessageFailedEvent;
-use SasaB\MessageBus\Event\MessageHandledEvent;
-use SasaB\MessageBus\Event\MessageReceivedEvent;
-use SasaB\MessageBus\Message;
-use SasaB\MessageBus\Middleware;
-use SasaB\MessageBus\Result\ResultMapper;
+use Sco\MessageBus\Event\Emitter;
+use Sco\MessageBus\Event\MessageFailedEvent;
+use Sco\MessageBus\Event\MessageHandledEvent;
+use Sco\MessageBus\Event\MessageReceivedEvent;
+use Sco\MessageBus\Message;
+use Sco\MessageBus\Middleware;
+use Sco\MessageBus\Result\ResultMapper;
 
 final class EventMiddleware implements Middleware
 {

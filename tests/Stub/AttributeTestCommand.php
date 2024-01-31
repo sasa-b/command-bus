@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SasaB\MessageBus\Tests\Stub;
+namespace Sco\MessageBus\Tests\Stub;
 
-use SasaB\MessageBus\Attribute\IsCommand;
-use SasaB\MessageBus\Concern\CanIdentify;
-use SasaB\MessageBus\Message;
+use Sco\MessageBus\Attribute\IsCommand;
+use Sco\MessageBus\Concern\CanIdentify;
+use Sco\MessageBus\Message;
 
 use function Tests\uuid;
 

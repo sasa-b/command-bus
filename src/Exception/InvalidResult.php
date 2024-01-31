@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SasaB\MessageBus\Exception;
+namespace Sco\MessageBus\Exception;
 
 class InvalidResult extends Exception
 {

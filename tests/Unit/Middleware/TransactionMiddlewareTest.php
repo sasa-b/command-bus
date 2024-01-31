@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace SasaB\MessageBus\Tests\Unit\Middleware;
+namespace Sco\MessageBus\Tests\Unit\Middleware;
 
-use SasaB\MessageBus\Bus;
-use SasaB\MessageBus\Middleware\TransactionMiddleware;
-use SasaB\MessageBus\Tests\Stub\EchoTestCommand;
-use SasaB\MessageBus\Tests\Stub\FailingTestCommand;
-use SasaB\MessageBus\Tests\TestCase;
+use Sco\MessageBus\Bus;
+use Sco\MessageBus\Middleware\TransactionMiddleware;
+use Sco\MessageBus\Tests\Stub\EchoTestCommand;
+use Sco\MessageBus\Tests\Stub\FailingTestCommand;
+use Sco\MessageBus\Tests\TestCase;
 
 class TransactionMiddlewareTest extends TestCase
 {

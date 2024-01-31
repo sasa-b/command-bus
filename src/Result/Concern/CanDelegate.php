@@ -8,9 +8,9 @@
 
 declare(strict_types=1);
 
-namespace SasaB\MessageBus\Result\Concern;
+namespace Sco\MessageBus\Result\Concern;
 
-use SasaB\MessageBus\Exception\ImmutabilityException;
+use Sco\MessageBus\Exception\ImmutabilityException;
 
 trait CanDelegate
 {

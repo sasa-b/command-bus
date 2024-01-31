@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SasaB\MessageBus\Identity;
+namespace Sco\MessageBus\Identity;
 
-use SasaB\MessageBus\Identity;
+use Sco\MessageBus\Identity;
 
 final class RandomString implements Identity
 {

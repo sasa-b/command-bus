@@ -8,9 +8,9 @@
 
 declare(strict_types=1);
 
-namespace SasaB\MessageBus\Mapper;
+namespace Sco\MessageBus\Mapper;
 
-use SasaB\MessageBus\Message;
+use Sco\MessageBus\Message;
 
 interface Mapper
 {

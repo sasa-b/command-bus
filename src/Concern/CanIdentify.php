@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SasaB\MessageBus\Concern;
+namespace Sco\MessageBus\Concern;
 
 trait CanIdentify
 {

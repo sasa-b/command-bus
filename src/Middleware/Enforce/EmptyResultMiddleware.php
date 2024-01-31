@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace SasaB\MessageBus\Middleware\Enforce;
+namespace Sco\MessageBus\Middleware\Enforce;
 
-use SasaB\MessageBus\Attribute\IsCommand;
-use SasaB\MessageBus\Command;
-use SasaB\MessageBus\Exception\InvalidResult;
-use SasaB\MessageBus\Message;
-use SasaB\MessageBus\Middleware;
+use Sco\MessageBus\Attribute\IsCommand;
+use Sco\MessageBus\Command;
+use Sco\MessageBus\Exception\InvalidResult;
+use Sco\MessageBus\Message;
+use Sco\MessageBus\Middleware;
 
 final class EmptyResultMiddleware implements Middleware
 {

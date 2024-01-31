@@ -19,12 +19,12 @@
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
-            "SasaB\\MessageBus\\": "src/"
+            "Sco\\MessageBus\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "SasaB\\MessageBus\\Tests\\": "tests/"
+            "Sco\\MessageBus\\Tests\\": "tests/"
         },
         "files": ["tests/functions.php"]
     },

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace SasaB\MessageBus\Tests\Unit\Mapper\Strategy;
+namespace Sco\MessageBus\Tests\Unit\Mapper\Strategy;
 
-use SasaB\MessageBus\Mapper\Strategy\MapByAttribute;
-use SasaB\MessageBus\Message;
-use SasaB\MessageBus\Tests\Stub\AttributeTestCommand;
-use SasaB\MessageBus\Tests\Stub\AttributeTestHandler;
-use SasaB\MessageBus\Tests\TestCase;
+use Sco\MessageBus\Mapper\Strategy\MapByAttribute;
+use Sco\MessageBus\Message;
+use Sco\MessageBus\Tests\Stub\AttributeTestCommand;
+use Sco\MessageBus\Tests\Stub\AttributeTestHandler;
+use Sco\MessageBus\Tests\TestCase;
 
 class MapByAttributeTest extends TestCase
 {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SasaB\MessageBus;
+namespace Sco\MessageBus;
 
-use SasaB\MessageBus\Concern\CanIdentify;
+use Sco\MessageBus\Concern\CanIdentify;
 
 abstract class Query implements Message
 {

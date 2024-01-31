@@ -8,9 +8,9 @@
 
 declare(strict_types=1);
 
-namespace SasaB\MessageBus\Event;
+namespace Sco\MessageBus\Event;
 
-use SasaB\MessageBus\Message;
+use Sco\MessageBus\Message;
 
 final class MessageFailedEvent implements Event
 {

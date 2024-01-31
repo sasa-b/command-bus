@@ -8,14 +8,14 @@
 
 declare(strict_types=1);
 
-namespace SasaB\MessageBus\Tests;
+namespace Sco\MessageBus\Tests;
 
 use Psr\Container\ContainerInterface;
-use SasaB\MessageBus\Tests\Stub\AttributeTestHandler;
-use SasaB\MessageBus\Tests\Stub\Container\InMemoryContainer;
-use SasaB\MessageBus\Tests\Stub\EchoTestHandler;
-use SasaB\MessageBus\Tests\Stub\FailingTestHandler;
-use SasaB\MessageBus\Tests\Stub\MixedContentTestHandler;
+use Sco\MessageBus\Tests\Stub\AttributeTestHandler;
+use Sco\MessageBus\Tests\Stub\Container\InMemoryContainer;
+use Sco\MessageBus\Tests\Stub\EchoTestHandler;
+use Sco\MessageBus\Tests\Stub\FailingTestHandler;
+use Sco\MessageBus\Tests\Stub\MixedContentTestHandler;
 
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {

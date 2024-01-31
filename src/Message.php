@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SasaB\MessageBus;
+namespace Sco\MessageBus;
 
 interface Message extends HasIdentity, Payload
 {

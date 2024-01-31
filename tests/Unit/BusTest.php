@@ -8,23 +8,23 @@
 
 declare(strict_types=1);
 
-namespace SasaB\MessageBus\Tests\Unit;
+namespace Sco\MessageBus\Tests\Unit;
 
-use SasaB\MessageBus\Bus;
-use SasaB\MessageBus\Result;
-use SasaB\MessageBus\Result\Boolean;
-use SasaB\MessageBus\Result\Collection;
-use SasaB\MessageBus\Result\Delegated;
-use SasaB\MessageBus\Result\Integer;
-use SasaB\MessageBus\Result\Map;
-use SasaB\MessageBus\Result\None;
-use SasaB\MessageBus\Result\Numeric;
-use SasaB\MessageBus\Result\Text;
-use SasaB\MessageBus\Tests\Stub\AttributeTestCommand;
-use SasaB\MessageBus\Tests\Stub\EchoTestCommand;
-use SasaB\MessageBus\Tests\Stub\MixedContentTestCommand;
-use SasaB\MessageBus\Tests\Stub\TestItemObject;
-use SasaB\MessageBus\Tests\TestCase;
+use Sco\MessageBus\Bus;
+use Sco\MessageBus\Result;
+use Sco\MessageBus\Result\Boolean;
+use Sco\MessageBus\Result\Collection;
+use Sco\MessageBus\Result\Delegated;
+use Sco\MessageBus\Result\Integer;
+use Sco\MessageBus\Result\Map;
+use Sco\MessageBus\Result\None;
+use Sco\MessageBus\Result\Numeric;
+use Sco\MessageBus\Result\Text;
+use Sco\MessageBus\Tests\Stub\AttributeTestCommand;
+use Sco\MessageBus\Tests\Stub\EchoTestCommand;
+use Sco\MessageBus\Tests\Stub\MixedContentTestCommand;
+use Sco\MessageBus\Tests\Stub\TestItemObject;
+use Sco\MessageBus\Tests\TestCase;
 
 class BusTest extends TestCase
 {

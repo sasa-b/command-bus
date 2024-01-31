@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SasaB\MessageBus\Middleware\Enforce;
+namespace Sco\MessageBus\Middleware\Enforce;
 
-use SasaB\MessageBus\Exception\InvalidResult;
-use SasaB\MessageBus\Message;
-use SasaB\MessageBus\Middleware;
+use Sco\MessageBus\Exception\InvalidResult;
+use Sco\MessageBus\Message;
+use Sco\MessageBus\Middleware;
 
 final class ImmutableResultMiddleware implements Middleware
 {

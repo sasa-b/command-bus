@@ -8,28 +8,28 @@
 
 declare(strict_types=1);
 
-namespace SasaB\MessageBus\Tests\Unit\Middleware;
+namespace Sco\MessageBus\Tests\Unit\Middleware;
 
 use RuntimeException;
-use SasaB\MessageBus\Bus;
-use SasaB\MessageBus\Event\Emitter;
-use SasaB\MessageBus\Event\MessageFailedEvent;
-use SasaB\MessageBus\Event\MessageHandledEvent;
-use SasaB\MessageBus\Event\MessageReceivedEvent;
-use SasaB\MessageBus\Event\Subscriber;
-use SasaB\MessageBus\Middleware\EventMiddleware;
-use SasaB\MessageBus\Result;
-use SasaB\MessageBus\Result\ResultMapper;
-use SasaB\MessageBus\Tests\Stub\EchoTestCommand;
-use SasaB\MessageBus\Tests\Stub\FailingTestCommand;
-use SasaB\MessageBus\Tests\TestCase;
+use Sco\MessageBus\Bus;
+use Sco\MessageBus\Event\Emitter;
+use Sco\MessageBus\Event\MessageFailedEvent;
+use Sco\MessageBus\Event\MessageHandledEvent;
+use Sco\MessageBus\Event\MessageReceivedEvent;
+use Sco\MessageBus\Event\Subscriber;
+use Sco\MessageBus\Middleware\EventMiddleware;
+use Sco\MessageBus\Result;
+use Sco\MessageBus\Result\ResultMapper;
+use Sco\MessageBus\Tests\Stub\EchoTestCommand;
+use Sco\MessageBus\Tests\Stub\FailingTestCommand;
+use Sco\MessageBus\Tests\TestCase;
 
 class EventMiddlewareTest extends TestCase
 {
     public function test_it_can_emmit_success_events(): void
     {
         $this->expectOutputString(
-            "SasaB\MessageBus\Event\MessageReceivedEvent|EchoTestCommand Successfully Dispatched|SasaB\MessageBus\Event\MessageHandledEvent"
+            "Sco\MessageBus\Event\MessageReceivedEvent|EchoTestCommand Successfully Dispatched|Sco\MessageBus\Event\MessageHandledEvent"
         );
 
         $subscriber = new Subscriber();
@@ -57,7 +57,7 @@ class EventMiddlewareTest extends TestCase
     public function test_it_can_emmit_failure_event(): void
     {
         $this->expectOutputString(
-            "SasaB\MessageBus\Event\MessageReceivedEvent|SasaB\MessageBus\Event\MessageFailedEvent"
+            "Sco\MessageBus\Event\MessageReceivedEvent|Sco\MessageBus\Event\MessageFailedEvent"
         );
 
         $subscriber = new Subscriber();

@@ -8,15 +8,15 @@
 
 declare(strict_types=1);
 
-namespace SasaB\MessageBus;
+namespace Sco\MessageBus;
 
 use Closure;
 use Psr\Container\ContainerInterface;
-use SasaB\MessageBus\Exception\MiddlewareException;
-use SasaB\MessageBus\Identity\RandomString;
-use SasaB\MessageBus\Mapper\Mapper;
-use SasaB\MessageBus\Mapper\Strategy\MapByName;
-use SasaB\MessageBus\Result\ResultMapper;
+use Sco\MessageBus\Exception\MiddlewareException;
+use Sco\MessageBus\Identity\RandomString;
+use Sco\MessageBus\Mapper\Mapper;
+use Sco\MessageBus\Mapper\Strategy\MapByName;
+use Sco\MessageBus\Result\ResultMapper;
 
 final class Bus implements Dispatcher
 {
