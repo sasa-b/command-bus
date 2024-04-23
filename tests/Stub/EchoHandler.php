@@ -14,7 +14,7 @@ use Sco\MessageBus\Handler;
 use Sco\MessageBus\Message;
 
 /**
- * @implements Handler<EchoCommand, int>
+ * @implements Handler<EchoCommand>
  */
 final class EchoHandler implements Handler
 {
