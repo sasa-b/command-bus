@@ -16,9 +16,8 @@ use Sco\MessageBus\Exception\MiddlewareException;
 use Sco\MessageBus\Identity\RandomString;
 use Sco\MessageBus\Mapper\Mapper;
 use Sco\MessageBus\Mapper\Strategy\MapByName;
-use Sco\MessageBus\Result\ResultMapper;
 
-final class Bus implements Dispatcher
+final readonly class Bus implements Dispatcher
 {
     private Closure $chain;
 
@@ -27,11 +26,10 @@ final class Bus implements Dispatcher
      * @throws MiddlewareException
      */
     public function __construct(
-        private readonly ContainerInterface $container,
+        private ContainerInterface $container,
         array $middlewares = [],
-        private readonly Mapper $mapper = new MapByName(),
-        private readonly Identity $identity = new RandomString(),
-        private readonly ?ResultMapper $resultMapper = new ResultMapper(),
+        private Mapper $mapper = new MapByName(),
+        private Identity $identity = new RandomString(),
     ) {
         $this->chain = $this->createMiddlewareChain($middlewares);
     }
@@ -43,15 +41,24 @@ final class Bus implements Dispatcher
         );
     }
 
-    public function dispatch(Message $message): Result
+    public function dispatch(Message $message): mixed
     {
-        $message->setId(
-            $this->identity->generate(),
-        );
+        if ($message instanceof HasIdentity) {
+            $message->setId(
+                $this->identity->generate(),
+            );
+        }
 
         $result = ($this->chain)($message);
 
-        return $this->resultMapper !== null ? $this->resultMapper->map($result)->setId($message->id()) : $result;
+        if (
+            $message instanceof HasIdentity &&
+            $result instanceof HasIdentity
+        ) {
+            $result->setId($message->id());
+        }
+
+        return $result;
     }
 
     /**

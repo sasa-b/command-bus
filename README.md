@@ -17,7 +17,7 @@ interoperability.
   * [Middleware](#middleware)
   * [Event](#event)
   * [Transaction](#transaction)
-  * [Result Types](#result-types)
+  * ~~[Result Types](#result-types)~~ (Removed in version 3.0)
 
 ## Getting Started
 

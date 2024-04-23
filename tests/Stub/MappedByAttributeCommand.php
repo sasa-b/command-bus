@@ -10,18 +10,14 @@ use Sco\MessageBus\Message;
 
 use function Tests\uuid;
 
-#[IsCommand(handler: AttributeTestHandler::class)]
-final class AttributeTestCommand implements Message
+#[IsCommand(handler: MappedByAttributeHandler::class)]
+final class MappedByAttributeCommand implements Message
 {
     use CanIdentify;
 
-    public function __construct()
-    {
+    public function __construct(
+        public string $value = 'Command is mapped by attribute',
+    ) {
         $this->setId(uuid());
-    }
-
-    public function payload(): string
-    {
-        return 'Command is mapped by attribute';
     }
 }

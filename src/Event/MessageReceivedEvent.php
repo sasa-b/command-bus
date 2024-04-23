@@ -12,19 +12,14 @@ namespace Sco\MessageBus\Event;
 
 use Sco\MessageBus\Message;
 
-final class MessageReceivedEvent implements Event
+final readonly class MessageReceivedEvent implements Event
 {
     public function __construct(
-        private readonly Message $message,
+        public Message $message,
     ) {}
 
     public function getName(): string
     {
         return self::class;
-    }
-
-    public function getMessage(): Message
-    {
-        return $this->message;
     }
 }

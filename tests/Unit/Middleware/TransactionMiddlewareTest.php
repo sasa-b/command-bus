@@ -6,8 +6,8 @@ namespace Sco\MessageBus\Tests\Unit\Middleware;
 
 use Sco\MessageBus\Bus;
 use Sco\MessageBus\Middleware\TransactionMiddleware;
-use Sco\MessageBus\Tests\Stub\EchoTestCommand;
-use Sco\MessageBus\Tests\Stub\FailingTestCommand;
+use Sco\MessageBus\Tests\Stub\EchoCommand;
+use Sco\MessageBus\Tests\Stub\FailingCommand;
 use Sco\MessageBus\Tests\TestCase;
 
 class TransactionMiddlewareTest extends TestCase
@@ -32,7 +32,7 @@ class TransactionMiddlewareTest extends TestCase
 
         $fixture = new Bus($this->container, [$transactionMiddleware]);
 
-        $fixture->dispatch(new EchoTestCommand(message: 'EchoTestCommand'));
+        $fixture->dispatch(new EchoCommand(message: 'EchoTestCommand'));
     }
 
     public function test_it_rollbacks_transaction_on_error(): void
@@ -56,7 +56,7 @@ class TransactionMiddlewareTest extends TestCase
         $fixture = new Bus($this->container, [$transactionMiddleware]);
 
         try {
-            $fixture->dispatch(new FailingTestCommand('Whoops'));
+            $fixture->dispatch(new FailingCommand('Whoops'));
         } catch (\Throwable) {
         }
     }

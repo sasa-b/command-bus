@@ -4,33 +4,47 @@ declare(strict_types=1);
 
 namespace Sco\MessageBus\Tests\Unit\Middleware;
 
+use PHPUnit\Framework\Attributes\Test;
 use Sco\MessageBus\Bus;
 use Sco\MessageBus\Exception\InvalidResult;
 use Sco\MessageBus\Middleware\Enforce\EmptyResultMiddleware;
-use Sco\MessageBus\Tests\Stub\AttributeTestCommand;
-use Sco\MessageBus\Tests\Stub\MixedContentTestCommand;
-use Sco\MessageBus\Tests\Stub\TestItemObject;
+use Sco\MessageBus\Tests\Stub\FooCommand;
+use Sco\MessageBus\Tests\Stub\MappedByAttributeCommand;
 use Sco\MessageBus\Tests\TestCase;
 
 class EmptyResultMiddlewareTest extends TestCase
 {
-    public function test_it_throws_an_error_when_extending_abstract_command_and_returning_value(): void
+    #[Test]
+    public function it_throws_an_error_when_extending_abstract_command_and_returning_value(): void
     {
         $this->expectException(InvalidResult::class);
-        $this->expectExceptionMessage('Commands cannot return values other than null. Sco\MessageBus\Tests\Stub\MixedContentTestCommand returns object.');
+        $this->expectExceptionMessage('Commands cannot return values other than null. Sco\MessageBus\Tests\Stub\FooCommand returns object.');
 
         $fixture = new Bus($this->container, [new EmptyResultMiddleware()]);
 
-        $fixture->dispatch(new MixedContentTestCommand(new TestItemObject()));
+        $fixture->dispatch(new FooCommand());
     }
 
-    public function test_it_throws_an_error_when_having_command_attribute_and_returning_value(): void
+    #[Test]
+    public function it_throws_an_error_when_having_command_attribute_and_returning_value(): void
     {
         $this->expectException(InvalidResult::class);
-        $this->expectExceptionMessage('Commands cannot return values other than null. Sco\MessageBus\Tests\Stub\AttributeTestCommand returns string.');
+        $this->expectExceptionMessage('Commands cannot return values other than null. Sco\MessageBus\Tests\Stub\MappedByAttributeCommand returns string.');
 
         $fixture = new Bus($this->container, [new EmptyResultMiddleware()]);
 
-        $fixture->dispatch(new AttributeTestCommand());
+        $fixture->dispatch(new MappedByAttributeCommand());
+    }
+
+    #[Test]
+    public function it_does_not_throw_an_error_when_an_excluded_command_returns(): void
+    {
+        EmptyResultMiddleware::$exclude = [MappedByAttributeCommand::class];
+
+        $fixture = new Bus($this->container, [new EmptyResultMiddleware()]);
+
+        $result = $fixture->dispatch(new MappedByAttributeCommand());
+
+        $this->assertSame('Command is mapped by attribute', $result);
     }
 }

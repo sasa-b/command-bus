@@ -11,14 +11,14 @@ declare(strict_types=1);
 namespace Sco\MessageBus;
 
 /**
- * @template TM of Message
+ * @template TMessage of Message
+ * @template TResult
  */
 interface Handler
 {
     /**
-     * @param TM&Message $message
-     *
-     * @return void|Result|mixed
+     * @param TMessage $message
+     * @return TResult
      */
     public function __invoke(Message $message);
 }

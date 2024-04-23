@@ -16,13 +16,11 @@ use Sco\MessageBus\Event\MessageHandledEvent;
 use Sco\MessageBus\Event\MessageReceivedEvent;
 use Sco\MessageBus\Message;
 use Sco\MessageBus\Middleware;
-use Sco\MessageBus\Result\ResultMapper;
 
-final class EventMiddleware implements Middleware
+final readonly class EventMiddleware implements Middleware
 {
     public function __construct(
-        private readonly Emitter $emitter,
-        private readonly ResultMapper $resultMapper,
+        private Emitter $emitter,
     ) {}
 
     public function __invoke(Message $message, \Closure $next): mixed
@@ -32,7 +30,7 @@ final class EventMiddleware implements Middleware
         try {
             $result = $next($message);
 
-            $this->emitter->emit(new MessageHandledEvent($message, $this->resultMapper->map($result)));
+            $this->emitter->emit(new MessageHandledEvent($message, $result));
         } catch (\Exception $e) {
             $this->emitter->emit(new MessageFailedEvent($message, $e));
             throw $e;

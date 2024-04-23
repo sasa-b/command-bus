@@ -8,9 +8,9 @@ use Sco\MessageBus\Handler;
 use Sco\MessageBus\Message;
 
 /**
- * @implements Handler<FailingTestCommand>
+ * @implements Handler<FailingCommand, void>
  */
-final class FailingTestHandler implements Handler
+final class FailingHandler implements Handler
 {
     public function __invoke(Message $message): mixed
     {

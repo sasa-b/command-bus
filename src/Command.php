@@ -6,13 +6,12 @@ namespace Sco\MessageBus;
 
 use Sco\MessageBus\Concern\CanIdentify;
 
-abstract class Command implements Message
+/**
+ * @template TCommandResult
+ * @template TCommandHandler
+ * @implements Message<TCommandResult, TCommandHandler>
+ */
+abstract class Command implements Message, HasIdentity
 {
     use CanIdentify;
-
-    public function payload(): mixed
-    {
-        // Override or ignore and use public read only properties
-        return null;
-    }
 }

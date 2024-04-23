@@ -11,11 +11,11 @@ declare(strict_types=1);
 namespace Sco\MessageBus\Tests;
 
 use Psr\Container\ContainerInterface;
-use Sco\MessageBus\Tests\Stub\AttributeTestHandler;
 use Sco\MessageBus\Tests\Stub\Container\InMemoryContainer;
-use Sco\MessageBus\Tests\Stub\EchoTestHandler;
-use Sco\MessageBus\Tests\Stub\FailingTestHandler;
-use Sco\MessageBus\Tests\Stub\MixedContentTestHandler;
+use Sco\MessageBus\Tests\Stub\EchoHandler;
+use Sco\MessageBus\Tests\Stub\FailingHandler;
+use Sco\MessageBus\Tests\Stub\FooHandler;
+use Sco\MessageBus\Tests\Stub\MappedByAttributeHandler;
 
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
@@ -26,10 +26,10 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         parent::setUp();
 
         $this->container = new InMemoryContainer([
-            EchoTestHandler::class => new EchoTestHandler(),
-            MixedContentTestHandler::class => new MixedContentTestHandler(),
-            FailingTestHandler::class => new FailingTestHandler(),
-            AttributeTestHandler::class => new AttributeTestHandler(),
+            EchoHandler::class => new EchoHandler(),
+            FooHandler::class => new FooHandler(),
+            FailingHandler::class => new FailingHandler(),
+            MappedByAttributeHandler::class => new MappedByAttributeHandler(),
         ]);
     }
 }

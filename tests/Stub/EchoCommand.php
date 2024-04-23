@@ -3,23 +3,23 @@
  * Created by PhpStorm.
  * User: sasa.blagojevic@mail.com
  * Date: 18. 12. 2020.
- * Time: 19:03
+ * Time: 11:30
  */
 
 declare(strict_types=1);
 
-namespace Sco\MessageBus\Result;
+namespace Sco\MessageBus\Tests\Stub;
 
-use Sco\MessageBus\Result;
+use Sco\MessageBus\Message;
 
-final class Text extends Result
+final class EchoCommand implements Message
 {
     public function __construct(
-        public readonly string $value,
+        public string $message,
     ) {}
 
     public function payload(): string
     {
-        return $this->value;
+        return $this->message;
     }
 }

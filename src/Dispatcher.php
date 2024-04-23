@@ -12,5 +12,10 @@ namespace Sco\MessageBus;
 
 interface Dispatcher
 {
-    public function dispatch(Message $message): Result;
+    /**
+     * @template TResult of mixed
+     * @param Message<TResult,*> $message
+     * @return TResult
+     */
+    public function dispatch(Message $message): mixed;
 }

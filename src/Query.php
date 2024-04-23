@@ -6,13 +6,12 @@ namespace Sco\MessageBus;
 
 use Sco\MessageBus\Concern\CanIdentify;
 
-abstract class Query implements Message
+/**
+ * @template TQueryResult
+ * @template TQueryHandler
+ * @implements Message<TQueryResult, TQueryHandler>
+ */
+abstract class Query implements Message, HasIdentity
 {
     use CanIdentify;
-
-    public function payload(): mixed
-    {
-        // Override or ignore and use public read only properties
-        return null;
-    }
 }

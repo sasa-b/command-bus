@@ -10,14 +10,10 @@ declare(strict_types=1);
 
 namespace Sco\MessageBus\Event;
 
-use Sco\MessageBus\Message;
-
 interface Event
 {
     /**
      * @return class-string
      */
     public function getName(): string;
-
-    public function getMessage(): Message;
 }

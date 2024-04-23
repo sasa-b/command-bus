@@ -14,9 +14,9 @@ use Sco\MessageBus\Handler;
 use Sco\MessageBus\Message;
 
 /**
- * @implements Handler<EchoTestCommand>
+ * @implements Handler<EchoCommand, int>
  */
-final class EchoTestHandler implements Handler
+final class EchoHandler implements Handler
 {
     public function __invoke(Message $message): int
     {

@@ -12,25 +12,15 @@ namespace Sco\MessageBus\Event;
 
 use Sco\MessageBus\Message;
 
-final class MessageFailedEvent implements Event
+final readonly class MessageFailedEvent implements Event
 {
     public function __construct(
-        private readonly Message $message,
-        private readonly \Throwable $error,
+        public Message $message,
+        public \Throwable $error,
     ) {}
 
     public function getName(): string
     {
         return self::class;
-    }
-
-    public function getMessage(): Message
-    {
-        return $this->message;
-    }
-
-    public function getError(): \Throwable
-    {
-        return $this->error;
     }
 }
