@@ -12,11 +12,13 @@ namespace Sco\MessageBus;
 
 /**
  * @template TMessage of Message
+ * @template TResult
  */
 interface Handler
 {
     /**
      * @param TMessage $message
+     * @return TResult
      */
-    public function __invoke(Message $message): mixed;
+    public function __invoke(Message $message);
 }
