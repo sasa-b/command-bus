@@ -41,6 +41,11 @@ final readonly class Bus implements Dispatcher
         );
     }
 
+    /**
+     * @template TResult of mixed
+     * @param Message<TResult,*> $message
+     * @return TResult
+     */
     public function dispatch(Message $message): mixed
     {
         if ($message instanceof HasIdentity) {
