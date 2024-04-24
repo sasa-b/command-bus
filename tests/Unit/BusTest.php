@@ -10,9 +10,13 @@ declare(strict_types=1);
 
 namespace Sco\MessageBus\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\Test;
 use Sco\MessageBus\Bus;
+use Sco\MessageBus\Mapper\Strategy\MapByAttribute;
 use Sco\MessageBus\Tests\Stub\EchoCommand;
 use Sco\MessageBus\Tests\Stub\FooCommand;
+use Sco\MessageBus\Tests\Stub\FooMessage;
+use Sco\MessageBus\Tests\Stub\FooResult;
 use Sco\MessageBus\Tests\Stub\MappedByAttributeCommand;
 use Sco\MessageBus\Tests\TestCase;
 
@@ -27,7 +31,8 @@ class BusTest extends TestCase
         $this->fixture = new Bus($this->container, []);
     }
 
-    public function test_it_can_dispatch_command(): void
+    #[Test]
+    public function it_can_dispatch_command(): void
     {
         $this->expectOutputString(EchoCommand::class . " Successfully Dispatched");
 
@@ -36,14 +41,26 @@ class BusTest extends TestCase
         );
     }
 
-    public function test_it_can_dispatch_command_with_attribute(): void
+    #[Test]
+    public function it_can_dispatch_command_with_attribute(): void
     {
-        $result = (new Bus($this->container, []))->dispatch(new MappedByAttributeCommand());
+        $result = (new Bus(container: $this->container, mapper: new MapByAttribute()))->dispatch(new MappedByAttributeCommand());
 
         $this->assertSame('Command is mapped by attribute', $result);
     }
 
-    public function test_command_uuid_and_result_uuid_are_same(): void
+    #[Test]
+    public function it_can_assign_unique_identity_to_results(): void
+    {
+        $result = (new Bus(container: $this->container, mapper: new MapByAttribute()))->dispatch(new FooMessage());
+
+        $this->assertInstanceOf(FooResult::class, $result);
+        $this->assertSame('FooMessage Handled', $result->value());
+        $this->assertNotEmpty($result->id());
+    }
+
+    #[Test]
+    public function command_identity_and_result_identity_are_the_same(): void
     {
         $result = $this->fixture->dispatch(
             $command = new FooCommand()

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sco\MessageBus\Tests\Unit\Middleware;
 
+use PHPUnit\Framework\Attributes\Test;
 use Sco\MessageBus\Bus;
 use Sco\MessageBus\Middleware\TransactionMiddleware;
 use Sco\MessageBus\Tests\Stub\EchoCommand;
@@ -12,7 +13,8 @@ use Sco\MessageBus\Tests\TestCase;
 
 class TransactionMiddlewareTest extends TestCase
 {
-    public function test_it_can_execute_in_transaction(): void
+    #[Test]
+    public function it_can_execute_in_transaction(): void
     {
         $this->expectOutputString(
             "Begin|EchoTestCommand Successfully Dispatched|Commit"
@@ -35,7 +37,8 @@ class TransactionMiddlewareTest extends TestCase
         $fixture->dispatch(new EchoCommand(message: 'EchoTestCommand'));
     }
 
-    public function test_it_rollbacks_transaction_on_error(): void
+    #[Test]
+    public function it_rollbacks_transaction_on_error(): void
     {
         $this->expectOutputString(
             "Begin|Rollback Command Fails"

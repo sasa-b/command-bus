@@ -56,11 +56,12 @@ final readonly class Bus implements Dispatcher
 
         $result = ($this->chain)($message);
 
-        if (
-            $message instanceof HasIdentity &&
-            $result instanceof HasIdentity
-        ) {
-            $result->setId($message->id());
+        if ($result instanceof HasIdentity) {
+            $result->setId(
+                $message instanceof HasIdentity
+                    ? $message->id()
+                    : $this->identity->generate()
+            );
         }
 
         return $result;

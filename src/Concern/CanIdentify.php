@@ -10,7 +10,7 @@ trait CanIdentify
 
     public function id(): string
     {
-        return $this->id;
+        return $this->id ?? 'uninitialized';
     }
 
     public function setId(string $id): static

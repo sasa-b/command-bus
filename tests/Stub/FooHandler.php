@@ -8,12 +8,12 @@ use Sco\MessageBus\Handler;
 use Sco\MessageBus\Message;
 
 /**
- * @implements Handler<FooCommand, FooResponse>
+ * @implements Handler<FooCommand, FooResult>
  */
 class FooHandler implements Handler
 {
-    public function __invoke(Message $message): FooResponse
+    public function __invoke(Message $message): FooResult
     {
-        return new FooResponse($message->value . ' Handled');
+        return new FooResult($message->value . ' Handled');
     }
 }
