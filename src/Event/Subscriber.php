@@ -35,7 +35,7 @@ final class Subscriber
     /**
      * @param class-string $event
      */
-    public function removeListener(string $event, int $index = null): Subscriber
+    public function removeListener(string $event, ?int $index = null): Subscriber
     {
         $this->validateEvent($event);
 

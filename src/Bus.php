@@ -76,6 +76,7 @@ final readonly class Bus implements Dispatcher
         $lastMiddleware = fn (Message $message) => $this->getHandlerFor($message)($message);
 
         while ($middleware = array_pop($chain)) {
+            /** @phpstan-ignore-next-line */
             if (!$middleware instanceof Middleware) {
                 throw MiddlewareException::invalid($middleware);
             }

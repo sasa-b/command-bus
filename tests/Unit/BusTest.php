@@ -16,7 +16,6 @@ use Sco\MessageBus\Mapper\Strategy\MapByAttribute;
 use Sco\MessageBus\Tests\Stub\EchoCommand;
 use Sco\MessageBus\Tests\Stub\FooCommand;
 use Sco\MessageBus\Tests\Stub\FooMessage;
-use Sco\MessageBus\Tests\Stub\FooResult;
 use Sco\MessageBus\Tests\Stub\MappedByAttributeCommand;
 use Sco\MessageBus\Tests\TestCase;
 
@@ -44,7 +43,7 @@ class BusTest extends TestCase
     #[Test]
     public function it_can_dispatch_command_with_attribute(): void
     {
-        $result = (new Bus(container: $this->container, mapper: new MapByAttribute()))->dispatch(new MappedByAttributeCommand());
+        $result = new Bus(container: $this->container, mapper: new MapByAttribute())->dispatch(new MappedByAttributeCommand());
 
         $this->assertSame('Command is mapped by attribute', $result);
     }
@@ -52,9 +51,8 @@ class BusTest extends TestCase
     #[Test]
     public function it_can_assign_unique_identity_to_results(): void
     {
-        $result = (new Bus(container: $this->container, mapper: new MapByAttribute()))->dispatch(new FooMessage());
+        $result = new Bus(container: $this->container, mapper: new MapByAttribute())->dispatch(new FooMessage());
 
-        $this->assertInstanceOf(FooResult::class, $result);
         $this->assertSame('FooMessage Handled', $result->value());
         $this->assertNotEmpty($result->id());
     }

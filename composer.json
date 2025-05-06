@@ -8,7 +8,7 @@
         "message-bus",
         "cqrs"
     ],
-    "version": "3.0.0",
+    "version": "4.0.0",
     "license": "MIT",
     "authors": [
         {
@@ -29,7 +29,7 @@
         "files": ["tests/functions.php"]
     },
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.4",
         "psr/container": "*",
         "psr/log": "*"
     },
