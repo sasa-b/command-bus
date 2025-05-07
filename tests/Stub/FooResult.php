@@ -8,7 +8,6 @@ use Sco\MessageBus\Result;
 
 /**
  * @extends Result<string>
-
  */
 final class FooResult extends Result
 {

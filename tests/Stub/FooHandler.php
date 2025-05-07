@@ -8,7 +8,7 @@ use Sco\MessageBus\Handler;
 use Sco\MessageBus\Message;
 
 /**
- * @implements Handler<FooCommand, FooResult>
+ * @implements Handler<FooCommand,FooResult>
  */
 class FooHandler implements Handler
 {

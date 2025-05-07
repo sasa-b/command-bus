@@ -8,7 +8,7 @@ use Sco\MessageBus\Handler;
 use Sco\MessageBus\Message;
 
 /**
- * @implements Handler<MappedByAttributeCommand|MappedByAttributeQuery, string>
+ * @implements Handler<MappedByAttributeCommand|MappedByAttributeQuery,string>
  */
 final class MappedByAttributeHandler implements Handler
 {

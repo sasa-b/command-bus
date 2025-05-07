@@ -8,7 +8,7 @@ use Sco\MessageBus\Attribute\IsQuery;
 use Sco\MessageBus\Message;
 
 /**
- * @implements Message<FooResult, FooHandler>
+ * @implements Message<FooResult,FooHandler>
  */
 #[IsQuery(handler: FooHandler::class)]
 final readonly class FooMessage implements Message

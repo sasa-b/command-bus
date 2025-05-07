@@ -9,7 +9,7 @@ use Sco\MessageBus\Concern\CanIdentify;
 /**
  * @template TCommandResult
  * @template TCommandHandler
- * @implements Message<TCommandResult, TCommandHandler>
+ * @implements Message<TCommandHandler,TCommandResult>
  */
 abstract class Command implements Message, HasIdentity
 {
