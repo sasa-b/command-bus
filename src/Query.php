@@ -7,8 +7,9 @@ namespace Sco\MessageBus;
 use Sco\MessageBus\Concern\CanIdentify;
 
 /**
- * @template TQueryResult
  * @template TQueryHandler
+ * @template TQueryResult
+ *
  * @implements Message<TQueryHandler,TQueryResult>
  */
 abstract class Query implements Message, HasIdentity

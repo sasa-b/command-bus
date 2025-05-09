@@ -7,8 +7,9 @@ namespace Sco\MessageBus;
 use Sco\MessageBus\Concern\CanIdentify;
 
 /**
- * @template TCommandResult
  * @template TCommandHandler
+ * @template TCommandResult
+ *
  * @implements Message<TCommandHandler,TCommandResult>
  */
 abstract class Command implements Message, HasIdentity
